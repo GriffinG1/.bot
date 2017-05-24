@@ -37,11 +37,10 @@ class Commands:
         await self.bot.say("Closing...")
         sys.exit()
         
-    @commands.command()
-    async def log(self, action=False, value=False):
-        """Command for managing the bot's internal idiot log, as well as linking the spreadsheet."""
-        if action == False:
-            await self.bot.say("http://bit.ly/ninidiots")
+    @commands.group()
+    async def log(self):
+        """Command for managing the bot's idiot log and linking the spreadsheet."""
+        await self.bot.say("http://bit.ly/ninidiots")
 
 def setup(bot):
     bot.add_cog(Commands(bot))
