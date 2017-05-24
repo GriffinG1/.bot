@@ -43,7 +43,8 @@ class Commands:
     @commands.group()
     async def log(self):
         """Command for managing the bot's idiot log with subcommands."""
-        
+    
+    @commands.has_permissions(administrator=True)    
     @log.command()
     async def add(self, name, rank, first_seen="N/A", last_seen="N/A", nickname="N/A", notes="N/A"):
         #make sure the rank is one of the five valid ranks
@@ -105,6 +106,42 @@ class Commands:
             await self.bot.say("", embed=embed)
         with open('log.json', 'w+') as f:
             json.dump(data, f)
+    
+    @commands.has_permissions(administrator=True)  
+    @log.command()
+    async def remove(self, name):
+        with open('log.json', 'r+') as f:
+            data = json.load(f)
+        #iterate through file looking for an entry that matches input
+        delete_entry = None
+        for entry in data:
+            if data[entry]["name"].lower() == name.lower():
+                 delete_entry = entry
+        if delete_entry == None:
+            await self.bot.say(name + " is not an entry in the idiot log.")
+        #then delete it
+        else:
+            data.pop(delete_entry, None)
+            await self.bot.say(name + " was successfully removed from the idiot log.")
+        with open('log.json', 'w+') as f:
+            json.dump(data, f)
+            
+    @log.command()
+    async def edit(self, name, key, value):
+        with open('log.json', 'r+') as f:
+            data = json.load(f)
+        #iterate through file looking for an entry that matches input
+        user = None
+        for entry in data:
+            if data[entry]["name"].lower() == name.lower():
+                 user = data[entry]
+        if key in user:
+            await self.bot.say("Successfully edited {}'s {} field to {}!".format(user["name"], key, value))
+        else:
+            await self.bot.say("Invalid field. Entries have 'name', 'rank', 'first_seen', 'last_seen', 'nickname' and 'notes' fields.")
+        with open('log.json', 'w+') as f:
+            json.dump(data, f)
+        
     
 def setup(bot):
     bot.add_cog(Commands(bot))
