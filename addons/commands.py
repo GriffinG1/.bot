@@ -21,7 +21,10 @@ class Commands:
     @commands.command()
     async def test(self):
         """A test command."""
-        await self.bot.say("Testing!")
+        embed = discord.Embed(title="testing", description="Testing")
+        embed.add_field(name="Notes", value="Testing!", inline=False)
+        embed.colour = discord.Colour(0x00FFFF)            
+        await self.bot.say("", embed=embed)
     
     @commands.has_permissions(administrator=True)    
     @commands.command()
@@ -39,8 +42,68 @@ class Commands:
         
     @commands.group()
     async def log(self):
-        """Command for managing the bot's idiot log and linking the spreadsheet."""
-        await self.bot.say("http://bit.ly/ninidiots")
-
+        """Command for managing the bot's idiot log with subcommands."""
+        
+    @log.command()
+    async def add(self, name, rank, first_seen="N/A", last_seen="N/A", nickname="N/A", notes=""):
+        #make sure the rank is one of the five valid ranks
+        if rank == "Diamond" or rank == "Platinum" or rank == "Gold" or rank == "Silver" or rank == "Bronze":
+            #replace spaces with underscores and save into name_var
+            name_var = ""
+            for letter in name:
+                if letter == " ":
+                    name_var += "_"
+                else:
+                    name_var += letter
+            name_var = name_var.lower()
+            #create dictionary with data from command
+            new_entry = {
+                "name": name,
+                "rank": rank,
+                "first_seen": first_seen,
+                "last_seen": last_seen,
+                "nickname": nickname,
+                "notes": notes
+            }
+            #load log.json into data, add previously created dictonary and write back to the file
+            with open('log.json', 'r+') as f:
+                data = json.load(f)
+            data[name_var] = new_entry
+            with open('log.json', 'w+') as f:
+                json.dump(data, f)
+            await self.bot.say("Successfully added {} to the log!".format(name))
+        else:
+            await self.bot.say(rank + " is not a valid rank. Must be: Diamond, Platinum, Gold, Silver, Bronze")
+        
+    @log.command()
+    async def view(self, name):
+        with open('log.json', 'r+') as f:
+            data = json.load(f)
+        #iterate through file looking for an entry that matches input 
+        for entry in data:
+            print(str(entry))
+            if data[entry]["name"] == name:
+                user = data[entry]
+        #if entry couldn't be found, send an error
+        if not user:
+            await self.bot.say("Entry not found.")
+        #otherwise create an embed with the information from the entry and send a message
+        else:
+            embed = discord.Embed(title=user["name"], description="Rank: {}\nFirst seen: {}\nLast seen: {}\nNickname: {}".format(user["rank"], user["first_seen"], user["last_seen"], user["nickname"]))
+            embed.add_field(name="Notes", value="Currently, notes are not working. This may be fixed in the future.", inline=False)
+            if user["rank"] == "Diamond":
+                embed.colour = discord.Colour(0x00FFFF)
+            elif user["rank"] == "Platinum":
+                embed.colour = discord.Colour(0xBFD7FF)
+            elif user["rank"] == "Gold":
+                embed.colour = discord.Colour(0xF1C232)
+            elif user["rank"] == "Silver":
+                embed.colour = discord.Colour(0xCCCCCC)
+            elif user["rank"] == "Bronze":
+                embed.colour = discord.Colour(0xE69138)
+            await self.bot.say("", embed=embed)
+        with open('log.json', 'w+') as f:
+            json.dump(data, f)
+    
 def setup(bot):
     bot.add_cog(Commands(bot))
