@@ -46,7 +46,7 @@ class Commands:
     
     @commands.has_permissions(administrator=True)    
     @log.command()
-    async def add(self, name, rank, first_seen="N/A", last_seen="N/A", nickname="N/A", notes="N/A"):
+    async def add(self, name, rank, identifier, first_seen="N/A", last_seen="N/A", nickname="N/A", banned="no", notes="N/A"):
         #make sure the rank is one of the five valid ranks
         if rank == "Diamond" or rank == "Platinum" or rank == "Gold" or rank == "Silver" or rank == "Bronze":
             #replace spaces with underscores and save into name_var
@@ -61,9 +61,11 @@ class Commands:
             new_entry = {
                 "name": name,
                 "rank": rank,
+                "identifier": identifier,
                 "first_seen": first_seen,
                 "last_seen": last_seen,
                 "nickname": nickname,
+                "banned": banned,
                 "notes": notes
             }
             #load log.json into data, add previously created dictonary and write back to the file
@@ -90,7 +92,7 @@ class Commands:
             await self.bot.say(name + " is not an entry in the idiot log.")
         #otherwise create an embed with the information from the entry and send a message
         else:
-            embed = discord.Embed(title=user["name"], description="Rank: {}\nFirst seen: {}\nLast seen: {}\nNickname: {}".format(user["rank"], user["first_seen"], user["last_seen"], user["nickname"]))
+            embed = discord.Embed(title=user["name"], description="Rank: {}\nIdentifier: {}\nFirst seen: {}\nLast seen: {}\nBanned: {}\nNickname: {}".format(user["rank"], user["identifier"], user["first_seen"], user["last_seen"], user["banned"], user["nickname"]))
             if not user["notes"] == "N/A":
                 embed.add_field(name="Notes", value=user["notes"], inline=False)
             if user["rank"] == "Diamond":
@@ -138,7 +140,7 @@ class Commands:
         if key in user:
             await self.bot.say("Successfully edited {}'s {} field to {}!".format(user["name"], key, value))
         else:
-            await self.bot.say("Invalid field. Entries have 'name', 'rank', 'first_seen', 'last_seen', 'nickname' and 'notes' fields.")
+            await self.bot.say("Invalid field. Entries have 'name', 'rank', 'identifier', 'first_seen', 'last_seen', 'nickname' and 'notes' fields.")
         with open('log.json', 'w+') as f:
             json.dump(data, f)
         
