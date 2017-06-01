@@ -91,8 +91,10 @@ async def on_message(message):
         
 # loads extensions
 addons = [
-    'addons.commands',
+    'addons.log',
     'addons.customcmds',
+    'addons.utility',
+    'addons.troll'
 ]
 
 failed_addons = []
