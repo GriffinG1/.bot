@@ -5,7 +5,6 @@ Goku, the bot for the Nintendo Homebrew Idiot Log Discord!
 # import dependencies
 import os
 from discord.ext import commands
-from discord_webhooks import *
 import discord
 import datetime
 import json, asyncio
@@ -17,12 +16,14 @@ import os
 import re
 import json
 import ast
+import git
 
 # sets working directory to bot's folder
 dir_path = os.path.dirname(os.path.realpath(__file__))
 os.chdir(dir_path)
 
 the_filename = "customcmds.txt"
+git = git.cmd.Git(".")
 
 with open(the_filename) as f:
     comms = json.loads(f.readline().strip())
@@ -80,11 +81,15 @@ async def on_ready():
         bot._is_all_ready.set()
 
         break
-
+@bot.event
+async def on_message(message):
+    if message.author.name == "GitHub" and message.channel.name == "git":
+        git.pull()
+        
 # loads extensions
 addons = [
     'addons.commands',
-    'addons.customcmds'
+    'addons.customcmds',
 ]
 
 failed_addons = []
