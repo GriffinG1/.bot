@@ -11,10 +11,10 @@ class Troll:
     async def pm(self, user, message):
         """PM a specified user."""
         try:
-            user = discord.utils.get(server.users, name=user)
+            user = get_member_named(user)
             self.bot.send_message(user, message)
         except Exception:
-            self.bot.say("Something went wrong! You likely entered an incorrect username.")
+            self.bot.say("Invalid user!")
             
 def setup(bot):
     bot.add_cog(Troll(bot))
