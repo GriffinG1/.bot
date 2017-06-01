@@ -21,7 +21,7 @@ class Troll:
                 if not member:
                     member = ctx.message.server.get_member(memberName)
                 if not member:
-                    await self.bot.send_message(ctx.message.channel, bot_prefix + 'Invalid user!')
+                    await self.bot.send_message(ctx.message.channel, 'Invalid user!')
             try:
                 await self.bot.send_message(member, message)
             except discord.errors.Forbidden: # if Goku is blocked
