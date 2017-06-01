@@ -82,17 +82,20 @@ async def on_ready():
 
         break
     
+#auto update    
 @bot.event
 async def on_message(message):
     if message.author.name == "GitHub":
         print("Pulling changes!")
         git.pull()
         print("Changes pulled!")
+    await bot.process_commands(message)
         
 # loads extensions
 addons = [
     'addons.commands',
     'addons.customcmds',
+    'addons.load'
 ]
 
 failed_addons = []
