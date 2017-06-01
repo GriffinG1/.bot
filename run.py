@@ -81,10 +81,13 @@ async def on_ready():
         bot._is_all_ready.set()
 
         break
+    
 @bot.event
 async def on_message(message):
-    if message.author.name == "GitHub" and message.channel.name == "git":
+    if message.author.name == "GitHub":
+        print("Pulling changes!")
         git.pull()
+        print("Changes pulled!")
         
 # loads extensions
 addons = [
