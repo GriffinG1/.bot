@@ -7,9 +7,9 @@ class Troll:
         self.bot = bot
         print('Addon "{}" loaded'.format(self.__class__.__name__))
         
-    @commands.command()
+    @commands.command(pass_context=True)
     async def pm(self, ctx, user, *, message=""):
-        """PM's a member since lyrics coding skills are too bad for this."""
+        """Sends a PM to a specified member."""
         try:
             subMsg = ctx.message.content.split(" ")[1]
             memberName = subMsg.strip()
@@ -22,11 +22,10 @@ class Troll:
                     member = ctx.message.server.get_member(memberName)
                 if not member:
                     await self.bot.send_message(ctx.message.channel, bot_prefix + 'Invalid user!')
-            msg_user = message
             try:
-                await self.bot.send_message(member, msg_user)
+                await self.bot.send_message(member, message)
             except discord.errors.Forbidden: # if Goku is blocked
-                pass  
+                await self.bot.say("Could not send message. The user likely has the bot blocked.")  
             await self.bot.say("Successfully sent a message to " + user + "!")    
         except discord.errors.Forbidden as e:
             await self.bot.say("An error occurred! " + e)
