@@ -71,6 +71,7 @@ bot.wait_until_all_ready = wait_until_all_ready
 @bot.event
 async def on_ready():
     # this bot should only ever be in one server anyway
+    print("Ready!")
     for server in bot.servers:
         bot.server = server
         if bot.all_ready:
@@ -90,11 +91,11 @@ async def on_message(message):
         print("Pulling changes!")
         git.pull()
         print("Changes pulled!")
-    await bot.process_commands(message)
     #recieve private messages
     if message.channel.is_private and message.author.id != bot.user.id:
         embed = discord.Embed(description=message.content)
-        bot.send_message(bot.private_messages_channel, "", embed=embed)
+        await bot.send_message(bot.private_messages_channel, "Private message sent by {}#{}:".format(message.author.name, message.author.discriminator), embed=embed)
+    await bot.process_commands(message)
         
 # loads extensions
 addons = [
