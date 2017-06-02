@@ -76,20 +76,25 @@ async def on_ready():
         if bot.all_ready:
             break
         bot.idiots_channel = discord.utils.get(server.channels, name="idiots")
+        bot.private_messages_channel = discord.utils.get(server.channels, name="private-messages")
         
         bot.all_ready = True
         bot._is_all_ready.set()
 
         break
-    
-#auto update    
+       
 @bot.event
 async def on_message(message):
+    #auto update 
     if message.author.name == "GitHub":
         print("Pulling changes!")
         git.pull()
         print("Changes pulled!")
     await bot.process_commands(message)
+    #recieve private messages
+    if message.channel.is_private and message.author.id != bot.user.id:
+        embed = discord.Embed(description=message.content)
+        bot.send_message(bot.private_messages_channel, "", embed=embed)
         
 # loads extensions
 addons = [
