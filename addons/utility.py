@@ -31,5 +31,11 @@ class Utility:
         await self.bot.say("Closing...")
         sys.exit()
         
+    @commands.has_permissions(administrator=True)    
+    @commands.command()
+    async def runpy(*, self, command):
+        """Run Python code for debug purposes"""
+        exec(command)
+        
 def setup(bot):
     bot.add_cog(Utility(bot))
