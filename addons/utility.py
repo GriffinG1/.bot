@@ -33,7 +33,7 @@ class Utility:
         
     @commands.has_permissions(administrator=True)    
     @commands.command()
-    async def runpy(*, self, command):
+    async def eval(self, command):
         """Run Python code for debug purposes"""
         exec(command)
         
