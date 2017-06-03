@@ -100,7 +100,7 @@ async def on_message(message):
 
 @bot.event
 async def on_member_join(member):
-    await bot.send_message(member, "Welcome to the offical Nintendo Homebrew Idiot Log server! Please read our {} and have a ~~horrible~~ great time!".format(bot.rules_channel.mention))
+    await bot.send_message(member, "Welcome to the official Nintendo Homebrew Idiot Log server! Please read our {} and have a ~~horrible~~ great time!".format(bot.rules_channel.mention))
     
 # loads extensions
 addons = [

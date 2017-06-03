@@ -22,14 +22,7 @@ class Utility:
     async def restart(self):
         """Restarts the bot."""
         await self.bot.say("Restarting...")
-        os.execv(sys.executable, ['python'] + sys.argv)
-    
-    @commands.has_permissions(administrator=True)   
-    @commands.command()
-    async def close(self):
-        """Ceases execution of the bot."""
-        await self.bot.say("Closing...")
-        sys.exit()
+        os.execv(sys.executable, ['python3.6'] + sys.argv)
         
 def setup(bot):
     bot.add_cog(Utility(bot))
