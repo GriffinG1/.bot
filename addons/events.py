@@ -25,3 +25,6 @@ class Events:
 
     async def on_member_join(member):
         await bot.send_message(member, "Welcome to the official Nintendo Homebrew Idiot Log server! Please read our {} and have a ~~horrible~~ great time!".format(bot.rules_channel.mention))
+        
+def setup(bot):
+    bot.add_cog(Events(bot))
