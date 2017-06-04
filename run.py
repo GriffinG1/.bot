@@ -80,27 +80,12 @@ async def on_ready():
         bot.private_messages_channel = discord.utils.get(server.channels, name="private-messages")
         bot.rules_channel = discord.utils.get(server.channels, name="rules")
         
+        bot.archit_role = discord.utils.get(server.roles, name="RageQuit")
+        
         bot.all_ready = True
         bot._is_all_ready.set()
 
         break
-       
-@bot.event
-async def on_message(message):
-    #auto update 
-    if message.author.name == "GitHub":
-        print("Pulling changes!")
-        git.pull()
-        print("Changes pulled!")
-    #recieve private messages
-    if message.channel.is_private and message.author.id != bot.user.id:
-        embed = discord.Embed(description=message.content)
-        await bot.send_message(bot.private_messages_channel, "Private message sent by {}#{}:".format(message.author.name, message.author.discriminator), embed=embed)
-    await bot.process_commands(message)
-
-@bot.event
-async def on_member_join(member):
-    await bot.send_message(member, "Welcome to the official Nintendo Homebrew Idiot Log server! Please read our {} and have a ~~horrible~~ great time!".format(bot.rules_channel.mention))
     
 # loads extensions
 addons = [
