@@ -10,7 +10,7 @@ class Events:
     
     async def on_message(self, message):
         #filter "it seem"
-        if "it seem " in message.content and message.author.name == "thecommondude":
+        if message.content.startswith("it seem ") and message.author.name == "thecommondude":
             await self.bot.send_message(message.channel, "STFU dude.")
             await self.bot.delete_message(message)
         #auto update 
