@@ -1,5 +1,8 @@
 import discord
 from discord.ext import commands
+import git
+
+git = git.cmd.Git(".")
 
 class Events:
     """Event handling."""
