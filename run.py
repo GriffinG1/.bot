@@ -93,7 +93,8 @@ addons = [
     'addons.customcmds',
     'addons.load',
     'addons.troll',
-    'addons.log'
+    'addons.log',
+    'addons.events'
 ]
 
 failed_addons = []
