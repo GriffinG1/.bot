@@ -71,7 +71,6 @@ bot.wait_until_all_ready = wait_until_all_ready
 @bot.event
 async def on_ready():
     # this bot should only ever be in one server anyway
-    print("Ready!")
     for server in bot.servers:
         bot.server = server
         if bot.all_ready:
@@ -80,7 +79,9 @@ async def on_ready():
         bot.private_messages_channel = discord.utils.get(server.channels, name="private-messages")
         bot.rules_channel = discord.utils.get(server.channels, name="rules")
         
-        bot.archit_role = discord.utils.get(server.roles, name="RageQuit")
+        bot.archit_role = discord.utils.get(server.roles, name="Tech Support")
+        bot.idiots_role = discord.utils.get(server.roles, name="Idiots")
+        print("Initialized on {}.".format(server.name))
         
         bot.all_ready = True
         bot._is_all_ready.set()
@@ -110,3 +111,5 @@ for extension in addons:
 # Execute
 print('Bot directory: ', dir_path)
 bot.run("MzE2MDI3ODc4NjAzMDk2MDY1.DAPTiQ.7QG9qND8pAJWsvPcGuVqWmG2H3I")
+# MzE2MDI3ODc4NjAzMDk2MDY1.DAPTiQ.7QG9qND8pAJWsvPcGuVqWmG2H3I is stable
+# MzI0MDQ5NTIyNDMyOTMzODg4.DCECKg.aqDI02VcJm5BP36nhwarF0DWCXI is beta
