@@ -17,7 +17,7 @@ class Utility:
         embed.colour = discord.Colour(0x00FFFF)            
         await self.bot.say("", embed=embed)
     
-    @commands.has_permissions(administrator=True)    
+    @commands.has_permissions(ban_members=True)    
     @commands.command()
     async def restart(self):
         """Restarts the bot."""
