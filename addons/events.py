@@ -37,7 +37,7 @@ class Events:
     async def on_member_ban(self, member):
         await self.bot.send_message(self.bot.logs_channel, ":exclamation: Member banned: {}#{}".format(member.name, member.discriminator))
         
-    async def on_member_unban(self, member):
+    async def on_member_unban(self, server, member):
         await self.bot.send_message(self.bot.logs_channel, ":exclamation: Member unbanned: {}#{}".format(member.name, member.discriminator))
         
 def setup(bot):
