@@ -32,16 +32,21 @@ class Events:
         except discord.errors.Forbidden: # doesn't accept DMs from non-friends
             pass
         await self.bot.add_roles(member, self.bot.idiots_role)
-        await self.bot.send_message(self.bot.logs_channel, ":exclamation: Member joined: {}#{}".format(member.name, member.discriminator))
+        embed = discord.Embed(title=":wave: Member joined", description="<@{}> | {}#{} | {}".format(member.id, member.name, member.discriminator, member.id))
+        await self.bot.send_message(self.bot.logs_channel, ":exclamation:", embed=embed)
 
-    async def on_member_leave(self, member):
-        await self.bot.send_message(self.bot.logs_channel, ":exclamation: Member left: {}#{}".format(member.name, member.discriminator))
+    async def on_member_remove(self, member):
+        embed = discord.Embed(title=":wave: Member left", description="<@{}> | {}#{} | {}".format(member.id, member.name, member.discriminator, member.id))
+        await self.bot.send_message(self.bot.logs_channel, ":exclamation:", embed=embed)
 
     async def on_member_ban(self, member):
-        await self.bot.send_message(self.bot.logs_channel, ":exclamation: Member banned: {}#{}".format(member.name, member.discriminator))
+        embed = discord.Embed(title=":anger: Member banned", description="<@{}> | {}#{} | {}".format(member.id, member.name, member.discriminator, member.id))
+        await self.bot.send_message(self.bot.logs_channel, ":exclamation:", embed=embed)
 
     async def on_member_unban(self, server, member):
-        await self.bot.send_message(self.bot.logs_channel, ":exclamation: Member unbanned: {}#{}".format(member.name, member.discriminator))
+        embed = discord.Embed(title=":anger: Member unbanned", description="<@{}> | {}#{} | {}".format(member.id, member.name, member.discriminator, member.id))
+        await self.bot.send_message(self.bot.logs_channel, ":exclamation:", embed=embed)
+        
 
 def setup(bot):
     bot.add_cog(Events(bot))
