@@ -27,5 +27,10 @@ class Troll:
         except discord.errors.Forbidden: # if Goku is blocked
             await self.bot.say("Could not send message. The user likely has the bot blocked.")  
             
+    @commands.command(pass_context=True)
+    async def say(self, ctx, channel, *, msg):
+        """Says a message in a specified channel."""
+        await self.bot.send_message(ctx.message.channel_mentions[0], msg)
+        
 def setup(bot):
     bot.add_cog(Troll(bot))
