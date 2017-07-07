@@ -6,7 +6,8 @@ class Troll:
     def __init__(self, bot):
         self.bot = bot
         print('Addon "{}" loaded'.format(self.__class__.__name__))
-        
+    
+    @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
     async def pm(self, ctx, user, *, message=""):
         """Sends a PM to a specified member."""
@@ -26,7 +27,8 @@ class Troll:
             await self.bot.say("Successfully sent a message to {}#{}!".format(member.name, member.discriminator))    
         except discord.errors.Forbidden: # if Goku is blocked
             await self.bot.say("Could not send message. The user likely has the bot blocked.")  
-            
+     
+    @commands.has_permissions(ban_members=True)       
     @commands.command(pass_context=True)
     async def say(self, ctx, channel, *, msg):
         """Says a message in a specified channel."""
