@@ -9,7 +9,6 @@ class Containment:
     def __init__(self, bot):
         self.bot = bot
         self.countdown = 0
-        self.message_sent = False
         print('Addon "{}" loaded'.format(self.__class__.__name__))  
     
     async def containment_loop(self):
@@ -18,15 +17,16 @@ class Containment:
         while self is self.bot.get_cog("Containment"):
             await asyncio.sleep(1)
             self.countdown += 1
-            if self.countdown == 90 and self.message_sent:
-                for message in self.bot.logs_from(self.bot.containment_channel, 500):
-                    await self.bot.delete_message(message)
-                await self.bot.send_message(self.bot.containment_channel, "Please tag Tony Stark for access to the server after reading {} so they can set you up with roles!".format(self.bot.rules_channel.mention))
+            print(self.countdown)
+            if self.countdown == 90:
+                deleted_message = False
+                async for message in self.bot.logs_from(self.bot.containment_channel, 500):
+                    if not (message.content == "Please tag Tony Stark for access to the server after reading <#318626746297745409> so they can set you up with roles!" and self.bot.user == message.author):
+                        await self.bot.delete_message(message)
             
     async def on_message(self, message):
         if message.channel == self.bot.containment_channel:
             self.countdown = 0
-            self.message_sent = True
         
 def setup(bot):
     containment = Containment(bot)
