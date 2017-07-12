@@ -1,7 +1,3 @@
-description = """
-Goku, the bot for the Nintendo Homebrew Idiot Log Discord!
-"""
-
 # import dependencies
 import os
 from discord.ext import commands
@@ -79,9 +75,12 @@ async def on_ready():
         bot.private_messages_channel = discord.utils.get(server.channels, name="private-messages")
         bot.rules_channel = discord.utils.get(server.channels, name="rules")
         bot.logs_channel = discord.utils.get(server.channels, name="logs")
+        bot.containment_channel = discord.utils.get(server.channels, name="containment")
         
         bot.archit_role = discord.utils.get(server.roles, name="Tech Support")
         bot.idiots_role = discord.utils.get(server.roles, name="Idiots")
+        bot.muted_role = discord.utils.get(server.roles, name="No Speaking!")
+        
         print("Initialized on {}.".format(server.name))
         
         bot.all_ready = True
@@ -96,7 +95,9 @@ addons = [
     'addons.load',
     'addons.troll',
     'addons.log',
-    'addons.events'
+    'addons.events',
+    'addons.mod',
+    'addons.containment'
 ]
 
 failed_addons = []

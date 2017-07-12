@@ -12,7 +12,7 @@ class Events:
         print('Addon "{}" loaded'.format(self.__class__.__name__))
 
     async def on_message(self, message):
-        #filter "it seem"                                                  #thecommondude
+        #filter "it seem"                                                  # thecommondude
         if message.content.startswith("it seem ") and message.author.id == "135204578986557440":
             await self.bot.send_message(message.channel, "STFU dude.")
             await self.bot.delete_message(message)
