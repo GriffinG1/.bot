@@ -1,3 +1,5 @@
+description = """Goku, the bot for the Nintendo Homebrew Idiot Log Discord!"""
+
 # import dependencies
 import os
 from discord.ext import commands
