@@ -17,7 +17,6 @@ class Containment:
         while self is self.bot.get_cog("Containment"):
             await asyncio.sleep(1)
             self.countdown += 1
-            print(self.countdown)
             if self.countdown == 90:
                 deleted_message = False
                 async for message in self.bot.logs_from(self.bot.containment_channel, 500):

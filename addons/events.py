@@ -24,6 +24,12 @@ class Events:
         #recieve private messages
         if message.channel.is_private and message.author.id != self.bot.user.id:
             embed = discord.Embed(description=message.content)
+            if message.attachments:
+                attachment_urls = []
+                for attachment in message.attachments:
+                    attachment_urls.append('[{}]({})'.format(attachment['filename'], attachment['url']))
+                attachment_msg = '\N{BULLET} ' + '\n\N{BULLET} s '.join(attachment_urls)
+                embed.add_field(name='Attachments', value=attachment_msg, inline=False)
             await self.bot.send_message(self.bot.private_messages_channel, "Private message sent by {}#{}:".format(message.author.name, message.author.discriminator), embed=embed)
 
     async def on_member_join(self, member):
