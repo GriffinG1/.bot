@@ -34,7 +34,7 @@ class Events:
 
     async def on_member_join(self, member):
         try:
-            await self.bot.send_message(member, "Welcome to the official Nintendo Homebrew Idiot Log server! Please read our {} and have a ~~horrible~~ great time!".format(self.bot.rules_channel.mention))
+            await self.bot.send_message(member, "Welcome to the Nintendo Homebrew Idiot Log server! Please read our {} and have a ~~horrible~~ great time! \nPlease note we are in no way affiliated with the official Nintendo Homebrew server.".format(self.bot.rules_channel.mention))
         except discord.errors.Forbidden: # doesn't accept DMs from non-friends
             pass
         await self.bot.add_roles(member, self.bot.idiots_role)
