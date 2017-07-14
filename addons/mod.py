@@ -74,7 +74,7 @@ class Moderation:
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
-            if "Muted" in [x.name for x in found_member.roles]:
+            if self.bot.muted_role in found_member.roles:
                 await self.bot.remove_roles(found_member, self.bot.muted_role)
                 await self.bot.say("Successfully unmuted user {0.name}#{0.discriminator}!".format(found_member))
             else:
