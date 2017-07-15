@@ -59,7 +59,7 @@ async def on_command_error(error, ctx):
         print('Ignoring exception in command {0.command} in {0.message.channel}'.format(ctx))
         tb = traceback.format_exception(type(error), error, error.__traceback__)
         print("".join(tb))
-        embed = discord.Embed(description="".join(tb))
+        embed = discord.Embed(description=re.escape("".join(tb)))
         await bot.send_message(bot.err_logs_channel, "An error occurred while processing the `{}` command in channel `{}`.".format(ctx.command.name, ctx.message.channel), embed=embed)
         
 @bot.event
@@ -69,7 +69,7 @@ async def on_error(event_method, *args, **kwargs):
     print("Ignoring exception in {}".format(event_method))
     tb = traceback.format_exc()
     print("".join(tb))
-    embed = discord.Embed(description="".join(tb))
+    embed = discord.Embed(description=re.escape("".join(tb)))
     await bot.send_message(bot.err_logs_channel, "An error occurred while processing `{}`.".format(event_method), embed=embed)
 
 bot.all_ready = False
