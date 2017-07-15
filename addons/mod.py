@@ -98,23 +98,33 @@ class Moderation:
                 self.warns[found_member.id] = []
             self.warns[found_member.id].append(reason)
             reply_msg = "Warned user {}#{}. This was warn {}.".format(found_member.name, found_member.discriminator, len(self.warns[found_member.id]))
+            private_message = You were warned for `" + reason + "`.
             if len(self.warns[found_member.id]) >= 5:
+                private_message += " You were banned for this warn. \nIf you would like to contest this you can message Griffin#2329."
+                await self.bot.send_message(found_member, private_message)
                 await self.bot.ban(found_member)
                 reply_msg += " As a result of this warn, the user was banned."
             elif len(self.warns[found_member.id]) >= 3:
+                private_message += "You were kicked for this warn. \nIf you'd like to rejoin you can use the following link. \nhttp://discord.gg/hHHKPFz. Your next warn will kick you."
+                await self.bot.send_message(found_member, private_message)
                 await self.bot.kick(found_member)
                 reply_msg += " As a result of this warn, the user was kicked."
             if len(self.warns[found_member.id]) >= 4:
+                private_message += "You were kicked for this warn, and it is your final one before you're banned. \nIf you'd like to rejoin you can use the following link. \nhttp://discord.gg/hHHKPFz."
+                await self.bot.send_message(found_member, private_message)
                 reply_msg += " The next warn will automatically ban the user."
             elif len(self.warns[found_member.id]) >= 2:
+                private_message += "Your next warn will kick you"
+                await self.bot.send_message(found_member, private_message)
                 reply_msg += " The next warn will automatically kick the user."
+            if len(self.warns[found_member.id]) == 1:
+                await self.bot.send_message(found_member, private_message)
             await self.bot.say(reply_msg)
             embed = discord.Embed(description="{0.name}#{0.discriminator} warned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             embed.add_field(name="Reason for Warn", value="• " + reason)
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
             with open("saves/warns.json", "w+") as f:
                 json.dump(self.warns, f)
-            await self.bot.send_message(found_member, "You were warned for `" + reason + "`.")
                 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
