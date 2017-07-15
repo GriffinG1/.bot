@@ -34,7 +34,7 @@ class Moderation:
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
-            await self.bot.send_message(found_member, "You were kicked on `Nintendo Homebrew Idiot Log`. \nIf you'd like to rejoin you can use the following link. \nhttp://discord.gg/hHHKPFz.
+            await self.bot.send_message(found_member, "You were kicked on `Nintendo Homebrew Idiot Log`. \nIf you'd like to rejoin you can use the following link. \nhttp://discord.gg/hHHKPFz.")
             await self.bot.kick(found_member)
             await self.bot.say("Successfully kicked user {0.name}#{0.discriminator}!".format(found_member))
             embed = discord.Embed(description="{0.name}#{0.discriminator} kicked user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
