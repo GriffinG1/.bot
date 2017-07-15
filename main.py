@@ -103,7 +103,8 @@ addons = [
     'addons.events',
     'addons.mod',
     'addons.containment',
-    'addons.rules'
+    'addons.rules',
+    'addons.test'
 ]
 
 failed_addons = []
