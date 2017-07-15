@@ -31,7 +31,7 @@ from bs4 import BeautifulSoup
 import urllib
 import psutil
 
-'''Module for the python interpreter as well as saving, loading, viewing, etc. the cmds/scripts ran with the interpreter.'''
+'''redirection'''
 
 
 # Used to get the output of exec()
@@ -48,7 +48,6 @@ def stdoutIO(stdout=None):
 class Testing:
 
     def __init__(self, bot):
-        self.bot = bot
         self.stream = io.StringIO()
         self.channel = None
 
