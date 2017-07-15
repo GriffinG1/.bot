@@ -7,7 +7,7 @@ class Moderation:
     """Bot commands for moderation."""
     def __init__(self, bot):
         self.bot = bot
-        with open('cogs/warns.json', 'w+') as f:
+        with open('saves/warns.json', 'w+') as f:
             self.warns = json.load(f)
         print('Addon "{}" loaded'.format(self.__class__.__name__))
         
@@ -92,7 +92,7 @@ class Moderation:
             elif len(self.warns[found_member.id]) >= 2:
                 reply_msg += " The next warn will automatically kick the user."
             await self.bot.say(reply_msg)
-            with open("cogs/warns.json") as f:
+            with open("saves/warns.json") as f:
                 json.dump(self.warns, f)
                 
     @commands.has_permissions(ban_members=True)    
@@ -125,7 +125,7 @@ class Moderation:
             try:
                 if self.warns[found_member.id]:
                     self.warns[found_member.id] = []
-                    with open("cogs/warns.json") as f:
+                    with open("saves/warns.json") as f:
                         json.dump(self.warns, f)
                     await self.bot.say("Cleared the warns of user {}#{}.".format(found_member.name, found_member.discriminator))
                 else:
