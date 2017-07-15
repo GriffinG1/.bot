@@ -36,7 +36,7 @@ class Moderation:
         else:
             await self.bot.kick(found_member)
             await self.bot.say("Successfully kicked user {0.name}#{0.discriminator}!".format(found_member))
-            embed = discord.Embed(description="{0.name}#{0.discriminator} kicked user <@{1.id}> | {1.name}#{1.discriminator}".format(found_member.name, found_member.discriminator), title="")
+            embed = discord.Embed(description="{0.name}#{0.discriminator} kicked user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
     
     @commands.has_permissions(ban_members=True)    
@@ -49,7 +49,7 @@ class Moderation:
         else:
             await self.bot.ban(found_member)
             await self.bot.say("Successfully banned user {0.name}#{0.discriminator}!".format(found_member))
-            embed = discord.Embed(description="{0.name}#{0.discriminator} banned user <@{1.id}> | {1.name}#{1.discriminator}".format(found_member.name, found_member.discriminator), title="")
+            embed = discord.Embed(description="{0.name}#{0.discriminator} banned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
             
     @commands.has_permissions(ban_members=True)    
@@ -62,7 +62,7 @@ class Moderation:
         else:
             await self.bot.add_roles(found_member, self.bot.muted_role)
             await self.bot.say("Successfully muted user {0.name}#{0.discriminator}!".format(found_member))
-            embed = discord.Embed(description="{0.name}#{0.discriminator} muted user <@{1.id}> | {1.name}#{1.discriminator}".format(found_member.name, found_member.discriminator), title="")
+            embed = discord.Embed(description="{0.name}#{0.discriminator} muted user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
             
     @commands.has_permissions(ban_members=True)    
@@ -75,7 +75,7 @@ class Moderation:
         else:
             if self.bot.muted_role in found_member.roles:
                 await self.bot.remove_roles(found_member, self.bot.muted_role)
-                embed = discord.Embed(description="{0.name}#{0.discriminator} unmuted user <@{1.id}> | {1.name}#{1.discriminator}".format(found_member.name, found_member.discriminator), title="")
+                embed = discord.Embed(description="{0.name}#{0.discriminator} unmuted user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
                 await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
             else:
                 await self.bot.say("That user isn't muted!")
@@ -105,7 +105,7 @@ class Moderation:
             elif len(self.warns[found_member.id]) >= 2:
                 reply_msg += " The next warn will automatically kick the user."
             await self.bot.say(reply_msg)
-            embed = discord.Embed(title="{0.name}#{0.discriminator} warned user <@{1.id}> | {1.name}#{1.discriminator}".format(found_member.name, found_member.discriminator), description="• {2}")
+            embed = discord.Embed(title="{0.name}#{0.discriminator} warned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member), description="• " + reason)
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
             with open("saves/warns.json", "w+") as f:
                 json.dump(self.warns, f)
@@ -145,7 +145,7 @@ class Moderation:
                     with open("saves/warns.json", "w+") as f:
                         json.dump(self.warns, f)
                     await self.bot.say("Cleared the warns of user {}#{}.".format(found_member.name, found_member.discriminator))
-                    embed = discord.Embed(description="{0.name}#{0.discriminator} cleared warns of user <@{1.id}> | {1.name}#{1.discriminator}".format(found_member.name, found_member.discriminator), title="")
+                    embed = discord.Embed(description="{0.name}#{0.discriminator} cleared warns of user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
                     await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
                 else:
                     await self.bot.say("That user has no warns!")
@@ -167,7 +167,7 @@ class Moderation:
                         with open("saves/warns.json", "w+") as f:
                             json.dump(self.warns, f)
                         await self.bot.say("Removed `{}` warn of user {}#{}.".format(reason, found_member.name, found_member.discriminator))
-                        embed = discord.Embed(title="{0.name}#{0.discriminator} took a warn off of user <@{1.id}> | {1.name}#{1.discriminator}".format(found_member.name, found_member.discriminator), description="• {2}")
+                        embed = discord.Embed(title="{0.name}#{0.discriminator} took a warn off of user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member), description="• " + reason)
                         await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
                     except ValueError:
                         await self.bot.say("{}#{} was never warned for the reason `{}`!".format(found_member.name, found_member.discriminator, reason))
