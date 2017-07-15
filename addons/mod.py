@@ -34,6 +34,7 @@ class Moderation:
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
+            await self.bot.send_message(found_member, "You were kicked on `Nintendo Homebrew Idiot Log`. \nIf you'd like to rejoin you can use the following link. \nhttp://discord.gg/hHHKPFz.
             await self.bot.kick(found_member)
             await self.bot.say("Successfully kicked user {0.name}#{0.discriminator}!".format(found_member))
             embed = discord.Embed(description="{0.name}#{0.discriminator} kicked user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
@@ -47,6 +48,7 @@ class Moderation:
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
+            await self.bot.send_message(found_member, "You were banned on `Nintendo Homebrew Idiot Log` for `" + reason "`. \nIf you would like to contest this you can message Griffin#2329.")
             await self.bot.ban(found_member)
             await self.bot.say("Successfully banned user {0.name}#{0.discriminator}!".format(found_member))
             embed = discord.Embed(description="{0.name}#{0.discriminator} banned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
@@ -64,6 +66,7 @@ class Moderation:
             await self.bot.say("Successfully muted user {0.name}#{0.discriminator}!".format(found_member))
             embed = discord.Embed(description="{0.name}#{0.discriminator} muted user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+            await self.bot.send_message(found_member, "You have been muted.")
             
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
@@ -77,6 +80,7 @@ class Moderation:
                 await self.bot.remove_roles(found_member, self.bot.muted_role)
                 embed = discord.Embed(description="{0.name}#{0.discriminator} unmuted user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
                 await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+                await self.bot.send_message(found_member, "You have been unmuted.")
             else:
                 await self.bot.say("That user isn't muted!")
                 
@@ -110,6 +114,7 @@ class Moderation:
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
             with open("saves/warns.json", "w+") as f:
                 json.dump(self.warns, f)
+            await self.bot.send_message(found_member, "You were warned for `" + reason + "`.")
                 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
@@ -148,6 +153,7 @@ class Moderation:
                     await self.bot.say("Cleared the warns of user {}#{}.".format(found_member.name, found_member.discriminator))
                     embed = discord.Embed(description="{0.name}#{0.discriminator} cleared warns of user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
                     await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+                    await self.bot.send_message(found_member, "All your warns have been cleared.")
                 else:
                     await self.bot.say("That user has no warns!")
             except KeyError:
@@ -173,6 +179,7 @@ class Moderation:
                         await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
                     except ValueError:
                         await self.bot.say("{}#{} was never warned for the reason `{}`!".format(found_member.name, found_member.discriminator, reason))
+                        await self.bot.send_message(found_member, "Your warn `" + reason + "` was removed!") 
                 else:
                     await self.bot.say("That user has no warns!")
             except KeyError:
@@ -189,8 +196,9 @@ class Moderation:
             await self.bot.say("That user could not be found.")
         else:
             await self.bot.replace_roles(found_member, self.bot.unhelpful_jerks_role)
-            embed = discord.Embed(description="{0.name}#{0.discriminator} moved user <@{1.id}> | {1.name}#{1.discriminator} out of #containment".format(ctx.message.author, found_member))
+            embed = discord.Embed(description="{0.name}#{0.discriminator} moved user <@{1.id}> | {1.name}#{1.discriminator} out of <#335599294553915392>".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+            await self.bot.send_message(found_member, "Enjoy the server!")
             
     @commands.has_permissions(kick_members=True)
     @commands.command(pass_context=True)
@@ -204,6 +212,8 @@ class Moderation:
         else:
             await self.bot.replace_roles(found_member, self.bot.neutron_stars_role)
             embed = discord.Embed(description="{0.name}#{0.discriminator} promoted user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
-            await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)    
+            await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+            await self.bot.send_message(found_member, "You now have the Neutron Stars role!")
+            
 def setup(bot):
     bot.add_cog(Moderation(bot))
