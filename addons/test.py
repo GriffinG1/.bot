@@ -6,29 +6,9 @@ import os
 import shutil
 import glob
 import math
-from PythonGists import PythonGists
 from discord.ext import commands
 from io import StringIO
 from traceback import format_exc
-from cogs.utils.checks import *
-
-# Common imports that can be used by the debugger.
-import requests
-import json
-import gc
-import datetime
-import time
-import traceback
-import prettytable
-import re
-import io
-import asyncio
-import discord
-import random
-import subprocess
-from bs4 import BeautifulSoup
-import urllib
-import psutil
 
 '''redirection'''
 
