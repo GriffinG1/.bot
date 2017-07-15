@@ -19,7 +19,7 @@ class Log:
     async def log(self):
         """Command for managing the bot's idiot log with subcommands."""
     
-    @commands.has_permissions(administrator=True)    
+    @commands.has_permissions(ban_members=True)    
     @log.command()
     async def add(self, name, rank, identifier, first_seen="N/A", last_seen="N/A", nickname="N/A", banned="no", notes="N/A"):
         #make sure the rank is one of the five valid ranks
@@ -43,11 +43,11 @@ class Log:
                 "banned": banned,
                 "notes": notes
             }
-            #load log.json into data, add previously created dictonary and write back to the file
-            with open('log.json', 'r+') as f:
+            #load cogs/log.json into data, add previously created dictonary and write back to the file
+            with open('cogs/log.json', 'r+') as f:
                 data = json.load(f)
             data[name_var] = new_entry
-            with open('log.json', 'w+') as f:
+            with open('cogs/log.json', 'w+') as f:
                 json.dump(data, f)
             await self.bot.say("Successfully added {} to the log!".format(name))
         else:
@@ -55,7 +55,7 @@ class Log:
         
     @log.command()
     async def view(self, name):
-        with open('log.json', 'r+') as f:
+        with open('cogs/log.json', 'r+') as f:
             data = json.load(f)
         #iterate through file looking for an entry that matches input
         user = {}
@@ -81,13 +81,13 @@ class Log:
             elif user["rank"] == "Bronze":
                 embed.colour = discord.Colour(0xE69138)
             await self.bot.say("", embed=embed)
-        with open('log.json', 'w+') as f:
+        with open('cogs/log.json', 'w+') as f:
             json.dump(data, f)
     
-    @commands.has_permissions(administrator=True)  
+    @commands.has_permissions(ban_members=True)  
     @log.command()
     async def remove(self, name):
-        with open('log.json', 'r+') as f:
+        with open('cogs/log.json', 'r+') as f:
             data = json.load(f)
         #iterate through file looking for an entry that matches input
         delete_entry = None
@@ -100,12 +100,12 @@ class Log:
         else:
             data.pop(delete_entry, None)
             await self.bot.say(name + " was successfully removed from the idiot log.")
-        with open('log.json', 'w+') as f:
+        with open('cogs/log.json', 'w+') as f:
             json.dump(data, f)
             
     @log.command()
     async def edit(self, name, key, value):
-        with open('log.json', 'r+') as f:
+        with open('cogs/log.json', 'r+') as f:
             data = json.load(f)
         #iterate through file looking for an entry that matches input
         user = None
@@ -116,7 +116,7 @@ class Log:
             await self.bot.say("Successfully edited {}'s {} field to {}!".format(user["name"], key, value))
         else:
             await self.bot.say("Invalid field. Entries have 'name', 'rank', 'identifier', 'first_seen', 'last_seen', 'nickname' and 'notes' fields.")
-        with open('log.json', 'w+') as f:
+        with open('cogs/log.json', 'w+') as f:
             json.dump(data, f)
         
     
