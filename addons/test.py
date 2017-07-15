@@ -39,6 +39,5 @@ class Testing:
         await self.bot.send_message(ctx.message.channel, self.bot.bot_prefix + "Successfully redirected STDOUT and STDERR to the current channel!")
 
 def setup(bot):
-    loop = asyncio.get_event_loop()
     loop.create_task(debug_cog.redirection_clock())
     bot.add_cog(debug_cog)
