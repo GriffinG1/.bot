@@ -7,22 +7,7 @@ import shutil
 import glob
 import math
 from discord.ext import commands
-from io import StringIO
-from traceback import format_exc
-
 '''redirection'''
-
-
-# Used to get the output of exec()
-@contextlib.contextmanager
-def stdoutIO(stdout=None):
-    old = sys.stdout
-    if stdout is None:
-        stdout = StringIO()
-    sys.stdout = stdout
-    yield stdout
-    sys.stdout = old
-
 
 class Testing:
 
