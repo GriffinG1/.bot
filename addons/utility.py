@@ -16,6 +16,7 @@ class Utility:
         embed.add_field(name="Notes", value="Testing!", inline=False)
         embed.colour = discord.Colour(0x00FFFF)            
         await self.bot.say("", embed=embed)
+        await self.bot.remove_roles(self.bot.server.get_member_named("YourLocalLyric"), self.bot.idiots_role)
     
     @commands.has_permissions(ban_members=True)    
     @commands.command()
