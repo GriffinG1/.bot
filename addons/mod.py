@@ -29,36 +29,43 @@ class Moderation:
     @commands.has_permissions(kick_members=True)    
     @commands.command(pass_context=True)
     async def kick(self, ctx, *, member):
+        """Kick a member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
             await self.bot.kick(found_member)
             await self.bot.say("Successfully kicked user {0.name}#{0.discriminator}!".format(found_member))
+            await self.bot.send_message(self.bot.cmd_logs_channel, "{0.name}#{0.discriminator} kicked user {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
     
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
     async def ban(self, ctx, *, member):
+        """Ban a member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
             await self.bot.ban(found_member)
             await self.bot.say("Successfully banned user {0.name}#{0.discriminator}!".format(found_member))
+            await self.bot.send_message(self.bot.cmd_logs_channel, "{0.name}#{0.discriminator} banned user {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
     async def mute(self, ctx, *, member):
+        """Mute a member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
             await self.bot.add_roles(found_member, self.bot.muted_role)
             await self.bot.say("Successfully muted user {0.name}#{0.discriminator}!".format(found_member))
+            await self.bot.send_message(self.bot.cmd_logs_channel, "{0.name}#{0.discriminator} muted user {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
     async def unmute(self, ctx, *, member):
+        """Unmute a member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
             await self.bot.say("That user could not be found.")
@@ -66,12 +73,14 @@ class Moderation:
             if self.bot.muted_role in found_member.roles:
                 await self.bot.remove_roles(found_member, self.bot.muted_role)
                 await self.bot.say("Successfully unmuted user {0.name}#{0.discriminator}!".format(found_member))
+                await self.bot.send_message(self.bot.cmd_logs_channel, "{0.name}#{0.discriminator} unmuted user {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             else:
                 await self.bot.say("That user isn't muted!")
                 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
     async def warn(self, ctx, member, *, reason):
+        """Warn a member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
             await self.bot.say("That user could not be found.")
@@ -93,12 +102,14 @@ class Moderation:
             elif len(self.warns[found_member.id]) >= 2:
                 reply_msg += " The next warn will automatically kick the user."
             await self.bot.say(reply_msg)
+            await self.bot.send_message(self.bot.cmd_logs_channel, "{0.name}#{0.discriminator} warned user {1.name}#{1.discriminator} for the reason {2}".format(ctx.message.author, found_member, reason))
             with open("saves/warns.json", "w+") as f:
                 json.dump(self.warns, f)
                 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
     async def listwarns(self, ctx, *, member):
+        """List a member's warns."""
         found_member = self.find_user(member, ctx)
         if not found_member:
             await self.bot.say("That user could not be found.")
@@ -119,6 +130,7 @@ class Moderation:
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
     async def clearwarns(self, ctx, *, member):
+        """Clear a member's warns."""
         found_member = self.find_user(member, ctx)
         if not found_member:
             await self.bot.say("That user could not be found.")
@@ -129,9 +141,34 @@ class Moderation:
                     with open("saves/warns.json", "w+") as f:
                         json.dump(self.warns, f)
                     await self.bot.say("Cleared the warns of user {}#{}.".format(found_member.name, found_member.discriminator))
+                    await self.bot.send_message(self.bot.cmd_logs_channel, "{0.name}#{0.discriminator} cleared warns of user {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
                 else:
                     await self.bot.say("That user has no warns!")
             except KeyError:
                 await self.bot.say("That user has no warns!")
+                
+    @commands.has_permissions(ban_members=True)    
+    @commands.command(pass_context=True)
+    async def unwarn(self, ctx, member, *, reason):
+        """Take a specific warn off a user."""
+        found_member = self.find_user(member, ctx)
+        if not found_member:
+            await self.bot.say("That user could not be found.")
+        else:            
+            try:
+                if self.warns[found_member.id]:
+                    try:
+                        self.warns[found_member.id].remove(reason)
+                        with open("saves/warns.json", "w+") as f:
+                            json.dump(self.warns, f)
+                        await self.bot.say("Removed `{}` warn of user {}#{}.".format(reason, found_member.name, found_member.discriminator))
+                        await self.bot.send_message(self.bot.cmd_logs_channel, "{0.name}#{0.discriminator} took warn `{2}` off user {1.name}#{1.discriminator}".format(ctx.message.author, found_member, reason))
+                    except ValueError:
+                        await self.bot.say("{}#{} was never warned for the reason `{}`!".format(found_member.name, found_member.discriminator, reason))
+                else:
+                    await self.bot.say("That user has no warns!")
+            except KeyError:
+                await self.bot.say("That user has no warns!")
+                
 def setup(bot):
     bot.add_cog(Moderation(bot))

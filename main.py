@@ -76,7 +76,8 @@ async def on_ready():
         bot.idiots_channel = discord.utils.get(server.channels, name="idiots")
         bot.private_messages_channel = discord.utils.get(server.channels, name="private-messages")
         bot.rules_channel = discord.utils.get(server.channels, name="rules")
-        bot.logs_channel = discord.utils.get(server.channels, name="logs")
+        bot.logs_channel = discord.utils.get(server.channels, name="server-logs")
+        bot.cmd_logs_channel = discord.utils.get(server.channels, name="cmd-logs")
         bot.containment_channel = discord.utils.get(server.channels, name="containment")
         
         bot.archit_role = discord.utils.get(server.roles, name="Tech Support")
