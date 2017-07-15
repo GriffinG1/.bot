@@ -184,11 +184,11 @@ class Moderation:
         """Remove a member from #containment."""
         await self.bot.delete_message(ctx.message)
         found_member = self.find_user(member, ctx)
+        member_roles = discord.found_member.roles
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
-            await self.bot.remove_roles(found_member, self.bot.idiots_role)
-            await self.bot.add_roles(found_member, self.bot.unhelpful_jerks_role)
+            await self.bot.replace_roles(found_member, self.bot.unhelpful_jerks_role)
             
     @commands.has_permissions(kick_members=True)
     @commands.command(pass_context=True)
@@ -196,11 +196,11 @@ class Moderation:
         """Upgrade to Neutron Stars."""
         await self.bot.delete_message(ctx.message)
         found_member = self.find_user(member, ctx)
+        member_roles = discord.found_member.roles
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
-            await self.bot.remove_roles(found_member, self.bot.unhelpful_jerks_role)
-            await self.bot.add_roles(found_member, self.bot.neutron_stars_role)
+            await self.bot.replace_roles(found_member, self.bot.neutron_stars_role)
                 
 def setup(bot):
     bot.add_cog(Moderation(bot))
