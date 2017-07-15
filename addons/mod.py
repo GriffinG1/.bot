@@ -8,7 +8,7 @@ class Moderation:
     """Bot commands for moderation."""
     def __init__(self, bot):
         self.bot = bot
-        with open('saves/warns.json', 'w+') as f:
+        with open('saves/warns.json', 'r+') as f:
             self.warns = json.load(f)
         print('Addon "{}" loaded'.format(self.__class__.__name__))
         
