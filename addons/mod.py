@@ -106,7 +106,7 @@ class Moderation:
             try:
                 user_warns = self.warns[found_member.id]
                 if user_warns:
-                    embed = discord.Embed(title="Warns for user {}#{}".format(found_member.name, found_member.discriminator))
+                    embed = discord.Embed(title="Warns for user {}#{}".format(found_member.name, found_member.discriminator), description="")
                     for warn in user_warns:
                         embed.description += "• {}".format(warn)
                     embed.set_footer(text="There are {} warns in total.".format(len(user_warns)))
