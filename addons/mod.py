@@ -178,5 +178,27 @@ class Moderation:
             except KeyError:
                 await self.bot.say("That user has no warns!")
                 
+    @commands.has_permissions(kick_members=True)
+    @commands.command(pass_context=True)
+    async def uncontain(self, ctx, member):
+        """Remove a member from #containment."""
+        found_member = self.find_user(member, ctx)
+        if not found_member:
+            await self.bot.say("That user could not be found.")
+        else:
+            await self.bot.add_roles(found_member, self.bot.unhelpful_jerks_role)
+            await self.bot.remove_roles(found_member, self.bot.idiots_role)
+            
+    @commands.has_permissions(kick_members=True)
+    @commands.command(pass_context=True)
+    async def promote(self, ctx, member):
+        """Upgrade to Neutron Stars."""
+        found_member = self.find_user(member, ctx)
+        if not found_member:
+            await self.bot.say("That user could not be found.")
+        else:
+            await self.bot.add_roles(found_member, self.bot.neutron_stars_role)
+            await self.bot.remove_roles(found_member, self.bot.unhelpful_jerks_role)
+                
 def setup(bot):
     bot.add_cog(Moderation(bot))
