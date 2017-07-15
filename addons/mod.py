@@ -102,7 +102,7 @@ class Moderation:
             elif len(self.warns[found_member.id]) >= 2:
                 reply_msg += " The next warn will automatically kick the user."
             await self.bot.say(reply_msg)
-            await self.bot.send_message(self.bot.cmd_logs_channel, "{0.name}#{0.discriminator} warned user {1.name}#{1.discriminator} for the reason {2}".format(ctx.message.author, found_member, reason))
+            await self.bot.send_message(self.bot.cmd_logs_channel, "{0.name}#{0.discriminator} warned user <@{1.id}> | {1.name}#{1.discriminator} for the reason {2}".format(ctx.message.author, found_member, reason))
             with open("saves/warns.json", "w+") as f:
                 json.dump(self.warns, f)
                 
