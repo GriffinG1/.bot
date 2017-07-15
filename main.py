@@ -55,9 +55,22 @@ async def on_command_error(error, ctx):
         await bot.send_message(ctx.message.channel, "{} You are missing required arguments.\n{}".format(ctx.message.author.mention, formatter.format_help_for(ctx, ctx.command)[0]))
     else:
         if ctx.command:
-            await bot.send_message(ctx.message.channel, "An error occured while processing the `{}` command.".format(ctx.command.name))
-        print('Ignoring exception in command {}'.format(ctx.command), file=sys.stderr)
-        traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+            await bot.send_message(ctx.message.channel, "An error occurred while processing the `{}` command.".format(ctx.command.name))
+        print('Ignoring exception in command {0.command} in {0.message.channel}'.format(ctx))
+        tb = traceback.format_exception(type(error), error, error.__traceback__)
+        print("".join(tb))
+        embed = discord.Embed(description="".join(tb))
+        await bot.send_message(bot.err_logs_channel, "An error occurred while processing the `{}` command in channel `{}`.".format(ctx.command.name, ctx.message.channel), embed=embed)
+        
+@bot.event
+async def on_error(event_method, *args, **kwargs):
+    if isinstance(args[0], commands.errors.CommandNotFound):
+        return
+    print("Ignoring exception in {}".format(event_method))
+    tb = traceback.format_exc()
+    print("".join(tb))
+    embed = discord.Embed(description="".join(tb))
+    await bot.send_message(bot.err_logs_channel, "An error occurred while processing `{}`.".format(event_method), embed=embed)
 
 bot.all_ready = False
 bot._is_all_ready = asyncio.Event(loop=bot.loop)
@@ -79,6 +92,7 @@ async def on_ready():
         bot.logs_channel = discord.utils.get(server.channels, name="server-logs")
         bot.cmd_logs_channel = discord.utils.get(server.channels, name="cmd-logs")
         bot.containment_channel = discord.utils.get(server.channels, name="containment")
+        bot.err_logs_channel = discord.utils.get(server.channels, name="err-logs")
         
         bot.archit_role = discord.utils.get(server.roles, name="Tech Support")
         bot.idiots_role = discord.utils.get(server.roles, name="Idiots")
