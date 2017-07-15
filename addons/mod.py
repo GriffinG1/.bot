@@ -98,7 +98,7 @@ class Moderation:
                 self.warns[found_member.id] = []
             self.warns[found_member.id].append(reason)
             reply_msg = "Warned user {}#{}. This was warn {}.".format(found_member.name, found_member.discriminator, len(self.warns[found_member.id]))
-            private_message = You were warned for `" + reason + "`."
+            private_message = "You were warned for `" + reason + "`."
             if len(self.warns[found_member.id]) >= 5:
                 private_message += " You were banned for this warn. \nIf you would like to contest this you can message Griffin#2329."
                 await self.bot.send_message(found_member, private_message)
