@@ -48,7 +48,7 @@ class Moderation:
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
-            await self.bot.send_message(found_member, "You were banned on `Nintendo Homebrew Idiot Log` for `" + reason + "`. \nIf you would like to contest this you can message Griffin#2329.")
+            await self.bot.send_message(found_member, "You were banned on `Nintendo Homebrew Idiot Log`. \nIf you would like to contest this you can message Griffin#2329.")
             await self.bot.ban(found_member)
             await self.bot.say("Successfully banned user {0.name}#{0.discriminator}!".format(found_member))
             embed = discord.Embed(description="{0.name}#{0.discriminator} banned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
