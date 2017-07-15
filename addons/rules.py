@@ -33,6 +33,7 @@ class rules:
         await self.simple_embed("If you would like the Neutron Stars role, you must have a total message count of 1,000 in #3ds-assistance-1 and #3ds-assistance-2 combined. DM <@316027878603096065> the image for the role.")
     @commands.command(pass_context=True)
     async def r7(self):
+        await self.simple_embed("If you would like the Sheet Admins role, DM <@177939404243992578> a valid gmail. **Note: breaking any of the rules will result in you losing the role and ability to edit the log.**")
 
 def setup(bot):
     bot.add_cog(rules(bot))
