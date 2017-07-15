@@ -39,4 +39,4 @@ class Testing:
         await self.bot.send_message(ctx.message.channel, self.bot.bot_prefix + "Successfully redirected STDOUT and STDERR to the current channel!")
 
 def setup(bot):
-    bot.add_cog(debug_cog)
+    bot.add_cog(Testing(bot))
