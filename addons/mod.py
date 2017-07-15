@@ -184,7 +184,7 @@ class Moderation:
         """Remove a member from #containment."""
         await self.bot.delete_message(ctx.message)
         found_member = self.find_user(member, ctx)
-        member_roles = discord.found_member.roles
+        member_roles = found_member.roles
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
@@ -196,7 +196,7 @@ class Moderation:
         """Upgrade to Neutron Stars."""
         await self.bot.delete_message(ctx.message)
         found_member = self.find_user(member, ctx)
-        member_roles = discord.found_member.roles
+        member_roles = found_member.roles
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
