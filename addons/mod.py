@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import os
 import sys
+import json
 
 class Moderation:
     """Bot commands for moderation."""
