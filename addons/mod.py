@@ -112,7 +112,6 @@ class Moderation:
             
             if self.bot.server_admin_role in found_member.roles and not found_member == owner:
                 return await self.bot.say("You cannot warn a staff member!")
-            if not 
             try:
                 self.warns[found_member.id]
             except KeyError:
