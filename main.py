@@ -43,6 +43,14 @@ bot.escape_name = escape_name
 
 bot.pruning = False  # used to disable leave logs if pruning, maybe.
 
+bot.escape_trans = str.maketrans({
+    "*": "\*",
+    "_": "\_",
+    "~" : "\~",
+    "`": "\`",
+    "\\": "\\\\"  # escape escapes... fuck it i'm out
+})  # used to escape a string
+
 # mostly taken from https://github.com/Rapptz/discord.py/blob/async/discord/ext/commands/bot.py
 @bot.event
 async def on_command_error(error, ctx):
@@ -58,8 +66,9 @@ async def on_command_error(error, ctx):
             await bot.send_message(ctx.message.channel, "An error occurred while processing the `{}` command.".format(ctx.command.name))
         print('Ignoring exception in command {0.command} in {0.message.channel}'.format(ctx))
         tb = traceback.format_exception(type(error), error, error.__traceback__)
-        print("".join(tb))
-        embed = discord.Embed(description=re.escape("".join(tb)))
+        error_trace = "".join(tb)
+        print(error_trace)
+        embed = discord.Embed(description=error_trace.translate(bot.escape_trans))
         await bot.send_message(bot.err_logs_channel, "An error occurred while processing the `{}` command in channel `{}`.".format(ctx.command.name, ctx.message.channel), embed=embed)
         
 @bot.event
@@ -68,8 +77,9 @@ async def on_error(event_method, *args, **kwargs):
         return
     print("Ignoring exception in {}".format(event_method))
     tb = traceback.format_exc()
-    print("".join(tb))
-    embed = discord.Embed(description=re.escape("".join(tb)))
+    error_trace = "".join(tb)
+    print(error_trace)
+    embed = discord.Embed(description=error_trace.translate(bot.escape_trans))
     await bot.send_message(bot.err_logs_channel, "An error occurred while processing `{}`.".format(event_method), embed=embed)
 
 bot.all_ready = False
