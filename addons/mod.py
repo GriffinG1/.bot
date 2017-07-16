@@ -116,7 +116,7 @@ class Moderation:
                 self.warns[found_member.id]
             except KeyError:
                 self.warns[found_member.id] = []
-            if reason == ("")
+            if reason == (""):
                 reason += ("No reason was listed.")
             else:
                 reason = reason
