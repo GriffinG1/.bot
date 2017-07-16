@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import os
-import sys
+import subprocess
 
 class Utility:
     """Utility bot commands."""
@@ -22,7 +22,10 @@ class Utility:
     async def restart(self):
         """Restarts the bot."""
         await self.bot.say("Restarting...")
-        os.execv(sys.executable, ['python3.6'] + sys.argv)
+        subprocess.Popen(['python3.6', 'run.py'])
+        time.sleep(3)
+        await self.bot.say("Restarted.")
+        time.sleep(99999999999)
         
 def setup(bot):
     bot.add_cog(Utility(bot))
