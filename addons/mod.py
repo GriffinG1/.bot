@@ -81,6 +81,7 @@ class Moderation:
                 embed = discord.Embed(description="{0.name}#{0.discriminator} unmuted user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
                 await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
                 await self.bot.send_message(found_member, "You have been unmuted.")
+                await self.bot.say("Successfully unmuted user {0.name}#{0.discriminator}!".format(found_member))
             else:
                 await self.bot.say("That user isn't muted!")
                 
@@ -93,7 +94,7 @@ class Moderation:
             await self.bot.say("That user could not be found.")
         else:
             user_roles = found_member.roles
-            if self.bot.server_admins_role in user_roles:
+            if self.bot.server_admin_role in user_roles:
                 await self.bot.say("You can't warn a fellow admin!")
             else:
                 try:
