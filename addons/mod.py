@@ -104,16 +104,17 @@ class Moderation:
                 await self.bot.send_message(found_member, private_message)
                 await self.bot.ban(found_member)
                 reply_msg += " As a result of this warn, the user was banned."
-            elif len(self.warns[found_member.id]) >= 3:
+            if len(self.warns[found_member.id]) >= 3:
                 private_message += "You were kicked for this warn. \nIf you'd like to rejoin you can use the following link. \nhttp://discord.gg/hHHKPFz. Your next warn will kick you."
                 await self.bot.send_message(found_member, private_message)
                 await self.bot.kick(found_member)
-                reply_msg += " As a result of this warn, the user was kicked."
+                reply_msg += " As a result of this warn, the user was kicked. The next warn will automatically kick the user."
             if len(self.warns[found_member.id]) >= 4:
                 private_message += "You were kicked for this warn, and it is your final one before you're banned. \nIf you'd like to rejoin you can use the following link. \nhttp://discord.gg/hHHKPFz."
                 await self.bot.send_message(found_member, private_message)
-                reply_msg += " The next warn will automatically ban the user."
-            elif len(self.warns[found_member.id]) >= 2:
+                await self.bot.kick(found_member)
+                reply_msg += " As a result of this warn, the user was kicked. The next warn will automatically ban the user."
+            if len(self.warns[found_member.id]) >= 2:
                 private_message += "Your next warn will kick you"
                 await self.bot.send_message(found_member, private_message)
                 reply_msg += " The next warn will automatically kick the user."
