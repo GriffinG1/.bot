@@ -108,9 +108,9 @@ class Moderation:
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
-            owner = server.owner
+            owner = ctx.message.server.owner
             
-            if self.bot.server_admin_role in found_member.roles and not found_member == ctx.message.server.owner:
+            if self.bot.server_admin_role in found_member.roles and not found_member == owner:
                 return await self.bot.say("You cannot warn a staff member!")
             try:
                 self.warns[found_member.id]
