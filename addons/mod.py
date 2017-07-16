@@ -66,7 +66,7 @@ class Moderation:
             
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
-    async def mute(self, ctx, member, reason=""):
+    async def mute(self, ctx, member, *, reason=""):
         """Mute a member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
