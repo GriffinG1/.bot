@@ -116,6 +116,10 @@ class Moderation:
                 self.warns[found_member.id]
             except KeyError:
                 self.warns[found_member.id] = []
+            if reason == ("")
+                reason += ("No reason was listed.")
+            else:
+                reason = reason
             self.warns[found_member.id].append(reason)
             reply_msg = "Warned user {}#{}. This is warn {}.".format(found_member.name, found_member.discriminator, len(self.warns[found_member.id]))
             private_message = "You have been warned by user {}#{}. The given reason was: `{}`\nThis is warn {}.".format(ctx.message.author.name, ctx.message.author.discriminator, reason, len(self.warns[found_member.id]))
