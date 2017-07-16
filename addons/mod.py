@@ -102,7 +102,7 @@ class Moderation:
                 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
-    async def warn(self, ctx, *, member):
+    async def warn(self, ctx, member, *, reason):
         """Warn a member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
