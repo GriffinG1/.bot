@@ -95,6 +95,8 @@ class Moderation:
                 await self.bot.remove_roles(found_member, self.bot.muted_role)
                 embed = discord.Embed(description="{0.name}#{0.discriminator} unmuted user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
                 await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+                await self.bot.send_message(found_member, "You have been unmuted by user {0.name}#{0.discriminator}. Don't do it again!".format(ctx.message.author))
+                await self.bot.say("Successfully unmuted user {0.name}#{0.discriminator}!".format(found_member))
             else:
                 await self.bot.say("That user isn't muted!")
                 
@@ -106,6 +108,8 @@ class Moderation:
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
+            if self.bot.server_admin_role in found_member.roles:
+                return await self.bot.say("You cannot warn a staff member!")
             try:
                 self.warns[found_member.id]
             except KeyError:
