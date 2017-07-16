@@ -28,45 +28,60 @@ class Moderation:
     
     @commands.has_permissions(kick_members=True)    
     @commands.command(pass_context=True)
-    async def kick(self, ctx, *, member):
+    async def kick(self, ctx, member, *, reason=""):
         """Kick a member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
-            await self.bot.send_message(found_member, "You were kicked on `Nintendo Homebrew Idiot Log`. \nIf you'd like to rejoin you can use the following link. \nhttp://discord.gg/hHHKPFz.")
+            if reason:
+                reason_msg = "The given reason was: {}".format(reason)
+            else:
+                reason_msg = "No reason was given."
+            await self.bot.send_message(found_member, "You have been kicked by user {0.name}#{0.discriminator}.\n{2}\nYou can rejoin the server with this link: https://discord.gg/hHHKPFz".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
             await self.bot.kick(found_member)
             await self.bot.say("Successfully kicked user {0.name}#{0.discriminator}!".format(found_member))
-            embed = discord.Embed(description="{0.name}#{0.discriminator} kicked user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
+            embed = discord.Embed(description="<@{0.id}> | {0.name}#{0.discriminator} kicked user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
+            embed.add_field(name="Reason given", value="• " + reason)
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
     
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
-    async def ban(self, ctx, *, member):
+    async def ban(self, ctx, member, *, reason=""):
         """Ban a member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
-            await self.bot.send_message(found_member, "You were banned on `Nintendo Homebrew Idiot Log`. \nIf you would like to contest this you can message Griffin#2329.")
+            if reason:
+                reason_msg = "The given reason was: {}".format(reason)
+            else:
+                reason_msg = "No reason was given."
+            await self.bot.send_message(found_member, "You have been banned by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
             await self.bot.ban(found_member)
             await self.bot.say("Successfully banned user {0.name}#{0.discriminator}!".format(found_member))
-            embed = discord.Embed(description="{0.name}#{0.discriminator} banned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
+            embed = discord.Embed(description="<@{0.id}> | {0.name}#{0.discriminator} banned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
+            embed.add_field(name="Reason given", value="• " + reason)
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
             
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
-    async def mute(self, ctx, *, member):
+    async def mute(self, ctx, member, reason=""):
         """Mute a member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
             await self.bot.add_roles(found_member, self.bot.muted_role)
+            if reason:
+                reason_msg = "The given reason was: {}".format(reason)
+            else:
+                reason_msg = "No reason was given."
             await self.bot.say("Successfully muted user {0.name}#{0.discriminator}!".format(found_member))
-            embed = discord.Embed(description="{0.name}#{0.discriminator} muted user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
+            embed = discord.Embed(description="<@{0.id}> | {0.name}#{0.discriminator} muted user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
+            embed.add_field(name="Reason given", value="• " + reason)
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
-            await self.bot.send_message(found_member, "You have been muted.")
+            await self.bot.send_message(found_member, "You have been muted by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this mute, send a direct message to one of the staff on the Server Admins list in {1}.".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
             
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
@@ -80,13 +95,12 @@ class Moderation:
                 await self.bot.remove_roles(found_member, self.bot.muted_role)
                 embed = discord.Embed(description="{0.name}#{0.discriminator} unmuted user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
                 await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
-                await self.bot.send_message(found_member, "You have been unmuted.")
             else:
                 await self.bot.say("That user isn't muted!")
                 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
-    async def warn(self, ctx, member, *, reason):
+    async def warn(self, ctx, *, member):
         """Warn a member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
@@ -97,32 +111,38 @@ class Moderation:
             except KeyError:
                 self.warns[found_member.id] = []
             self.warns[found_member.id].append(reason)
-            reply_msg = "Warned user {}#{}. This was warn {}.".format(found_member.name, found_member.discriminator, len(self.warns[found_member.id]))
-            private_message = "You were warned for `" + reason + "`."
+            reply_msg = "Warned user {}#{}. This is warn {}.".format(found_member.name, found_member.discriminator, len(self.warns[found_member.id]))
+            private_message = "You have been warned by user {}#{}. The given reason was: `{}`\nThis is warn {}.".format(ctx.message.author.name, ctx.message.author.discriminator, reason, len(self.warns[found_member.id]))
+            
             if len(self.warns[found_member.id]) >= 5:
-                private_message += " You were banned for this warn. \nIf you would like to contest this you can message Griffin#2329."
+                private_message += "\nYou were banned due to this warn. \nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}."
                 await self.bot.send_message(found_member, private_message)
                 await self.bot.ban(found_member)
                 reply_msg += " As a result of this warn, the user was banned."
-            if len(self.warns[found_member.id]) == 3:
-                private_message += "You were kicked for this warn. \nIf you'd like to rejoin you can use the following link. \nhttp://discord.gg/hHHKPFz. Your next warn will kick you."
-                await self.bot.send_message(found_member, private_message)
-                await self.bot.kick(found_member)
-                reply_msg += " As a result of this warn, the user was kicked. The next warn will automatically kick the user."
-            if len(self.warns[found_member.id]) == 4:
-                private_message += "You were kicked for this warn, and it is your final one before you're banned. \nIf you'd like to rejoin you can use the following link. \nhttp://discord.gg/hHHKPFz."
+                
+            elif len(self.warns[found_member.id]) == 4:
+                private_message += "\nYou were kicked due to this warn. You can rejoin the server with this link: https://discord.gg/hHHKPFz\nYour next warn will automatically ban you."
                 await self.bot.send_message(found_member, private_message)
                 await self.bot.kick(found_member)
                 reply_msg += " As a result of this warn, the user was kicked. The next warn will automatically ban the user."
-            if len(self.warns[found_member.id]) == 2:
-                private_message += "Your next warn will kick you"
+                
+            elif len(self.warns[found_member.id]) == 3:
+                private_message += "\nYou were kicked due to this warn. \nYou can rejoin the server with this link: https://discord.gg/hHHKPFz\nYour next warn will automatically kick you."
+                await self.bot.send_message(found_member, private_message)
+                await self.bot.kick(found_member)
+                reply_msg += " As a result of this warn, the user was kicked. The next warn will automatically kick the user."
+                
+            elif len(self.warns[found_member.id]) == 2:
+                private_message += "\nYour next warn will automatically kick you."
                 await self.bot.send_message(found_member, private_message)
                 reply_msg += " The next warn will automatically kick the user."
-            if len(self.warns[found_member.id]) == 1:
+                
+            elif len(self.warns[found_member.id]) == 1:
                 await self.bot.send_message(found_member, private_message)
+                
             await self.bot.say(reply_msg)
             embed = discord.Embed(description="{0.name}#{0.discriminator} warned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
-            embed.add_field(name="Reason for Warn", value="• " + reason)
+            embed.add_field(name="Reason given", value="• " + reason)
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
             with open("saves/warns.json", "w+") as f:
                 json.dump(self.warns, f)
@@ -190,7 +210,6 @@ class Moderation:
                         await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
                     except ValueError:
                         await self.bot.say("{}#{} was never warned for the reason `{}`!".format(found_member.name, found_member.discriminator, reason))
-                        await self.bot.send_message(found_member, "Your warn `" + reason + "` was removed!") 
                 else:
                     await self.bot.say("That user has no warns!")
             except KeyError:
