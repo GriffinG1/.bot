@@ -110,7 +110,7 @@ class Moderation:
         else:
             owner = server.owner
             
-            if self.bot.server_admin_role in found_member.roles and not found_member == owner:
+            if self.bot.server_admin_role in found_member.roles and not found_member == ctx.message.server.owner:
                 return await self.bot.say("You cannot warn a staff member!")
             try:
                 self.warns[found_member.id]
