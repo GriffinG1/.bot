@@ -131,7 +131,6 @@ class Moderation:
             reply_msg = "Warned user {}#{}. This is warn {}.".format(found_member.name, found_member.discriminator, len(self.warns[found_member.id]))
             private_message = "You have been warned by user {}#{}. The given reason was: `{}`\nThis is warn {}.".format(ctx.message.author.name, ctx.message.author.discriminator, reason, len(self.warns[found_member.id]))
             
-<<<<<<< 4c2fb70ca19620726b7b0b18159ccecbf7b2a6b9
             if len(self.warns[found_member.id]) >= 5:
                 private_message += "\nYou were banned due to this warn. \nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.\nIn the rare scenario that you do not have the entire staff list memorized, LyricLy#5752 and Griffin#2329 are two choices you could use."
                 await self.bot.send_message(found_member, private_message)
@@ -157,7 +156,6 @@ class Moderation:
                 
             elif len(self.warns[found_member.id]) == 1:
                 await self.bot.send_message(found_member, private_message)
-=======
             try:
                 if len(self.warns[found_member.id]) >= 5:
                     private_message += "\nYou were banned due to this warn. \nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.\nIn the rare scenario that you do not have the entire staff list memorized, YourLocalLyric#5752 and Griffin#2329 are two choices you could use."
@@ -186,7 +184,6 @@ class Moderation:
                     await self.bot.send_message(found_member, private_message)
             except discord.errors.Forbidden:
                 pass
->>>>>>> ignore PM errors
                 
             await self.bot.say(reply_msg)
             embed = discord.Embed(description="{0.name}#{0.discriminator} warned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
@@ -347,6 +344,54 @@ class Moderation:
                 await self.bot.send_message(found_member, "You're a Server Admin now!")
             except discord.errors.Forbidden:
                 pass
+    
+    @commands.has_permissions(kick_members=True)
+    @commands.command(pass_context=True)
+    async def nosupport(self, ctx, member, *, reason):
+        """Kicks a user out of support"""
+        await self.bot.delete_message(ctx.message)
+        found_member = self.find_user(member, ctx)
+        channel = self.bot.server.get_channel("336761748159987713")
+        if not found_member:
+            await self.bot.say("That user could not be found.")
+        else:
+            if self.bot.support_role in found_member.roles:
+                await self.bot.remove_roles(found_member, self.bot.support_role)
+                overwrites = channel.overwrites_for(found_member)
+                overwrites.read_messages = False
+                await self.bot.edit_channel_permissions(channel, found_member, overwrites)
+                embed = discord.Embed(description="{0.name}#{0.discriminator} kicked user <@{1.id}> | {1.name}#{1.discriminator} from <#336761748159987713>".format(ctx.message.author, found_member))
+                embed.add_field(name="Reason given", value="• " + reason)
+                await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+                try:
+                    await self.bot.send_message(found_member, "You were removed from 9-1-1-tech-support by user {}#{}. The given reason was: `{}` \nIf you feel that you did not deserve this removal, send a direct message to one of the staff on the Server Admins list in <#318626746297745409>".format(ctx.message.author.name, ctx.message.author.discriminator, reason))
+                except discord.errors.Forbidden:
+                    pass
+                await self.bot.say("{}#{} can no longer access support.".format(found_member.name, found_member.discriminator))
+            else:
+                await self.bot.say("That user isn't in support!")
+                
+    @commands.has_permissions(kick_members=True)
+    @commands.command(pass_context=True)
+    async def givesupport(self, ctx, member):
+        """Allows a user to rejoin support"""
+        await self.bot.delete_message(ctx.message)
+        found_member = self.find_user(member, ctx)
+        channel = self.bot.server.get_channel("336761748159987713")
+        if not found_member:
+            await self.bot.say("That user could not be found.")
+        else:
+            await self.bot.add_roles(found_member, self.bot.support_role)
+            overwrites = channel.overwrites_for(found_member)
+            overwrites.read_messages = True
+            await self.bot.edit_channel_permissions(channel, found_member, overwrites)
+            embed = discord.Embed(description="{0.name}#{0.discriminator} restored user <@{1.id}> | {1.name}#{1.discriminator} permissions for <#336761748159987713>".format(ctx.message.author, found_member))
+            await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+            try:
+                await self.bot.send_message(found_member, "You can access <#336761748159987713> again!")
+            except discord.errors.Forbidden:
+                pass
+            await self.bot.say("{}#{} can access support again.".format(found_member.name, found_member.discriminator))
             
 def setup(bot):
     bot.add_cog(Moderation(bot))
