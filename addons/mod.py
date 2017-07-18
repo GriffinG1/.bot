@@ -39,7 +39,10 @@ class Moderation:
                 reason_msg = "The given reason was: {}".format(reason)
             else:
                 reason_msg = "No reason was given."
-            await self.bot.send_message(found_member, "You have been kicked by user {0.name}#{0.discriminator}.\n{2}\nYou can rejoin the server with this link: https://discord.gg/hHHKPFz".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
+            try:
+                await self.bot.send_message(found_member, "You have been kicked by user {0.name}#{0.discriminator}.\n{2}\nYou can rejoin the server with this link: https://discord.gg/hHHKPFz".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
+            except discord.errors.Forbidden:
+                pass
             await self.bot.kick(found_member)
             await self.bot.say("Successfully kicked user {0.name}#{0.discriminator}!".format(found_member))
             embed = discord.Embed(description="<@{0.id}> | {0.name}#{0.discriminator} kicked user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
@@ -58,7 +61,14 @@ class Moderation:
                 reason_msg = "The given reason was: {}".format(reason)
             else:
                 reason_msg = "No reason was given."
+<<<<<<< 4c2fb70ca19620726b7b0b18159ccecbf7b2a6b9
             await self.bot.send_message(found_member, "You have been banned by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.\nIn the rare scenario that you do not have the entire staff list memorized, LyricLy#5752 and Griffin#2329 are two choices you could use.".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
+=======
+            try: 
+                await self.bot.send_message(found_member, "You have been banned by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.\nIn the rare scenario that you do not have the entire staff list memorized, YourLocalLyric#5752 and Griffin#2329 are two choices you could use.".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
+            except discord.errors.Forbidden:
+                pass
+>>>>>>> ignore PM errors
             await self.bot.ban(found_member)
             await self.bot.say("Successfully banned user {0.name}#{0.discriminator}!".format(found_member))
             embed = discord.Embed(description="<@{0.id}> | {0.name}#{0.discriminator} banned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
@@ -82,7 +92,10 @@ class Moderation:
             embed = discord.Embed(description="<@{0.id}> | {0.name}#{0.discriminator} muted user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             embed.add_field(name="Reason given", value="• " + reason)
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
-            await self.bot.send_message(found_member, "You have been muted by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this mute, send a direct message to one of the staff on the Server Admins list in {1}.".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
+            try:
+                await self.bot.send_message(found_member, "You have been muted by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this mute, send a direct message to one of the staff on the Server Admins list in {1}.".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
+            except discord.errors.Forbidden:
+                pass
             
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
@@ -121,6 +134,7 @@ class Moderation:
             reply_msg = "Warned user {}#{}. This is warn {}.".format(found_member.name, found_member.discriminator, len(self.warns[found_member.id]))
             private_message = "You have been warned by user {}#{}. The given reason was: `{}`\nThis is warn {}.".format(ctx.message.author.name, ctx.message.author.discriminator, reason, len(self.warns[found_member.id]))
             
+<<<<<<< 4c2fb70ca19620726b7b0b18159ccecbf7b2a6b9
             if len(self.warns[found_member.id]) >= 5:
                 private_message += "\nYou were banned due to this warn. \nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.\nIn the rare scenario that you do not have the entire staff list memorized, LyricLy#5752 and Griffin#2329 are two choices you could use."
                 await self.bot.send_message(found_member, private_message)
@@ -146,6 +160,36 @@ class Moderation:
                 
             elif len(self.warns[found_member.id]) == 1:
                 await self.bot.send_message(found_member, private_message)
+=======
+            try:
+                if len(self.warns[found_member.id]) >= 5:
+                    private_message += "\nYou were banned due to this warn. \nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.\nIn the rare scenario that you do not have the entire staff list memorized, YourLocalLyric#5752 and Griffin#2329 are two choices you could use."
+                    await self.bot.send_message(found_member, private_message)
+                    await self.bot.ban(found_member)
+                    reply_msg += " As a result of this warn, the user was banned."
+                    
+                elif len(self.warns[found_member.id]) == 4:
+                    private_message += "\nYou were kicked due to this warn. You can rejoin the server with this link: https://discord.gg/hHHKPFz\nYour next warn will automatically ban you."
+                    await self.bot.send_message(found_member, private_message)
+                    await self.bot.kick(found_member)
+                    reply_msg += " As a result of this warn, the user was kicked. The next warn will automatically ban the user."
+                    
+                elif len(self.warns[found_member.id]) == 3:
+                    private_message += "\nYou were kicked due to this warn. \nYou can rejoin the server with this link: https://discord.gg/hHHKPFz\nYour next warn will automatically kick you."
+                    await self.bot.send_message(found_member, private_message)
+                    await self.bot.kick(found_member)
+                    reply_msg += " As a result of this warn, the user was kicked. The next warn will automatically kick the user."
+                    
+                elif len(self.warns[found_member.id]) == 2:
+                    private_message += "\nYour next warn will automatically kick you."
+                    await self.bot.send_message(found_member, private_message)
+                    reply_msg += " The next warn will automatically kick the user."
+                    
+                elif len(self.warns[found_member.id]) == 1:
+                    await self.bot.send_message(found_member, private_message)
+            except discord.errors.Forbidden:
+                pass
+>>>>>>> ignore PM errors
                 
             await self.bot.say(reply_msg)
             embed = discord.Embed(description="{0.name}#{0.discriminator} warned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
@@ -191,7 +235,10 @@ class Moderation:
                     await self.bot.say("Cleared the warns of user {}#{}.".format(found_member.name, found_member.discriminator))
                     embed = discord.Embed(description="{0.name}#{0.discriminator} cleared warns of user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
                     await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
-                    await self.bot.send_message(found_member, "All your warns have been cleared.")
+                    try:
+                        await self.bot.send_message(found_member, "All your warns have been cleared.")
+                    except discord.errors.Forbidden:
+                        pass
                 else:
                     await self.bot.say("That user has no warns!")
             except KeyError:
@@ -235,7 +282,10 @@ class Moderation:
             await self.bot.replace_roles(found_member, self.bot.unhelpful_jerks_role)
             embed = discord.Embed(description="{0.name}#{0.discriminator} moved user <@{1.id}> | {1.name}#{1.discriminator} out of <#335599294553915392>".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
-            await self.bot.send_message(found_member, "Enjoy the server!")
+            try:
+                await self.bot.send_message(found_member, "Enjoy the server!")
+            except discord.errors.Forbidden:
+                pass
             
     @commands.has_permissions(kick_members=True)
     @commands.group(pass_context=True)
@@ -249,7 +299,7 @@ class Moderation:
 
     @commands.has_permissions(kick_members=True)
     @promote.command(pass_context=True)
-    async def Neutron(self, ctx, member):
+    async def Neutron(self, ctx, *, member):
         """Neutron Stars"""
         await self.bot.delete_message(ctx.message)
         found_member = self.find_user(member, ctx)
@@ -260,11 +310,14 @@ class Moderation:
             await self.bot.replace_roles(found_member, self.bot.neutron_stars_role)
             embed = discord.Embed(description="{0.name}#{0.discriminator} promoted user <@{1.id}> | {1.name}#{1.discriminator} to Neutron Stars!".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
-            await self.bot.send_message(found_member, "You're a Neutron Star now! Congrats, you're the densest known thing in the universe!")
+            try:
+                await self.bot.send_message(found_member, "You're a Neutron Star now! Congrats, you're the densest known thing in the universe!")
+            except discord.errors.Forbidden:
+                pass
 
     @commands.has_permissions(kick_members=True)
     @promote.command(pass_context=True)
-    async def Sheet(self, ctx, member):
+    async def Sheet(self, ctx, *, member):
         """Sheet Admins"""
         await self.bot.delete_message(ctx.message)
         found_member = self.find_user(member, ctx)
@@ -275,11 +328,14 @@ class Moderation:
             await self.bot.add_roles(found_member, self.bot.sheet_admins_role)
             embed = discord.Embed(description="{0.name}#{0.discriminator} promoted user <@{1.id}> | {1.name}#{1.discriminator} to Sheet Admin!".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
-            await self.bot.send_message(found_member, "You're a Sheet Admin now!")
+            try:
+                await self.bot.send_message(found_member, "You're a Sheet Admin now!")
+            except discord.errors.Forbidden:
+                pass
 
     @commands.has_permissions(ban_members=True)
     @promote.command(pass_context=True)
-    async def Server(self, ctx, member):
+    async def Server(self, ctx, *, member):
         """Server Admins"""
         await self.bot.delete_message(ctx.message)
         found_member = self.find_user(member, ctx)
@@ -290,7 +346,10 @@ class Moderation:
             await self.bot.add_roles(found_member, self.bot.server_admins_role)
             embed = discord.Embed(description="{0.name}#{0.discriminator} promoted user <@{1.id}> | {1.name}#{1.discriminator} to Server Admin!".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
-            await self.bot.send_message(found_member, "You're a Server Admin now!")
-    
+            try:
+                await self.bot.send_message(found_member, "You're a Server Admin now!")
+            except discord.errors.Forbidden:
+                pass
+            
 def setup(bot):
     bot.add_cog(Moderation(bot))

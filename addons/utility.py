@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import os
-import subprocess
+import sys
 
 class Utility:
     """Utility bot commands."""
@@ -16,13 +16,13 @@ class Utility:
         embed.add_field(name="Notes", value="Testing!", inline=False)
         embed.colour = discord.Colour(0x00FFFF)            
         await self.bot.say("", embed=embed)
-                                                                     
+
     @commands.has_permissions(ban_members=True)    
     @commands.command()
     async def restart(self):
         """Restarts the bot."""
         await self.bot.say("Restarting...")
-        subprocess.call(['python', 'run.py'])
+        sys.exit(0)
         
 def setup(bot):
     bot.add_cog(Utility(bot))
