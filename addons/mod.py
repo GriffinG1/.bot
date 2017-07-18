@@ -235,11 +235,21 @@ class Moderation:
             embed = discord.Embed(description="{0.name}#{0.discriminator} moved user <@{1.id}> | {1.name}#{1.discriminator} out of <#335599294553915392>".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
             await self.bot.send_message(found_member, "Enjoy the server!")
-            
+
     @commands.has_permissions(kick_members=True)
-    @commands.command(pass_context=True)
-    async def promote(self, ctx, member):
-        """Upgrade to Neutron Stars."""
+    @commands.group(pass_context=True)
+    async def promote(self, ctx):
+        """Upgrade Roles"""
+        if ctx.invoked_subcommand is None:
+            message = await self.bot.say("You're missing a parameter!")
+            await self.bot.delete_message(ctx.message)
+            await asyncio.sleep(3)
+            await self.bot.delete_message(message)
+
+    @commands.has_permissions(kick_members=True)
+    @promote.command(pass_context=True)
+    async def Neutron(self, ctx, member):
+        """Neutron Stars"""
         await self.bot.delete_message(ctx.message)
         found_member = self.find_user(member, ctx)
         member_roles = found_member.roles
@@ -247,9 +257,39 @@ class Moderation:
             await self.bot.say("That user could not be found.")
         else:
             await self.bot.replace_roles(found_member, self.bot.neutron_stars_role)
-            embed = discord.Embed(description="{0.name}#{0.discriminator} promoted user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
+            embed = discord.Embed(description="{0.name}#{0.discriminator} promoted user <@{1.id}> | {1.name}#{1.discriminator} to Neutron Stars!".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
-            await self.bot.send_message(found_member, "You now have the Neutron Stars role!")
-            
+            await self.bot.send_message(found_member, "You're a Neutron Star now! Congrats, you're the densest known thing in the universe!")
+
+    @commands.has_permissions(kick_members=True)
+    @promote.command(pass_context=True)
+    async def Sheet(self, ctx, member):
+        """Sheet Admins"""
+        await self.bot.delete_message(ctx.message)
+        found_member = self.find_user(member, ctx)
+        member_roles = found_member.roles
+        if not found_member:
+            await self.bot.say("That user could not be found.")
+        else:
+            await self.bot.add_roles(found_member, self.bot.sheet_admins_role)
+            embed = discord.Embed(description="{0.name}#{0.discriminator} promoted user <@{1.id}> | {1.name}#{1.discriminator} to Sheet Admin!".format(ctx.message.author, found_member))
+            await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+            await self.bot.send_message(found_member, "You're a Sheet Admin now!")
+
+    @commands.has_permissions(ban_members=True)
+    @promote.command(pass_context=True)
+    async def Server(self, ctx, member):
+        """Server Admins"""
+        await self.bot.delete_message(ctx.message)
+        found_member = self.find_user(member, ctx)
+        member_roles = found_member.roles
+        if not found_member:
+            await self.bot.say("That user could not be found.")
+        else:
+            await self.bot.add_roles(found_member, self.bot.server_admins_role)
+            embed = discord.Embed(description="{0.name}#{0.discriminator} promoted user <@{1.id}> | {1.name}#{1.discriminator} to Server Admin!".format(ctx.message.author, found_member))
+            await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+            await self.bot.send_message(found_member, "You're a Server Admin now!")
+    
 def setup(bot):
     bot.add_cog(Moderation(bot))
