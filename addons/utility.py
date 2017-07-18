@@ -22,7 +22,7 @@ class Utility:
     async def restart(self):
         """Restarts the bot."""
         await self.bot.say("Restarting...")
-        subprocess.call(['python3.6', 'run.py'])
+        subprocess.call(['python', 'run.py'])
         
 def setup(bot):
     bot.add_cog(Utility(bot))

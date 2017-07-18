@@ -58,7 +58,7 @@ class Moderation:
                 reason_msg = "The given reason was: {}".format(reason)
             else:
                 reason_msg = "No reason was given."
-            await self.bot.send_message(found_member, "You have been banned by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.\nIn the rare scenario that you do not have the entire staff list memorized, YourLocalLyric#5752 and Griffin#2329 are two choices you could use.".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
+            await self.bot.send_message(found_member, "You have been banned by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.\nIn the rare scenario that you do not have the entire staff list memorized, LyricLy#5752 and Griffin#2329 are two choices you could use.".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
             await self.bot.ban(found_member)
             await self.bot.say("Successfully banned user {0.name}#{0.discriminator}!".format(found_member))
             embed = discord.Embed(description="<@{0.id}> | {0.name}#{0.discriminator} banned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
@@ -122,7 +122,7 @@ class Moderation:
             private_message = "You have been warned by user {}#{}. The given reason was: `{}`\nThis is warn {}.".format(ctx.message.author.name, ctx.message.author.discriminator, reason, len(self.warns[found_member.id]))
             
             if len(self.warns[found_member.id]) >= 5:
-                private_message += "\nYou were banned due to this warn. \nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.\nIn the rare scenario that you do not have the entire staff list memorized, YourLocalLyric#5752 and Griffin#2329 are two choices you could use."
+                private_message += "\nYou were banned due to this warn. \nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.\nIn the rare scenario that you do not have the entire staff list memorized, LyricLy#5752 and Griffin#2329 are two choices you could use."
                 await self.bot.send_message(found_member, private_message)
                 await self.bot.ban(found_member)
                 reply_msg += " As a result of this warn, the user was banned."
@@ -236,7 +236,7 @@ class Moderation:
             embed = discord.Embed(description="{0.name}#{0.discriminator} moved user <@{1.id}> | {1.name}#{1.discriminator} out of <#335599294553915392>".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
             await self.bot.send_message(found_member, "Enjoy the server!")
-
+            
     @commands.has_permissions(kick_members=True)
     @commands.group(pass_context=True)
     async def promote(self, ctx):
