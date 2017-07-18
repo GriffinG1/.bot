@@ -3,6 +3,7 @@ from discord.ext import commands
 import os
 import sys
 import json
+import asyncio
 
 class Moderation:
     """Bot commands for moderation."""
