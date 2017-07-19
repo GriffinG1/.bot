@@ -301,7 +301,9 @@ class Moderation:
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
-            await self.bot.replace_roles(found_member, self.bot.neutron_stars_role)
+            # await self.bot.replace_roles(found_member, self.bot.neutron_stars_role
+            await self.bot.add_roles(found_member, self.bot.neutron_stars_role)
+            await self.bot.remove_roles(found_member, self.bot.unhelpful_jerks_role)
             embed = discord.Embed(description="{0.name}#{0.discriminator} promoted user <@{1.id}> | {1.name}#{1.discriminator} to Neutron Stars!".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
             try:
