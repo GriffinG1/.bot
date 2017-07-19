@@ -120,7 +120,6 @@ class Moderation:
             await self.bot.say("That user could not be found.")
         else:
             owner = ctx.message.server.owner
-            
             if self.bot.server_admin_role in found_member.roles and not ctx.message.author == owner:
                 return await self.bot.say("You cannot warn a staff member!")
             try:
@@ -130,32 +129,6 @@ class Moderation:
             self.warns[found_member.id].append(reason)
             reply_msg = "Warned user {}#{}. This is warn {}.".format(found_member.name, found_member.discriminator, len(self.warns[found_member.id]))
             private_message = "You have been warned by user {}#{}. The given reason was: `{}`\nThis is warn {}.".format(ctx.message.author.name, ctx.message.author.discriminator, reason, len(self.warns[found_member.id]))
-            
-            if len(self.warns[found_member.id]) >= 5:
-                private_message += "\nYou were banned due to this warn. \nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.\nIn the rare scenario that you do not have the entire staff list memorized, LyricLy#5752 and Griffin#2329 are two choices you could use."
-                await self.bot.send_message(found_member, private_message)
-                await self.bot.ban(found_member)
-                reply_msg += " As a result of this warn, the user was banned."
-                
-            elif len(self.warns[found_member.id]) == 4:
-                private_message += "\nYou were kicked due to this warn. You can rejoin the server with this link: https://discord.gg/hHHKPFz\nYour next warn will automatically ban you."
-                await self.bot.send_message(found_member, private_message)
-                await self.bot.kick(found_member)
-                reply_msg += " As a result of this warn, the user was kicked. The next warn will automatically ban the user."
-                
-            elif len(self.warns[found_member.id]) == 3:
-                private_message += "\nYou were kicked due to this warn. \nYou can rejoin the server with this link: https://discord.gg/hHHKPFz\nYour next warn will automatically kick you."
-                await self.bot.send_message(found_member, private_message)
-                await self.bot.kick(found_member)
-                reply_msg += " As a result of this warn, the user was kicked. The next warn will automatically kick the user."
-                
-            elif len(self.warns[found_member.id]) == 2:
-                private_message += "\nYour next warn will automatically kick you."
-                await self.bot.send_message(found_member, private_message)
-                reply_msg += " The next warn will automatically kick the user."
-                
-            elif len(self.warns[found_member.id]) == 1:
-                await self.bot.send_message(found_member, private_message)
             try:
                 if len(self.warns[found_member.id]) >= 5:
                     private_message += "\nYou were banned due to this warn. \nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.\nIn the rare scenario that you do not have the entire staff list memorized, YourLocalLyric#5752 and Griffin#2329 are two choices you could use."
@@ -183,8 +156,7 @@ class Moderation:
                 elif len(self.warns[found_member.id]) == 1:
                     await self.bot.send_message(found_member, private_message)
             except discord.errors.Forbidden:
-                pass
-                
+                pass   
             await self.bot.say(reply_msg)
             embed = discord.Embed(description="{0.name}#{0.discriminator} warned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             embed.add_field(name="Reason given", value="• " + reason)
