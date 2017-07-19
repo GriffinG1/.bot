@@ -349,7 +349,7 @@ class Moderation:
     
     @commands.has_permissions(kick_members=True)
     @commands.command(pass_context=True)
-    async def nosupport(self, ctx, member, *, reason):
+    async def nosupport(self, ctx, member, *, reason="No reason given."):
         """Kicks a user out of support"""
         await self.bot.delete_message(ctx.message)
         found_member = self.find_user(member, ctx)
