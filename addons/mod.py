@@ -321,7 +321,7 @@ class Moderation:
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
-            await self.bot.add_roles(found_member, self.bot.sheet_admins_role)
+            await self.bot.add_roles(found_member, self.bot.sheet_admin_role)
             embed = discord.Embed(description="{0.name}#{0.discriminator} promoted user <@{1.id}> | {1.name}#{1.discriminator} to Sheet Admin!".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
             try:
@@ -339,7 +339,7 @@ class Moderation:
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
-            await self.bot.add_roles(found_member, self.bot.server_admins_role)
+            await self.bot.add_roles(found_member, self.bot.server_admin_role)
             embed = discord.Embed(description="{0.name}#{0.discriminator} promoted user <@{1.id}> | {1.name}#{1.discriminator} to Server Admin!".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
             try:

@@ -110,7 +110,7 @@ async def on_ready():
         bot.unhelpful_jerks_role = discord.utils.get(server.roles, name="Unhelpful Jerks")
         bot.neutron_stars_role = discord.utils.get(server.roles, name="Neutron Stars")
         bot.server_admin_role = discord.utils.get(server.roles, name="Server Admins")
-        bot.sheet_admins_role = discord.utils.get(server.roles, name="Sheet Admins")
+        bot.sheet_admin_role = discord.utils.get(server.roles, name="Sheet Admins")
         bot.support_role = discord.utils.get(server.roles, name="I NEED SUPPORT")
         
         print("Initialized on {}.".format(server.name))
