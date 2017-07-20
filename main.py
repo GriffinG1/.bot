@@ -123,10 +123,8 @@ async def on_ready():
 # loads extensions
 addons = [
     'addons.utility',
-    'addons.customcmds',
     'addons.load',
     'addons.troll',
-    'addons.log',
     'addons.events',
     'addons.mod',
     'addons.containment',
