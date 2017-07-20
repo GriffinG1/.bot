@@ -34,6 +34,9 @@ class rules:
     @commands.command(pass_context=True, hidden=True)
     async def r7(self):
         await self.simple_embed("If you would like the Sheet Admins role, DM <@177939404243992578> a valid gmail. **Note: breaking any of the rules will result in you losing the role and ability to edit the log.**")
+    @commands.command(pass_context=True, hidden=True)
+    async def containment(self):
+        await self.simple_embed("Please tag Tony Stark for access to the server after reading #rules so they can set you up with roles!")
 
 def setup(bot):
     bot.add_cog(rules(bot))
