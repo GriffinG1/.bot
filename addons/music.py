@@ -41,7 +41,7 @@ class Music:
         """Play a YouTube URL in voice chat."""
         print(self.voice_channel)
         if self.voice_channel:
-            self.player = self.voice_channel.create_ytdl_player(url)
+            self.player = await self.voice_channel.create_ytdl_player(url)
             self.player.start()
         else:
             await self.bot.say("How am I supposed to play music when I'm not in a voice channel? *Think. Think. Think.* Please.")
