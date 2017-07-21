@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 import os
 import sys
-import pynacl
 
 class Music:
     """Bot commands for playing music."""
