@@ -29,7 +29,7 @@ class Music:
     @music.command()
     async def leave(self):
         """Leave a voice channel."""
-        if self.voice_channel:
+        if self.bot.user.voice.voice_channel:
             self.voice_channel.disconnect()
             self.voice_channel = None
             await self.bot.say("Successfully left voice!")
