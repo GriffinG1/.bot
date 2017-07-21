@@ -39,6 +39,7 @@ class Music:
     @music.command()
     async def play(self, url):
         """Play a YouTube URL in voice chat."""
+        print(self.voice_channel)
         if self.voice_channel:
             self.player = self.voice_channel.create_ytdl_player(url)
             self.player.start()
