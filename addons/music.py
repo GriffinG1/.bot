@@ -30,8 +30,8 @@ class Music:
     async def leave(self):
         """Leave a voice channel."""
         if self.bot.server.get_member(self.bot.user.id).voice.voice_channel:
-            self.bot.server.get_member(self.bot.user.id).voice.voice_channel.disconnect()
-            self.voice_channel = None
+            voice_client = self.bot.voice_client_in(server)
+            await voice_client.disconnect()
             await self.bot.say("Successfully left voice!")
         else:
             await self.bot.say("*sigh* I'm not in a voice channel. You're asking me to do things that I just can't do. You expect too much of me. I put in such an effort, but sometimes...")
