@@ -48,9 +48,12 @@ class Music:
     @music.command()
     async def stop(self):
         """Stop a playing song."""
-        if self.player.is_playing():
-            self.player.stop()
-            self.player = None
+        if self.player:
+            if self.player.is_playing():
+                self.player.stop()
+                self.player = None
+            else:
+                await self.bot.say("I'm not PLAYING a song! Ugh!")
         else:
             await self.bot.say("I'm not PLAYING a song! Ugh!")
 
