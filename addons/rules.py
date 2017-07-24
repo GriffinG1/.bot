@@ -35,6 +35,8 @@ class rules:
     async def r7(self):
         await self.simple_embed("If you would like the Sheet Admins role, DM <@177939404243992578> a valid gmail. **Note: breaking any of the rules will result in you losing the role and ability to edit the log.**")
     @commands.command(pass_context=True, hidden=True)
+        await self.simple_embed("**8.** If you require support with a tech issue, you can do `.support` to access a channel where you can ask for help. `.unsupport` can be used to leave this channel.")
+    @commands.command(pass_context=True, hidden=True)
     async def containment(self):
         await self.simple_embed("Please tag Tony Stark for access to the server after reading #rules so they can set you up with roles!")
 
