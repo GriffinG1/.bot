@@ -43,9 +43,11 @@ class Music:
         if self.voice_channel:
             self.player = await self.voice_channel.create_ytdl_player(url)
             self.player.start()
+            await self.bot.say("Now playing:" + url)
         else:
             await self.bot.say("How am I supposed to play music when I'm not in a voice channel? *Think. Think. Think.* Please.")
             
+    @commands.has_permissions(kick_members=True)
     @music.command()
     async def stop(self):
         """Stop a playing song."""
