@@ -21,8 +21,11 @@ class Music:
     async def join(self, ctx):
         """Join a voice channel."""
         if ctx.message.author.voice.voice_channel:
-            self.voice_channel = await self.bot.join_voice_channel(ctx.message.author.voice.voice_channel)
-            await self.bot.say("Successfully joined your voice channel!")
+            if not self.bot.server.get_member(self.bot.user.id).voice.voice_channel:
+                self.voice_channel = await self.bot.join_voice_channel(ctx.message.author.voice.voice_channel)
+                await self.bot.say("Successfully joined your voice channel!")
+            else:
+                await self.bot.say("I'm already in a voice channel, dumbass.")
         else:
             await self.bot.say("You're not in a voice channel. Man, I try my best, but sometimes you make it so difficult. I can't tell what to join when you're not in a server. Please, just give me something to work with.")
             
