@@ -12,10 +12,13 @@ class Music:
         print('Addon "{}" loaded'.format(self.__class__.__name__))  
   
     @commands.group(pass_context=True)
-    async def music(self, ctx):
+    async def music(self, ctx, *, text=""):
         """Music commands."""
         if ctx.invoked_subcommand is None:
-            await self.bot.say("You need to tell me more than that, mate. How do you expect me to know what to do if you just tell me 'music'? I might as well join a random voice channel and start playing Rick Astley's Never Gonna Give You Up. Think about your actions, okay? Thank you.")
+            if text:
+                await self.bot.say("That command doesn't exist. Please check that you spelled it correctly and/or the command exists. Thanks for trying!")
+            else:
+                await self.bot.say("You need to tell me more than that, mate. How do you expect me to know what to do if you just tell me 'music'? I might as well join a random voice channel and start playing Rick Astley's Never Gonna Give You Up. Think about your actions, okay? Thank you.")
             
     @music.command(pass_context=True)
     async def join(self, ctx):
