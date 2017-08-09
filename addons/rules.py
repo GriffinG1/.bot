@@ -40,6 +40,10 @@ class rules:
     @commands.command(pass_context=True, hidden=True)
     async def containment(self):
         await self.simple_embed("Please tag Tony Stark for access to the server after reading #rules so they can set you up with roles!")
+        
+    @commands.command(pass_context=True, hidden=True, aliases=['nick'])
+    async def nickname(self):
+        await self.simple_embed("If you would like a nickname, please DM it to @FuckFace McGee, and your nickname will be applied ASAP!")
 
 def setup(bot):
     bot.add_cog(rules(bot))
