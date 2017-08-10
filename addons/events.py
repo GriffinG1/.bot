@@ -23,14 +23,14 @@ class Events:
             print("Changes pulled!")
         #recieve private messages
         if message.channel.is_private and message.author.id != self.bot.user.id:
-            embed = discord.Embed(description=message.content)
+            embed = discord.Embed(description="***Private message sent by: <@{}> | {}#{}:***\n\n\n".format(message.author.id, message.author.name, message.author.discriminator) + message.content)
             if message.attachments:
                 attachment_urls = []
                 for attachment in message.attachments:
                     attachment_urls.append('[{}]({})'.format(attachment['filename'], attachment['url']))
                 attachment_msg = '\N{BULLET} ' + '\n\N{BULLET} s '.join(attachment_urls)
                 embed.add_field(name='Attachments', value=attachment_msg, inline=False)
-            await self.bot.send_message(self.bot.private_messages_channel, "Private message sent by {}#{}:".format(message.author.name, message.author.discriminator), embed=embed)
+            await self.bot.send_message(self.bot.private_messages_channel, embed=embed)
 
     async def on_member_join(self, member):
         try:
