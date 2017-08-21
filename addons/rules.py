@@ -44,6 +44,10 @@ class rules:
     @commands.command(pass_context=True, hidden=True, aliases=['nick'])
     async def nickname(self):
         await self.simple_embed("If you would like a nickname, please DM it to @FuckFace McGee, and your nickname will be applied ASAP!")
+        
+    @commands.command(pass_context=True, hidden=True)
+    async def botuse(self):
+        await self.simple_embed("**By participating in this server, you acknowledge that user data (including messages, user IDs, user tags) will be collected and logged for moderation purposes. If you disagree with this collection, please leave the server immediately.**")
 
 def setup(bot):
     bot.add_cog(rules(bot))
