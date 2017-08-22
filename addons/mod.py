@@ -195,6 +195,7 @@ class Moderation:
             for warn in user_warns:
                 embed.description += "• {}\n".format(warn)
             embed.set_footer(text="There are {} warns in total.".format(len(user_warns)))
+            await self.bot.say("", embed=embed)
         else:
             await self.bot.say("You have no warns!")
                 
