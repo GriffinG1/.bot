@@ -41,6 +41,11 @@ class Events:
                 embed.add_field(name='Attachments', value=attachment_msg, inline=False)
             await self.bot.send_message(self.bot.private_messages_channel, 
                                         "Private message sent by {0.mention} | {0}:".format(message.author), embed=embed)
+                                        
+    async def on_message_delete(self, message):
+        embed = discord.Embed(description=message.content)
+        await self.bot.send_message(self.bot.msg_logs_channel, 
+                                    "Message deleted by {0.mention} | {0} in channel {1.mention}:".format(message.author, message.channel), embed=embed)
 
     async def on_member_join(self, member):
         try:
