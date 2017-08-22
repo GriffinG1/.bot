@@ -3,3 +3,4 @@ __pycache__/
 run.bat
 runbeta.py
 *.pyc
+addons/__pycache__/

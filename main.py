@@ -48,7 +48,7 @@ bot.escape_trans = str.maketrans({
     "_": "\_",
     "~" : "\~",
     "`": "\`",
-    "\\": "\\\\"  # escape escapes... fuck it i'm out
+    "\\": "\\\\"
 })  # used to escape a string
 
 # mostly taken from https://github.com/Rapptz/discord.py/blob/async/discord/ext/commands/bot.py
@@ -57,10 +57,10 @@ async def on_command_error(error, ctx):
     if isinstance(error, discord.ext.commands.errors.CommandNotFound):
         pass  # ...don't need to know if commands don't exist
     if isinstance(error, discord.ext.commands.errors.CheckFailure):
-        await bot.send_message(ctx.message.channel, "{} You don't have permission to use this command.".format(ctx.message.author.mention))
+        await bot.send_message(ctx.message.channel, "You don't have permission to use this command.")
     elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
         formatter = commands.formatter.HelpFormatter()
-        await bot.send_message(ctx.message.channel, "{} You are missing required arguments.\n{}".format(ctx.message.author.mention, formatter.format_help_for(ctx, ctx.command)[0]))
+        await bot.send_message(ctx.message.channel, "You are missing required arguments.\n{}".format(formatter.format_help_for(ctx, ctx.command)[0]))
     else:
         if ctx.command:
             await bot.send_message(ctx.message.channel, "An error occurred while processing the `{}` command.".format(ctx.command.name))

@@ -166,38 +166,30 @@ class Moderation:
                 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
-    async def listwarns(self, ctx, *, member):
+    async def listwarns(self, ctx, *, member=None):
         """List a member's warns."""
-        found_member = self.find_user(member, ctx)
+        if member is None:
+            found_member = ctx.message.author
+        else:
+            found_member = self.find_user(member, ctx)
         if not found_member:
             await self.bot.say("That user could not be found.")
         else:
-            try:
-                user_warns = self.warns[found_member.id]
-                if user_warns:
-                    embed = discord.Embed(title="Warns for user {}#{}".format(found_member.name, found_member.discriminator), description="")
-                    for warn in user_warns:
-                        embed.description += "• {}\n".format(warn)
-                    embed.set_footer(text="There are {} warns in total.".format(len(user_warns)))
-                    await self.bot.say("", embed=embed)
-                else:
+            if not ctx.message.author.server_permissions.ban_members and ctx.message.author != found_member:
+                await self.bot.say("You don't have permission to use this command.")
+            else:
+                try:
+                    user_warns = self.warns[found_member.id]
+                    if user_warns:
+                        embed = discord.Embed(title="Warns for user {}#{}".format(found_member.name, found_member.discriminator), description="")
+                        for warn in user_warns:
+                            embed.description += "• {}\n".format(warn)
+                        embed.set_footer(text="There are {} warns in total.".format(len(user_warns)))
+                        await self.bot.say("", embed=embed)
+                    else:
+                        await self.bot.say("That user has no warns!")
+                except KeyError:
                     await self.bot.say("That user has no warns!")
-            except KeyError:
-                await self.bot.say("That user has no warns!")
-                
-    @commands.command(pass_context=True)
-    async def warns(self, ctx):
-        """List your own warns"""
-        found_member = ctx.message.author
-        user_warns = self.warns[found_member.id]
-        if user_warns:
-            embed = discord.Embed(Title="Warns for user {}.{}".format(found_member.name, found_member.discriminator), description="")
-            for warn in user_warns:
-                embed.description += "• {}\n".format(warn)
-            embed.set_footer(text="There are {} warns in total.".format(len(user_warns)))
-            await self.bot.say("", embed=embed)
-        else:
-            await self.bot.say("You have no warns!")
                 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
