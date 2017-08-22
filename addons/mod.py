@@ -164,7 +164,6 @@ class Moderation:
             with open("saves/warns.json", "w+") as f:
                 json.dump(self.warns, f)
                 
-    @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
     async def listwarns(self, ctx, *, member=None):
         """List a member's warns."""
