@@ -189,16 +189,13 @@ class Moderation:
     async def warns(self, ctx):
         """List your own warns"""
         found_member = ctx.message.author
-        try:
-            user_warns = self.warns[found_member.id]
-            if user_warns:
-                embed = discord.Embed(Title="Warns for user {}.{}".format(found_member.name, found_member.discriminator), description="")
-                for warn in user_warns:
-                    embed.description += "• {}\n".format(warn)
-                embed.set_footer(text="There are {} warns in total.".format(len(user_warns)))
-            else:
-                await self.bot.say("You have no warns!")
-        except KeyError:
+        user_warns = self.warns[found_member.id]
+        if user_warns:
+            embed = discord.Embed(Title="Warns for user {}.{}".format(found_member.name, found_member.discriminator), description="")
+            for warn in user_warns:
+                embed.description += "• {}\n".format(warn)
+            embed.set_footer(text="There are {} warns in total.".format(len(user_warns)))
+        else:
             await self.bot.say("You have no warns!")
                 
     @commands.has_permissions(ban_members=True)    
