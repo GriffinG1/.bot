@@ -43,7 +43,7 @@ class Events:
                                         "Private message sent by {0.mention} | {0}:".format(message.author), embed=embed)
                                         
     async def on_message_delete(self, message):
-        if message.channel not in (self.bot.msg_logs_channel, self.bot.hidden_channel, self.bot.containment_channel):
+        if message.channel != self.bot.msg_logs_channel and if message.channel != self.bot.containment_channel and if message.channel != self.bot.hidden_channel:
             embed = discord.Embed(description=message.content)
             if message.attachments:
                     attachment_urls = []
