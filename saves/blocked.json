@@ -1,0 +1,14 @@
+{
+"Users": [
+        [
+            "Name",
+            "Id"
+        ]
+    ],
+"Channels": [
+        [
+            "Channel",
+            "id"
+        ]
+    ]
+}
