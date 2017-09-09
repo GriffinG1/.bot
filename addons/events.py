@@ -44,6 +44,7 @@ class Events:
                                         
     async def on_message_delete(self, message):
         if message.channel not in (self.bot.msg_logs_channel, self.bot.hidden_channel, self.bot.containment_channel):
+            embed = discord.Embed(description=message.content)
             if message.attachments:
                     attachment_urls = []
                     for attachment in message.attachments:
