@@ -41,6 +41,16 @@ class Events:
                 embed.add_field(name='Attachments', value=attachment_msg, inline=False)
             await self.bot.send_message(self.bot.private_messages_channel, 
                                         "Private message sent by {0.mention} | {0}:".format(message.author), embed=embed)
+            
+        # auto ban on 15+ pings
+        if len(message.mentions) > 15:
+            embed = discord.Embed(description=message.content)
+            await self.bot.delete_message(message)
+            await self.bot.kick_member(message.author)
+            await self.bot.send_message(message.channel, "{} was kicked for trying to spam ping users.".format(message.author))
+            await self.bot.send_message(self.bot.logs_channnel, "{} was kicked for trying to spam ping users.".format(message.author))
+            await self.bot.send_message(self.bot.logs_channel, embed=embed)
+        
                                         
     async def on_message_delete(self, message):
         if message.channel not in (self.bot.msg_logs_channel, self.bot.containment_channel, self.bot.hidden_channel):
