@@ -50,4 +50,4 @@ class Rules:
         await self.simple_embed("**By participating in this server, you acknowledge that user data (including messages, user IDs, user tags) will be collected and logged for moderation purposes. If you disagree with this collection, please leave the server immediately.**")
 
 def setup(bot):
-    bot.add_cog(rules(bot))
+    bot.add_cog(Rules(bot))
