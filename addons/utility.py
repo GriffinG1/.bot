@@ -59,5 +59,33 @@ class Utility:
         embed = discord.Embed(description="Goku is a shitty bot created by <@175456582098878464> and <@177939404243992578> for use on the Nintendo Homebrew Idiot Log server. \nYou can view the source code [here](https://github.com/LyricLy/Goku/)")
         await self.bot.say(embed=embed)
             
+    @commands.command(pass_context=True)
+    async def derek(self, ctx):
+        """Get your Daily Derek today!"
+        await self.bot.delete_message(ctx.message)
+        found_member = ctx.message.author
+        member_roles = found_member.roles
+        await self.bot.add_roles(found_member, self.bot.derek_role)
+        embed = discord.Embed(description="<@{1.id}> | {0.name}#{0.discriminator} has chosen to meme about <#357720803988733952>".format(ctx.message.author, found_member))
+        await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+        try:
+            await self.bot.send_message(found_member, "You can now meme about derek in <#357720803988733952>!")
+        except discord.errors.Forbidden:
+            pass
+            
+    @commands.command(pass_context=True)
+    async def derek(self, ctx):
+        """Get your Daily Derek today!"
+        await self.bot.delete_message(ctx.message)
+        found_member = ctx.message.author
+        member_roles = found_member.roles
+        await self.bot.remove_roles(found_member, self.bot.derek_role)
+        embed = discord.Embed(description="<@{1.id}> | {0.name}#{0.discriminator} has chosen to leave <#357720803988733952>".format(ctx.message.author, found_member))
+        await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+        try:
+            await self.bot.send_message(found_member, "You don't want to derek meme anymore?")
+        except discord.errors.Forbidden:
+            pass
+            
 def setup(bot):
     bot.add_cog(Utility(bot))
