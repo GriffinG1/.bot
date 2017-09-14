@@ -61,7 +61,7 @@ class Utility:
             
     @commands.command(pass_context=True)
     async def derek(self, ctx):
-        """Get your Daily Derek today!"
+        """Get your Daily Derek today!"""
         await self.bot.delete_message(ctx.message)
         found_member = ctx.message.author
         member_roles = found_member.roles
@@ -75,7 +75,7 @@ class Utility:
             
     @commands.command(pass_context=True)
     async def derek(self, ctx):
-        """Get your Daily Derek today!"
+        """No more daily derek <:blobsad:356259106862006272>"""
         await self.bot.delete_message(ctx.message)
         found_member = ctx.message.author
         member_roles = found_member.roles
