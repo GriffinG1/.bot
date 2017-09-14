@@ -74,8 +74,8 @@ class Utility:
             pass
             
     @commands.command(pass_context=True)
-    async def derek(self, ctx):
-        """No more daily derek <:blobsad:356259106862006272>"""
+    async def underek(self, ctx):
+        """No more daily derek"""
         await self.bot.delete_message(ctx.message)
         found_member = ctx.message.author
         member_roles = found_member.roles
