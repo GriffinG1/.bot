@@ -71,7 +71,7 @@ class Events:
             pass
         await self.bot.add_roles(member, self.bot.idiots_role)
         embed = discord.Embed(title=":wave: Member joined", description="<@{}> | {}#{} | {}".format(member.id, member.name, member.discriminator, member.id))
-        async for message in self.bot.blacklist_channel.history():
+        async for message in self.bot.logs_from(blacklist_channel):
             if member.mention in message.content:
                 embed.set_footer(text="This user is blacklisted.")
         await self.bot.send_message(self.bot.logs_channel, ":exclamation:", embed=embed)
