@@ -183,10 +183,11 @@ class Moderation:
             found_member = ctx.message.author
         elif member == "everyone":
             if ctx.message.author == ctx.message.server.owner:
+                embed = discord.Embed(title="Warns for All Users")
                 for id in self.warns:
                     user_warns = self.warns[id]
                     if user_warns:
-                        embed = discord.Embed(title="Warns for All Users", description="<@{}>\n".format(id))
+                        embed.description = "<@{}>\n".format(id))
                         for warn in user_warns:
                             embed.description += "• {}\n".format(warn)
                 if embed.description is None:
