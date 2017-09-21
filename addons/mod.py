@@ -186,9 +186,9 @@ class Moderation:
                 for id in self.warns:
                     user_warns = self.warns[id]
                     if user_warns:
-                        embed = discord.Embed(title="Warns for All Users", description="")
+                        embed = discord.Embed(title="Warns for All Users", description="<@{}>\n".format(id))
                         for warn in user_warns:
-                            embed.description += "<@{}>\n• {}\n".format(id, warn)
+                            embed.description += "• {}\n".format(warn)
                 if embed.description is None:
                     await self.bot.say("There are no warns")
                 else:
