@@ -189,9 +189,10 @@ class Moderation:
                         embed = discord.Embed(title="Warns for All Users", description="")
                         for warn in user_warns:
                             embed.description += "<@{}>\n• {}\n".format(id, warn)
-                        await self.bot.say("", embed=embed)
-                    else:
-                        await self.bot.say("There are no warns somehow!")
+                if embed.description is None:
+                    await self.bot.say("There are no warns")
+                else:
+                    await self.bot.say("", embed=embed)
             else:
                 await self.bot.say("Only the owner can check everyone's warns")
         else:
