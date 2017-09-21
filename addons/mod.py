@@ -192,9 +192,9 @@ class Moderation:
                 if embed.description is None:
                     await self.bot.say("There are no warns")
                 else:
-                    await self.bot.say("", embed=embed)
+                    return await self.bot.say("", embed=embed)
             else:
-                await self.bot.say("Only the owner can check everyone's warns")
+                return await self.bot.say("Only the owner can check everyone's warns")
         else:
             found_member = self.find_user(member, ctx)
         if not found_member:
