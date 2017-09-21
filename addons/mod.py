@@ -190,6 +190,7 @@ class Moderation:
                         embed.description += "<@{}>\n".format(id)
                         for warn in user_warns:
                             embed.description += "• {}\n".format(warn)
+                        embed.description += "\n"
                 if embed.description is None:
                     await self.bot.say("There are no warns")
                 else:
