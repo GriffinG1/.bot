@@ -187,7 +187,7 @@ class Moderation:
                 for id in self.warns:
                     user_warns = self.warns[id]
                     if user_warns:
-                        embed.description += "<@{}>\n".format(id))
+                        embed.description += "<@{}>\n".format(id)
                         for warn in user_warns:
                             embed.description += "• {}\n".format(warn)
                 if embed.description is None:
