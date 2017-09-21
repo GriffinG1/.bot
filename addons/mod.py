@@ -181,6 +181,20 @@ class Moderation:
         """List a member's warns."""
         if member is None:
             found_member = ctx.message.author
+        elif member == "everyone":
+            try:
+                if ctx.message.author == ctx.message.server.owner:
+                    for id in self.warns:
+                        user_warns = self.warns[id]
+                        if user_warns:
+                            embed = discord.Embed(title="Warns for All Users", description="")
+                            for warn in user_warns:
+                                embed.description += "<@{}>\n• {}\n".format(id, warn)
+                            await self.bot.say("", embed=embed)
+                        else:
+                            await self.bot.say("There are no warns somehow!")
+                else:
+                    return await self.bot.say("Only the owner can check everyone's warns")
         else:
             found_member = self.find_user(member, ctx)
         if not found_member:
