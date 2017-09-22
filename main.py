@@ -148,5 +148,3 @@ for extension in addons:
 # Execute
 print('Bot directory: ', dir_path)
 bot.run("MzE2MDI3ODc4NjAzMDk2MDY1.DAPTiQ.7QG9qND8pAJWsvPcGuVqWmG2H3I")
-# MzE2MDI3ODc4NjAzMDk2MDY1.DAPTiQ.7QG9qND8pAJWsvPcGuVqWmG2H3I is stable
-# MzI0MDQ5NTIyNDMyOTMzODg4.DCECKg.aqDI02VcJm5BP36nhwarF0DWCXI is beta
