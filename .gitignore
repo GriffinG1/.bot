@@ -4,3 +4,4 @@ run.bat
 runbeta.py
 *.pyc
 addons/__pycache__/
+config.ini

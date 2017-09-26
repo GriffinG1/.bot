@@ -9,3 +9,4 @@ Although it is open source, this bot is not really designed to be used in other 
 
 ## Credits
 * [Kurisu](https://github.com/ihaveamac/Kurisu) for inspiration
+* [Brick](https://github.com/T3CHNOLOG1C/Brick) for the token parsing code.

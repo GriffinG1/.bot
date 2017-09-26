@@ -29,6 +29,9 @@ with open(the_filename) as f:
 prefix = ['!', '.']
 bot = commands.Bot(command_prefix=prefix, description=description, pm_help=None)
 
+config = configparser.ConfigParser()
+config.read("config.ini")
+
 bot.actions = []  # changes messages in mod-/server-logs
 
 # http://stackoverflow.com/questions/3411771/multiple-character-replace-with-python
@@ -147,4 +150,4 @@ for extension in addons:
 
 # Execute
 print('Bot directory: ', dir_path)
-bot.run("MzE2MDI3ODc4NjAzMDk2MDY1.DAPTiQ.7QG9qND8pAJWsvPcGuVqWmG2H3I")
+bot.run(config['Main']['token'])
