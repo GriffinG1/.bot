@@ -60,19 +60,19 @@ class Utility:
         found_member = ctx.message.author
         member_roles = found_member.roles
         if not self.bot.derek_role in member_roles:
-            await self.bot.add_roles(found_member, self.bot.derek_role)
+            await found_member.add_roles(self.bot.derek_role)
             embed = discord.Embed(description="<@{1.id}> | {0.name}#{0.discriminator} has chosen to meme about <#357720803988733952>".format(ctx.message.author, found_member))
-            await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+            await self.bot.cmd_logs_channel.send(embed=embed)
             try:
-                await self.bot.send_message(found_member, "You can now meme about derek in <#357720803988733952>!")
+                await found_member.send("You can now meme about derek in <#357720803988733952>!")
             except discord.errors.Forbidden:
                 pass
         else:
-            await self.bot.remove_roles(found_member, self.bot.derek_role)
+            await found_member.remove_roles(self.bot.derek_role)
             embed = discord.Embed(description="<@{1.id}> | {0.name}#{0.discriminator} has chosen to leave <#357720803988733952>".format(ctx.message.author, found_member))
-            await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+            await self.bot.cmd_logs_channel.send(embed=embed)
             try:
-                await self.bot.send_message(found_member, "You don't want to derek meme anymore?")
+                await found_member.send("You don't want to derek meme anymore?")
             except discord.errors.Forbidden:
                 pass
             
