@@ -21,19 +21,19 @@ class Troll:
             if not member:
                 member = ctx.message.server.get_member(memberName)
             if not member:
-                await self.bot.send_message(ctx.message.channel, 'Invalid user!')
+                await ctx.send('Invalid user!')
         try:
-            await self.bot.send_message(member, message)
-            await self.bot.say("Successfully sent a message to {}#{}!".format(member.name, member.discriminator))    
+            await member.send(message)
+            await ctx.send("Successfully sent a message to {}#{}!".format(member.name, member.discriminator))    
         except discord.errors.Forbidden: # if Goku is blocked
-            await self.bot.say("Could not send message. The user likely has the bot blocked.")  
+            await ctx.send("Could not send message. The user likely has the bot blocked.")  
      
     @commands.has_permissions(ban_members=True)       
     @commands.command(pass_context=True)
     async def say(self, ctx, channel, *, msg):
         """Says a message in a specified channel."""
         msg = msg.replace("@everyone", "`@`everyone").replace("@here", "`@`here")
-        await self.bot.send_message(ctx.message.channel_mentions[0], msg)
+        await ctx.message.channel_mentions[0].send(msg)
         
 def setup(bot):
     bot.add_cog(Troll(bot))
