@@ -32,7 +32,7 @@ class Troll:
     @commands.command(pass_context=True)
     async def say(self, ctx, channel, *, msg):
         """Says a message in a specified channel."""
-        msg = msg.replace("@everyone", "`@`everyone")
+        msg = msg.replace("@everyone", "`@`everyone").replace("@here", "`@`here")
         await self.bot.send_message(ctx.message.channel_mentions[0], msg)
         
 def setup(bot):

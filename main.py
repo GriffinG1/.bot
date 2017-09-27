@@ -29,6 +29,9 @@ with open(the_filename) as f:
 prefix = ['!', '.']
 bot = commands.Bot(command_prefix=prefix, description=description, pm_help=None)
 
+config = configparser.ConfigParser()
+config.read("config.ini")
+
 bot.actions = []  # changes messages in mod-/server-logs
 
 # http://stackoverflow.com/questions/3411771/multiple-character-replace-with-python
@@ -48,7 +51,7 @@ bot.escape_trans = str.maketrans({
     "_": "\_",
     "~" : "\~",
     "`": "\`",
-    "\\": "\\\\"  # escape escapes... fuck it i'm out
+    "\\": "\\\\"
 })  # used to escape a string
 
 # mostly taken from https://github.com/Rapptz/discord.py/blob/async/discord/ext/commands/bot.py
@@ -57,10 +60,10 @@ async def on_command_error(error, ctx):
     if isinstance(error, discord.ext.commands.errors.CommandNotFound):
         pass  # ...don't need to know if commands don't exist
     if isinstance(error, discord.ext.commands.errors.CheckFailure):
-        await bot.send_message(ctx.message.channel, "{} You don't have permission to use this command.".format(ctx.message.author.mention))
+        await bot.send_message(ctx.message.channel, "You don't have permission to use this command.")
     elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
         formatter = commands.formatter.HelpFormatter()
-        await bot.send_message(ctx.message.channel, "{} You are missing required arguments.\n{}".format(ctx.message.author.mention, formatter.format_help_for(ctx, ctx.command)[0]))
+        await bot.send_message(ctx.message.channel, "You are missing required arguments.\n{}".format(formatter.format_help_for(ctx, ctx.command)[0]))
     else:
         if ctx.command:
             await bot.send_message(ctx.message.channel, "An error occurred while processing the `{}` command.".format(ctx.command.name))
@@ -103,6 +106,9 @@ async def on_ready():
         bot.cmd_logs_channel = discord.utils.get(server.channels, name="cmd-logs")
         bot.containment_channel = discord.utils.get(server.channels, name="containment")
         bot.err_logs_channel = discord.utils.get(server.channels, name="err-logs")
+        bot.msg_logs_channel = discord.utils.get(server.channels, name="msg-logs")
+        bot.hidden_channel = discord.utils.get(server.channels, name="hiddenplace")
+        bot.blacklist_channel = discord.utils.get(server.channels, name="blacklist")
         
         bot.archit_role = discord.utils.get(server.roles, name="Tech Support")
         bot.idiots_role = discord.utils.get(server.roles, name="Idiots")
@@ -110,6 +116,9 @@ async def on_ready():
         bot.unhelpful_jerks_role = discord.utils.get(server.roles, name="Unhelpful Jerks")
         bot.neutron_stars_role = discord.utils.get(server.roles, name="Neutron Stars")
         bot.server_admin_role = discord.utils.get(server.roles, name="Server Admins")
+        bot.sheet_admin_role = discord.utils.get(server.roles, name="Sheet Admins")
+        bot.support_role = discord.utils.get(server.roles, name="I NEED SUPPORT")
+        bot.derek_role = discord.utils.get(server.roles, name="DDM")
         
         print("Initialized on {}.".format(server.name))
         
@@ -121,10 +130,8 @@ async def on_ready():
 # loads extensions
 addons = [
     'addons.utility',
-    'addons.customcmds',
     'addons.load',
     'addons.troll',
-    'addons.log',
     'addons.events',
     'addons.mod',
     'addons.containment',
@@ -143,6 +150,4 @@ for extension in addons:
 
 # Execute
 print('Bot directory: ', dir_path)
-bot.run("MzE2MDI3ODc4NjAzMDk2MDY1.DAPTiQ.7QG9qND8pAJWsvPcGuVqWmG2H3I")
-# MzE2MDI3ODc4NjAzMDk2MDY1.DAPTiQ.7QG9qND8pAJWsvPcGuVqWmG2H3I is stable
-# MzI0MDQ5NTIyNDMyOTMzODg4.DCECKg.aqDI02VcJm5BP36nhwarF0DWCXI is beta
+bot.run(config['Main']['token'])
