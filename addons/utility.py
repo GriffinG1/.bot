@@ -56,7 +56,7 @@ class Utility:
     async def about(self, ctx):
         """Information about Goku"""
         await self.bot.delete_message(ctx.message)
-        embed = discord.Embed(description="Goku is a shitty bot created by <@175456582098878464> and <@177939404243992578> for use on the Nintendo Homebrew Idiot Log server. \nYou can view the source code [here](https://github.com/LyricLy/Goku/)")
+        embed = discord.Embed(description="Goku is a shitty bot created by <@175456582098878464> and <@177939404243992578> for use on the Nintendo Homebrew Idiot Log server. \nYou can view the source code [here](https://github.com/GriffinG1/Goku/)")
         await self.bot.say(embed=embed)
             
     @commands.command(pass_context=True)
