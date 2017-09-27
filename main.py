@@ -131,7 +131,7 @@ async def on_ready():
 addons = [
     'addons.utility',
     'addons.load',
-    'addons.troll',
+    'addons.message',
     'addons.events',
     'addons.mod',
     'addons.containment',
