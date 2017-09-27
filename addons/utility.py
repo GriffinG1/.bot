@@ -24,7 +24,7 @@ class Utility:
         await ctx.send("Restarting...")
         sys.exit(0)
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def support(self, ctx):
         """Use to access the support channel"""
         await ctx.message.delete()
@@ -47,13 +47,13 @@ class Utility:
             except discord.errors.Forbidden:
                 pass
             
-    @commands.command(pass_context=True)
+    @commands.command()
     async def about(self, ctx):
         """Information about Goku"""
         embed = discord.Embed(description="Goku is a shitty bot created by <@177939404243992578> for use on the Nintendo Homebrew Idiot Log server. \nYou can view the source code [here](https://github.com/GriffinG1/Goku/)")
         await ctx.send(embed=embed)
             
-    @commands.command(pass_context=True)
+    @commands.command()
     async def derek(self, ctx):
         """Get your Daily Derek today!"""
         await ctx.message.delete()
