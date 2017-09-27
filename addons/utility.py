@@ -30,7 +30,7 @@ class Utility:
         await ctx.message.delete()
         found_member = ctx.message.author
         member_roles = found_member.roles
-        if !self.bot.support_role in member_roles:
+        if not self.bot.support_role in member_roles:
             await found_member.add_roles(self.bot.support_role)
             embed = discord.Embed(description="<@{1.id}> | {0.name}#{0.discriminator} accessed <#336761748159987713>".format(ctx.message.author, found_member))
             await self.bot.cmd_logs_channel.send(embed=embed)
@@ -59,7 +59,7 @@ class Utility:
         await ctx.message.delete()
         found_member = ctx.message.author
         member_roles = found_member.roles
-        if !self.bot.derek_role in member_roles:
+        if not self.bot.derek_role in member_roles:
             await self.bot.add_roles(found_member, self.bot.derek_role)
             embed = discord.Embed(description="<@{1.id}> | {0.name}#{0.discriminator} has chosen to meme about <#357720803988733952>".format(ctx.message.author, found_member))
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
