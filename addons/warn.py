@@ -47,7 +47,7 @@ class Warning:
             reply_msg = "Warned user {}#{}. This is warn {}.".format(found_member.name, found_member.discriminator, len(self.warns[found_member.id]))
             private_message = "You have been warned by user {}#{}. The given reason was: `{}`\nThis is warn {}.".format(ctx.message.author.name, ctx.message.author.discriminator, reason, len(self.warns[found_member.id]))
             if len(self.warns[found_member.id]) >= 5:
-                private_message += "\nYou were banned due to this warn.\nIf you feel that you did not deserve this ban, send a direct message to one of the staff on the Server Admins list in {1}.\nIn the rare scenario that you do not have the entire staff list memorized, YourLocalLyric#5752 and Griffin#2329 are two choices you could use."
+                private_message += "\nYou were banned due to this warn.\nIIf you feel that you did not deserve this ban, send a direct message to one of the Server Admins.\nIn the rare scenario that you do not have the entire staff list memorized, you can DM <@177939404243992578> | Griffin#2329."
                 try:
                     await self.bot.send_message(found_member, private_message)
                 except discord.Forbidden:
