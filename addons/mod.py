@@ -59,7 +59,7 @@ class Moderation:
             else:
                 reason_msg = "No reason was given."
             try: 
-                await found_member.send("You have been banned by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this ban, send a direct message to one of the Server Admins.\nIn the rare scenario that you do not have the entire staff list memorized, you can DM <@177939404243992578> | Griffin#2329.".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
+                await found_member.send("You have been banned by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this ban, send a direct message to one of the Server Admins.\nIn the rare scenario that you do not have the entire staff list memorized, you can DM <@177939404243992578> | Griffin#2329.".format(ctx.message.author, reason_msg))
             except discord.errors.Forbidden:
                 pass
             await found_member.ban(0)
