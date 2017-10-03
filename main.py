@@ -20,11 +20,7 @@ import git
 dir_path = os.path.dirname(os.path.realpath(__file__))
 os.chdir(dir_path)
 
-the_filename = "customcmds.txt"
 git = git.cmd.Git(".")
-
-with open(the_filename) as f:
-    comms = json.loads(f.readline().strip())
 
 prefix = ['!', '.']
 bot = commands.Bot(command_prefix=prefix, description=description, pm_help=None)
@@ -136,6 +132,7 @@ addons = [
     'addons.mod',
     'addons.containment',
     'addons.rules'
+    'addons.warn'
 ]
 
 failed_addons = []
