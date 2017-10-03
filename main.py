@@ -125,13 +125,14 @@ async def on_ready():
     
 # loads extensions
 addons = [
-    'addons.utility',
+    'addons.containment',
+    'addons.events',
     'addons.load',
     'addons.message',
-    'addons.events',
     'addons.mod',
-    'addons.containment',
-    'addons.rules'
+    #'addons.music', Commented out until music.py is stable
+    'addons.rules',
+    'addons.utility',
     'addons.warn'
 ]
 
