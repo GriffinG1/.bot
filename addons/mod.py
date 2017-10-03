@@ -11,9 +11,9 @@ class Moderation:
         self.bot = bot
         
     def find_user(self, user, ctx):
-        found_member = self.bot.server.get_member(user)
+        found_member = guild.get_member(user)
         if not found_member:
-            found_member = self.bot.server.get_member_named(user)
+            found_member = guild.get_member_named(user)
         if not found_member:
             try:
                 found_member = ctx.message.mentions[0]
