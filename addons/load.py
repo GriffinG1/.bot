@@ -44,12 +44,12 @@ class Load:
         errors = ""
         for addon in os.listdir("addons"):
             if ".py" in addon:
-                cog = cog.replace('.py', '')
+                addon = addon.replace('.py', '')
                 try:
-                    self.bot.unload_extension("cogs.{}".format(addon))
-                    self.bot.load_extension("cogs.{}".format(addon))
+                    self.bot.unload_extension("addons.{}".format(addon))
+                    self.bot.load_extension("addons.{}".format(addon))
                 except Exception as e:
-                    errors += 'Failed to load module: `{}.py` due to `{}: {}`\n'.format(addon, type(e).__name__, e)
+                    errors += 'Failed to load addon: `{}.py` due to `{}: {}`\n'.format(addon, type(e).__name__, e)
         if not errors:
             await ctx.send(self.bot.bot_prefix + "All addons reloaded")
         else:
