@@ -56,19 +56,19 @@ async def on_command_error(error, ctx):
     if isinstance(error, discord.ext.commands.errors.CommandNotFound):
         pass  # ...don't need to know if commands don't exist
     if isinstance(error, discord.ext.commands.errors.CheckFailure):
-        await bot.send_message(ctx.message.channel, "You don't have permission to use this command.")
+        await ctx.send("You don't have permission to use this command.")
     elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
         formatter = commands.formatter.HelpFormatter()
-        await bot.send_message(ctx.message.channel, "You are missing required arguments.\n{}".format(formatter.format_help_for(ctx, ctx.command)[0]))
+        await ctx.send("You are missing required arguments.\n{}".format(formatter.format_help_for(ctx, ctx.command)[0]))
     else:
         if ctx.command:
-            await bot.send_message(ctx.message.channel, "An error occurred while processing the `{}` command.".format(ctx.command.name))
+            await ctx.send("An error occurred while processing the `{}` command.".format(ctx.command.name))
         print('Ignoring exception in command {0.command} in {0.message.channel}'.format(ctx))
         tb = traceback.format_exception(type(error), error, error.__traceback__)
         error_trace = "".join(tb)
         print(error_trace)
         embed = discord.Embed(description=error_trace.translate(bot.escape_trans))
-        await bot.send_message(bot.err_logs_channel, "An error occurred while processing the `{}` command in channel `{}`.".format(ctx.command.name, ctx.message.channel), embed=embed)
+        await bot.err_logs_channel.send("An error occurred while processing the `{}` command in channel `{}`.".format(ctx.command.name, ctx.message.channel), embed=embed)
         
 @bot.event
 async def on_error(event_method, *args, **kwargs):
@@ -79,7 +79,7 @@ async def on_error(event_method, *args, **kwargs):
     error_trace = "".join(tb)
     print(error_trace)
     embed = discord.Embed(description=error_trace.translate(bot.escape_trans))
-    await bot.send_message(bot.err_logs_channel, "An error occurred while processing `{}`.".format(event_method), embed=embed)
+    await bot.err_logs_channel.send("An error occurred while processing `{}`.".format(event_method), embed=embed)
 
 bot.all_ready = False
 bot._is_all_ready = asyncio.Event(loop=bot.loop)
@@ -91,32 +91,32 @@ bot.wait_until_all_ready = wait_until_all_ready
 @bot.event
 async def on_ready():
     # this bot should only ever be in one server anyway
-    for server in bot.servers:
-        bot.server = server
+    for guild in bot.guilds:
+        bot.guild = guild
         if bot.all_ready:
             break
-        bot.idiots_channel = discord.utils.get(server.channels, name="idiots")
-        bot.private_messages_channel = discord.utils.get(server.channels, name="private-messages")
-        bot.rules_channel = discord.utils.get(server.channels, name="rules")
-        bot.logs_channel = discord.utils.get(server.channels, name="server-logs")
-        bot.cmd_logs_channel = discord.utils.get(server.channels, name="cmd-logs")
-        bot.containment_channel = discord.utils.get(server.channels, name="containment")
-        bot.err_logs_channel = discord.utils.get(server.channels, name="err-logs")
-        bot.msg_logs_channel = discord.utils.get(server.channels, name="msg-logs")
-        bot.hidden_channel = discord.utils.get(server.channels, name="hiddenplace")
-        bot.blacklist_channel = discord.utils.get(server.channels, name="blacklist")
+        bot.idiots_channel = discord.utils.get(guild.channels, name="idiots")
+        bot.private_messages_channel = discord.utils.get(guild.channels, name="private-messages")
+        bot.rules_channel = discord.utils.get(guild.channels, name="rules")
+        bot.logs_channel = discord.utils.get(guild.channels, name="server-logs")
+        bot.cmd_logs_channel = discord.utils.get(guild.channels, name="cmd-logs")
+        bot.containment_channel = discord.utils.get(guild.channels, name="containment")
+        bot.err_logs_channel = discord.utils.get(guild.channels, name="err-logs")
+        bot.msg_logs_channel = discord.utils.get(guild.channels, name="msg-logs")
+        bot.hidden_channel = discord.utils.get(guild.channels, name="hiddenplace")
+        bot.blacklist_channel = discord.utils.get(guild.channels, name="blacklist")
         
-        bot.archit_role = discord.utils.get(server.roles, name="Tech Support")
-        bot.idiots_role = discord.utils.get(server.roles, name="Idiots")
-        bot.muted_role = discord.utils.get(server.roles, name="No Speaking!")
-        bot.unhelpful_jerks_role = discord.utils.get(server.roles, name="Unhelpful Jerks")
-        bot.neutron_stars_role = discord.utils.get(server.roles, name="Neutron Stars")
-        bot.server_admin_role = discord.utils.get(server.roles, name="Server Admins")
-        bot.sheet_admin_role = discord.utils.get(server.roles, name="Sheet Admins")
-        bot.support_role = discord.utils.get(server.roles, name="I NEED SUPPORT")
-        bot.derek_role = discord.utils.get(server.roles, name="DDM")
+        bot.archit_role = discord.utils.get(guild.roles, name="Tech Support")
+        bot.idiots_role = discord.utils.get(guild.roles, name="Idiots")
+        bot.muted_role = discord.utils.get(guild.roles, name="No Speaking!")
+        bot.unhelpful_jerks_role = discord.utils.get(guild.roles, name="Unhelpful Jerks")
+        bot.neutron_stars_role = discord.utils.get(guild.roles, name="Neutron Stars")
+        bot.server_admin_role = discord.utils.get(guild.roles, name="Server Admins")
+        bot.sheet_admin_role = discord.utils.get(guild.roles, name="Sheet Admins")
+        bot.support_role = discord.utils.get(guild.roles, name="I NEED SUPPORT")
+        bot.derek_role = discord.utils.get(guild.roles, name="DDM")
         
-        print("Initialized on {}.".format(server.name))
+        print("Initialized on {}.".format(guild.name))
         
         bot.all_ready = True
         bot._is_all_ready.set()
