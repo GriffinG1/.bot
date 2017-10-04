@@ -15,7 +15,7 @@ class Load:
     @commands.has_permissions(ban_members=True)
     @commands.command(hidden=True)
     async def load(self, ctx, *, module):
-        """Load an addon"""
+        """Loads an addon"""
         try:
             self.bot.load_extension("addons.{}".format(module))
         except Exception as e:
@@ -26,7 +26,7 @@ class Load:
     @commands.has_permissions(ban_members=True)
     @commands.command(hidden=True)
     async def unload(self, ctx, *, module):
-        """Unload a module"""
+        """Unloads an addon"""
         try:
             if module == "addons.load":
                 await ctx.send(":exclamation: I don't think you want to unload that!")
