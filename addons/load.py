@@ -20,9 +20,9 @@ class Load:
             if module[0:7] != "addons.":
                 module = "addons." + module
             self.bot.load_extension(module)
-            await self.bot.say(':white_check_mark: Extension loaded.')
+            await ctx.send(':white_check_mark: Extension loaded.')
         except Exception as e:
-            await self.bot.say(':anger: Failed!\n```\n{}: {}\n```'.format(type(e).__name__, e))
+            await ctx.send(':anger: Failed!\n```\n{}: {}\n```'.format(type(e).__name__, e))
 
     @commands.has_permissions(ban_members=True)
     @commands.command(hidden=True)
@@ -32,12 +32,12 @@ class Load:
             if module[0:7] != "addons.":
                 module = "addons." + module
             if module == "addons.load":
-                await self.bot.say(":exclamation: I don't think you want to unload that!")
+                await ctx.send(":exclamation: I don't think you want to unload that!")
             else:
                 self.bot.unload_extension(module)
-                await self.bot.say(':white_check_mark: Extension unloaded.')
+                await ctx.send(':white_check_mark: Extension unloaded.')
         except Exception as e:
-            await self.bot.say(':anger: Failed!\n```\n{}: {}\n```'.format(type(e).__name__, e))
+            await ctx.send(':anger: Failed!\n```\n{}: {}\n```'.format(type(e).__name__, e))
 
     @commands.has_permissions(ban_members=True)
     @commands.command(name='reload', hidden=True)
@@ -48,9 +48,9 @@ class Load:
                 module = "addons." + module
             self.bot.unload_extension(module)
             self.bot.load_extension(module)
-            await self.bot.say(':white_check_mark: Extension reloaded.')
+            await ctx.send(':white_check_mark: Extension reloaded.')
         except Exception as e:
-            await self.bot.say(':anger: Failed!\n```\n{}: {}\n```'.format(type(e).__name__, e))
+            await ctx.send(':anger: Failed!\n```\n{}: {}\n```'.format(type(e).__name__, e))
 
 def setup(bot):
     bot.add_cog(Load(bot))
