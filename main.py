@@ -30,25 +30,27 @@ config.read("config.ini")
 
 bot.actions = []  # changes messages in mod-/server-logs
 
+
 # http://stackoverflow.com/questions/3411771/multiple-character-replace-with-python
-chars = "\\`*_<>#@:~"
 def escape_name(name):
+    chars = "\\`*_<>#@:~"
     name = str(name)
     for c in chars:
         if c in name:
             name = name.replace(c, "\\" + c)
     return name.replace("@", "@\u200b")  # prevent mentions
+
+
 bot.escape_name = escape_name
-
 bot.pruning = False  # used to disable leave logs if pruning, maybe.
-
 bot.escape_trans = str.maketrans({
     "*": "\*",
     "_": "\_",
-    "~" : "\~",
+    "~": "\~",
     "`": "\`",
     "\\": "\\\\"
 })  # used to escape a string
+
 
 # mostly taken from https://github.com/Rapptz/discord.py/blob/async/discord/ext/commands/bot.py
 @bot.event
@@ -69,7 +71,8 @@ async def on_command_error(error, ctx):
         print(error_trace)
         embed = discord.Embed(description=error_trace.translate(bot.escape_trans))
         await bot.err_logs_channel.send("An error occurred while processing the `{}` command in channel `{}`.".format(ctx.command.name, ctx.message.channel), embed=embed)
-        
+
+
 @bot.event
 async def on_error(event_method, *args, **kwargs):
     if isinstance(args[0], commands.errors.CommandNotFound):
@@ -83,10 +86,13 @@ async def on_error(event_method, *args, **kwargs):
 
 bot.all_ready = False
 bot._is_all_ready = asyncio.Event(loop=bot.loop)
+
+
 async def wait_until_all_ready():
     """Wait until the entire bot is ready."""
     await bot._is_all_ready.wait()
 bot.wait_until_all_ready = wait_until_all_ready
+
 
 @bot.event
 async def on_ready():
