@@ -1,1 +1,1 @@
-python runbeta.py
+python run.py
