@@ -13,7 +13,6 @@ class Containment:
     
     async def containment_loop(self):
         await self.bot.wait_until_ready()
-        await self.bot.wait_until_login()
         while self is self.bot.get_cog("Containment"):
             await asyncio.sleep(1)
             self.countdown += 1
