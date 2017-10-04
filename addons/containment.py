@@ -19,9 +19,9 @@ class Containment:
             self.countdown += 1
             if self.countdown == 90:
                 deleted_message = False
-                async for message in self.bot.logs_from(self.bot.containment_channel, 500):
+                async for message in self.bot.containment_channel.history(limit=500):
                     if not (message.content == "Please tag Tony Stark for access to the server after reading <#318626746297745409> so they can set you up with roles!" and self.bot.user == message.author):
-                        await self.bot.delete_message(message)
+                        await message.delete()
             
     async def on_message(self, message):
         if message.channel == self.bot.containment_channel:
