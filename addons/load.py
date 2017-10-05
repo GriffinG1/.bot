@@ -52,7 +52,7 @@ class Load:
                 except Exception as e:
                     errors += 'Failed to load addon: `{}.py` due to `{}: {}`\n'.format(addon, type(e).__name__, e)
         if not errors:
-            await ctx.send("All addons reloaded")
+            await ctx.send(':white_check_mark: Extensions reloaded.')
         else:
             await ctx.send(errors)
 

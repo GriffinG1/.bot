@@ -10,7 +10,7 @@ class Utility:
         print('Addon "{}" loaded'.format(self.__class__.__name__))  
     
     @commands.command()
-    async def test(self):
+    async def test(self, ctx):
         """A test command."""
         embed = discord.Embed(title="testing", description="Testing")
         embed.add_field(name="Notes", value="Testing!", inline=False)
@@ -18,8 +18,8 @@ class Utility:
         await ctx.send(embed=embed)
 
     @commands.has_permissions(ban_members=True)    
-    @commands.command()
-    async def restart(self):
+    @commands.command(pass_context=True)
+    async def restart(self, ctx):
         """Restarts the bot."""
         await ctx.send("Restarting...")
         sys.exit(0)

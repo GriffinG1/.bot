@@ -23,7 +23,7 @@ os.chdir(dir_path)
 git = git.cmd.Git(".")
 
 prefix = ['!', '.']
-bot = commands.Bot(command_prefix=prefix, description=description, pm_help=None)
+bot = commands.Bot(command_prefix=prefix, description=description)
 
 config = configparser.ConfigParser()
 config.read("config.ini")
@@ -57,7 +57,7 @@ bot.escape_trans = str.maketrans({
 async def on_command_error(ctx, error):
     if isinstance(error, discord.ext.commands.errors.CommandNotFound):
         pass  # ...don't need to know if commands don't exist
-    if isinstance(error, discord.ext.commands.errors.CheckFailure):
+    elif isinstance(error, discord.ext.commands.errors.CheckFailure):
         await ctx.send("You don't have permission to use this command.")
     elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
         formatter = commands.formatter.HelpFormatter()
@@ -132,7 +132,7 @@ async def on_ready():
 # loads extensions
 addons = [
     'addons.containment',
-    'addons.events',
+    #'addons.events',
     'addons.load',
     'addons.message',
     'addons.mod',
