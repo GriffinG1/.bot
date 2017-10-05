@@ -112,7 +112,7 @@ class Moderation:
     @commands.command(pass_context=True)
     async def uncontain(self, ctx, member):
         """Remove a member from #containment."""
-        ctx.message.delete()
+        await ctx.message.delete()
         found_member = self.find_user(member, ctx)
         member_roles = found_member.roles
         if not found_member:
@@ -139,7 +139,7 @@ class Moderation:
     @promote.command(pass_context=True)
     async def Neutron(self, ctx, *, member):
         """Neutron Stars"""
-        ctx.message.delete()
+        await ctx.message.delete()
         found_member = self.find_user(member, ctx)
         member_roles = found_member.roles
         if not found_member:
@@ -158,7 +158,7 @@ class Moderation:
     @promote.command(pass_context=True)
     async def Sheet(self, ctx, *, member):
         """Sheet Admins"""
-        ctx.message.delete()
+        await ctx.message.delete()
         found_member = self.find_user(member, ctx)
         member_roles = found_member.roles
         if not found_member:
