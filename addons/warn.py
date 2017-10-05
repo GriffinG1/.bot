@@ -14,9 +14,9 @@ class Warning:
         print('Addon "{}" loaded'.format(self.__class__.__name__))
         
     def find_user(self, user, ctx):
-        found_member = self.bot.server.get_member(user)
+        found_member = self.bot.guild.get_member(user)
         if not found_member:
-            found_member = self.bot.server.get_member_named(user)
+            found_member = self.bot.guild.get_member_named(user)
         if not found_member:
             try:
                 found_member = ctx.message.mentions[0]
@@ -25,8 +25,7 @@ class Warning:
         if not found_member:
             return None
         else:
-            return found_member
-            
+            return found_member            
                 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
