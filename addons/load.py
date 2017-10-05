@@ -2,6 +2,7 @@
 import discord
 from discord.ext import commands
 from sys import argv
+import os
 
 class Load:
     """
@@ -28,8 +29,8 @@ class Load:
     async def unload(self, ctx, *, module):
         """Unloads an addon"""
         try:
-            if module == "addons.load":
-                await ctx.send(":exclamation: I don't think you want to unload that!")
+            if module == "load":
+                return await ctx.send(":exclamation: I don't think you want to unload that!")
             else:
                 self.bot.unload_extension("addons.{}".format(module))
         except Exception as e:
@@ -51,9 +52,9 @@ class Load:
                 except Exception as e:
                     errors += 'Failed to load addon: `{}.py` due to `{}: {}`\n'.format(addon, type(e).__name__, e)
         if not errors:
-            await ctx.send(self.bot.bot_prefix + "All addons reloaded")
+            await ctx.send("All addons reloaded")
         else:
-            await ctx.send(self.bot.bot_prefix + errors)
+            await ctx.send(errors)
 
 def setup(bot):
     bot.add_cog(Load(bot))
