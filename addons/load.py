@@ -31,7 +31,7 @@ class Load:
             if module == "addons.load":
                 await ctx.send(":exclamation: I don't think you want to unload that!")
             else:
-            self.bot.unload_extension("addons.{}".format(module))
+                self.bot.unload_extension("addons.{}".format(module))
         except Exception as e:
             await ctx.send(':anger: Failed!\n```\n{}: {}\n```'.format(type(e).__name__, e))
         else:
