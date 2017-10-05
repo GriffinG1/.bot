@@ -44,7 +44,7 @@ class Moderation:
             await ctx.send("Successfully kicked user {0.name}#{0.discriminator}!".format(found_member))
             embed = discord.Embed(description="<@{0.id}> | {0.name}#{0.discriminator} kicked user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             embed.add_field(name="Reason given", value="• " + reason)
-            await self.bot.cmd_logs_channel(embed=embed)
+            await self.bot.cmd_logs_channel.send(embed=embed)
     
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
@@ -59,10 +59,10 @@ class Moderation:
             else:
                 reason_msg = "No reason was given."
             try: 
-                await found_member.send("You have been banned by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this ban, send a direct message to one of the Server Admins.\nIn the rare scenario that you do not have the entire staff list memorized, you can DM <@177939404243992578> | Griffin#2329.".format(ctx.message.author, reason_msg))
+                await found_member.send("You have been banned by user {}#{}.\n{}\nIf you feel that you did not deserve this ban, send a direct message to one of the Server Admins.\nIn the rare scenario that you do not have the entire staff list memorized, you can DM <@177939404243992578> | Griffin#2329.".format(ctx.message.author.name, ctx.message.author.discriminator, reason_msg))
             except discord.errors.Forbidden:
                 pass
-            await found_member.ban(0)
+            await self.bot.guild.ban(found_member, delete_message_days=0)
             await ctx.send("Successfully banned user {0.name}#{0.discriminator}!".format(found_member))
             embed = discord.Embed(description="<@{0.id}> | {0.name}#{0.discriminator} banned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             embed.add_field(name="Reason given", value="• " + reason)
@@ -117,9 +117,10 @@ class Moderation:
         if not found_member:
             await ctx.send("That user could not be found.")
         else:
-            await found_member.edit(roles=self.bot.unhelpful_jerks_role)
+            await found_member.add_roles(self.bot.unhelpful_jerks_role)
+            await found_member.remove_roles(self.bot.idiots_role)
             embed = discord.Embed(description="{0.name}#{0.discriminator} moved user <@{1.id}> | {1.name}#{1.discriminator} out of <#335599294553915392>".format(ctx.message.author, found_member))
-            await self.bot.cmd_logs_channel(embed=embed)
+            await self.bot.cmd_logs_channel.send(embed=embed)
             try:
                 await found_member.send("Enjoy the server!")
             except discord.errors.Forbidden:
@@ -194,7 +195,7 @@ class Moderation:
         """Kicks a user out of support"""
         await ctx.message.delete()
         found_member = self.find_user(member, ctx)
-        channel = self.bot.server.get_channel(336761748159987713)
+        channel = self.bot.guild.get_channel(336761748159987713)
         if not found_member:
             await ctx.send("That user could not be found.")
         else:
@@ -218,7 +219,7 @@ class Moderation:
         """Allows a user to rejoin support"""
         await ctx.message.delete()
         found_member = self.find_user(member, ctx)
-        channel = self.bot.server.get_channel(336761748159987713)
+        channel = self.bot.guild.get_channel(336761748159987713)
         if not found_member:
             await ctx.send("That user could not be found.")
         else:
