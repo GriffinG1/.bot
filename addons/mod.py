@@ -9,6 +9,7 @@ class Moderation:
     """Bot commands for moderation."""
     def __init__(self, bot):
         self.bot = bot
+        print('Addon "{}" loaded'.format(self.__class__.__name__))
         
     def find_user(self, user, ctx):
         found_member = self.bot.guild.get_member(user)
