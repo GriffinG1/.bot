@@ -30,7 +30,7 @@ class Events:
             git.pull()
             print("Changes pulled!")
             
-        # recieve private messages
+        # receive private messages
         if message.channel.is_private and message.author.id != self.bot.user.id:
             embed = discord.Embed(description=message.content)
             if message.attachments:
