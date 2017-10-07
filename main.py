@@ -132,7 +132,7 @@ async def on_ready():
 # loads extensions
 addons = [
     'addons.containment',
-    #'addons.events',
+    'addons.events',
     'addons.load',
     'addons.message',
     'addons.mod',
