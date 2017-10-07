@@ -1,5 +1,5 @@
 # Goku
-A Discord server bot by GriffinG1, chenzw95, and sixardyh. Designed specifically for use on the Nintendo Homebrew Idiot Log Discord.
+A Discord server bot by [GriffinG1](http://github.com/GriffinG1) and [chenzw95](http://github.com/chenzw95). Designed specifically for use on the Nintendo Homebrew Idiot Log Discord.
 
 This source is mainly just available for those interested in how it works on the server, and for those who would like to suggest changes.
 
