@@ -12,17 +12,10 @@ If you disagree with this collection, please leave the server immediately.**
 """
 
 class Events:
-    """Event handling."""
 
     def __init__(self, bot):
         self.bot = bot
         print('Addon "{}" loaded'.format(self.__class__.__name__))
-
-    async def on_message(self, message):
-        # filter "it seem"                                                 thecommondude
-        if message.content.startswith("it seem ") and message.author.id == 135204578986557440:
-            await message.channel.send("STFU dude.")
-            await message.delete()
             
         # auto update
         if message.author.name == "GitHub":
@@ -31,7 +24,7 @@ class Events:
             print("Changes pulled!")
             
         # receive private messages
-        if message.channel.is_private and message.author.id != self.bot.user.id:
+        if isinstance(channel, discord.abc.PrivateChannel) and message.author.id != self.bot.user.id:
             embed = discord.Embed(description=message.content)
             if message.attachments:
                 attachment_urls = []
