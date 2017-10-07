@@ -84,7 +84,7 @@ class Moderation:
                 reason_msg = "No reason was given."
             await ctx.send("Successfully muted user {0.name}#{0.discriminator}!".format(found_member))
             embed = discord.Embed(description="<@{0.id}> | {0.name}#{0.discriminator} muted user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
-            embed.add_field(name="Reason given", value="• " + reason)
+            embed.add_field(name="Reason given", value="• {}".format(reason if reason else "*no reason given*"))
             await self.bot.cmd_logs_channel.send(embed=embed)
             try:
                 await found_member.send("You have been muted by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this mute, send a direct message to one of the staff on the Server Admins list in {1}.".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
