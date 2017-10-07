@@ -20,9 +20,9 @@ class Events:
 
     async def on_message(self, message):
         # filter "it seem"                                                 thecommondude
-        if message.content.startswith("it seem ") and message.author.id == "135204578986557440":
-            await self.bot.send_message(message.channel, "STFU dude.")
-            await self.bot.delete_message(message)
+        if message.content.startswith("it seem ") and message.author.id == 135204578986557440:
+            await message.channel.send("STFU dude.")
+            await message.delete()
             
         # auto update
         if message.author.name == "GitHub":
@@ -39,17 +39,16 @@ class Events:
                     attachment_urls.append('[{}]({})'.format(attachment['filename'], attachment['url']))
                 attachment_msg = '\N{BULLET} ' + '\n\N{BULLET} s '.join(attachment_urls)
                 embed.add_field(name='Attachments', value=attachment_msg, inline=False)
-            await self.bot.send_message(self.bot.private_messages_channel, 
-                                        "Private message sent by {0.mention} | {0}:".format(message.author), embed=embed)
+            await self.bot.private_messages_channel.send("Private message sent by {0.mention} | {0}:".format(message.author), embed=embed)
             
         # auto ban on 15+ pings
         if len(message.mentions) > 15:
             embed = discord.Embed(description=message.content)
-            await self.bot.delete_message(message)
-            await self.bot.kick_member(message.author)
-            await self.bot.send_message(message.channel, "{} was kicked for trying to spam ping users.".format(message.author))
-            await self.bot.send_message(self.bot.logs_channnel, "{} was kicked for trying to spam ping users.".format(message.author))
-            await self.bot.send_message(self.bot.logs_channel, embed=embed)
+            await message.delete()
+            await message.author.kick()
+            await message.channel.send("{} was kicked for trying to spam ping users.".format(message.author))
+            await self.bot.logs_channnel.send("{} was kicked for trying to spam ping users.".format(message.author))
+            await self.bot.logs_channel.send(embed=embed)
         
                                         
     async def on_message_delete(self, message):
@@ -61,32 +60,31 @@ class Events:
                         attachment_urls.append('[{}]({})'.format(attachment['filename'], attachment['url']))
                     attachment_msg = '\N{BULLET} ' + '\n\N{BULLET} s '.join(attachment_urls)
                     embed.add_field(name='Attachments', value=attachment_msg, inline=False)
-            await self.bot.send_message(self.bot.msg_logs_channel, 
-                                        "Message by {0} deleted in channel {1.mention}:".format(message.author, message.channel), embed=embed)
+            await self.bot.msg_logs_channel.send("Message by {0} deleted in channel {1.mention}:".format(message.author, message.channel), embed=embed)
 
     async def on_member_join(self, member):
         try:
-            await self.bot.send_message(member, welcome_message.format(self.bot.rules_channel.mention))
+            await member.send(welcome_message.format(self.bot.rules_channel.mention))
         except discord.errors.Forbidden:  # doesn't accept DMs from non-friends
             pass
-        await self.bot.add_roles(member, self.bot.idiots_role)
+        await member.add_roles(self.bot.idiots_role)
         embed = discord.Embed(title=":wave: Member joined", description="<@{}> | {}#{} | {}".format(member.id, member.name, member.discriminator, member.id))
         async for message in self.bot.logs_from(self.bot.blacklist_channel):
             if member.mention in message.content:
                 embed.set_footer(text="This user is blacklisted.")
-        await self.bot.send_message(self.bot.logs_channel, ":exclamation:", embed=embed)
+        await self.bot.logs_channel.send(":exclamation:", embed=embed)
 
     async def on_member_remove(self, member):
         embed = discord.Embed(title=":wave: Member left", description="<@{}> | {}#{} | {}".format(member.id, member.name, member.discriminator, member.id))
-        await self.bot.send_message(self.bot.logs_channel, ":exclamation:", embed=embed)
+        await self.bot.logs_channel.send(":exclamation:", embed=embed)
 
-    async def on_member_ban(self, member):
+    async def on_member_ban(self, guild, member):
         embed = discord.Embed(title=":anger: Member banned", description="<@{}> | {}#{} | {}".format(member.id, member.name, member.discriminator, member.id))
-        await self.bot.send_message(self.bot.logs_channel, ":exclamation:", embed=embed)
+        await self.bot.logs_channel.send(":exclamation:", embed=embed)
 
-    async def on_member_unban(self, server, member):
+    async def on_member_unban(self, guild, member):
         embed = discord.Embed(title=":anger: Member unbanned", description="<@{}> | {}#{} | {}".format(member.id, member.name, member.discriminator, member.id))
-        await self.bot.send_message(self.bot.logs_channel, ":exclamation:", embed=embed)
+        await self.bot.logs_channel.send(":exclamation:", embed=embed)
         
 
 def setup(bot):
