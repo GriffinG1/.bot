@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import git
 
+
+git = git.cmd.Git(".")
 welcome_message = """
 Welcome to the Nintendo Homebrew Idiot Log server! Please read our {} and have a ~~horrible~~ great time!
 Please note we are in no way affiliated with the official Nintendo Homebrew server.
@@ -20,7 +22,6 @@ class Events:
     async def on_message(self, message):
         # auto update
         if message.author.name == "GitHub":
-            git = git.cmd.Git(".")
             print("Pulling changes!")
             git.pull()
             print("Changes pulled!")
