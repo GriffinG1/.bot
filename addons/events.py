@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 import git
 
-git = git.cmd.Git(".")
 welcome_message = """
 Welcome to the Nintendo Homebrew Idiot Log server! Please read our {} and have a ~~horrible~~ great time!
 Please note we are in no way affiliated with the official Nintendo Homebrew server.
@@ -17,14 +16,17 @@ class Events:
         self.bot = bot
         print('Addon "{}" loaded'.format(self.__class__.__name__))
             
+
+    async def on_message(self, message):
         # auto update
         if message.author.name == "GitHub":
+            git = git.cmd.Git(".")
             print("Pulling changes!")
             git.pull()
             print("Changes pulled!")
             
         # receive private messages
-        if isinstance(channel, discord.abc.PrivateChannel) and message.author.id != self.bot.user.id:
+        if isinstance(message.channel, discord.abc.PrivateChannel) and message.author.id != self.bot.user.id:
             embed = discord.Embed(description=message.content)
             if message.attachments:
                 attachment_urls = []
