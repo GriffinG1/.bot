@@ -17,9 +17,9 @@ class Troll:
             try:
                 member = ctx.message.mentions[0]
             except:
-                member = ctx.message.server.get_member_named(memberName)
+                member = ctx.message.guild.get_member_named(memberName)
             if not member:
-                member = ctx.message.server.get_member(memberName)
+                member = ctx.message.guild.get_member(memberName)
             if not member:
                 await ctx.send('Invalid user!')
         try:
