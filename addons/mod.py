@@ -145,13 +145,14 @@ class Moderation:
             await ctx.send("That user could not be found.")
         else:
             for role in member_roles:
-                rolelist += "•{}\n".format(role)
+                if "@everyone" != role.name:
+                    rolelist += "• {}\n".format(role)
             found_member.edit(roles=[])
             await found_member.add_roles(self.bot.idiots_role)
-            embed = discord.Embed(description="{}#{} recontained user {} | {}#{} for \n•{}. Users roles were:\n{}".format(ctx.message.author.name, ctx.message.author.discriminator, found_member.mention, found_member.name, found_member.discriminator, reason, rolelist))
+            embed = discord.Embed(description="{}#{} recontained user {} | {}#{} for \n• *{}*\n\nUsers roles were:\n{}".format(ctx.message.author.name, ctx.message.author.discriminator, found_member.mention, found_member.name, found_member.discriminator, reason, rolelist))
             await self.bot.cmd_logs_channel.send(embed=embed)
             try:
-                await found_member.send("You have been recontained by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this mute, send a direct message to one of the staff on the Server Admins list in {1}.".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
+                await found_member.send("You have been recontained by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this, send a direct message to one of the staff on the Server Admins list in {1}.".format(ctx.message.author, self.bot.rules_channel.mention, reason))
             except discord.errors.Forbidden:
                 pass
         
