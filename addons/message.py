@@ -7,26 +7,33 @@ class Troll:
         self.bot = bot
         print('Addon "{}" loaded'.format(self.__class__.__name__))
     
+    def find_user(self, user, ctx):
+        found_member = self.bot.guild.get_member(user)
+        if not found_member:
+            found_member = self.bot.guild.get_member_named(user)
+        if not found_member:
+            try:
+                found_member = ctx.message.mentions[0]
+            except IndexError:
+                pass
+        if not found_member:
+            return None
+        else:
+            return found_member
+    
     @commands.has_permissions(ban_members=True)    
-    @commands.command(pass_context=True)
+    @commands.command(aliases=['whisper, dm'], pass_context=True)
     async def pm(self, ctx, user, *, message=""):
         """Sends a PM to a specified member."""
-        subMsg = ctx.message.content.split(" ")[1]
-        memberName = subMsg.strip()
-        if memberName:
+        found_member = self.find_user(member, ctx)
+        if not found_member:
+            await ctx.send("That user could not be found.")
+        else:
             try:
-                member = ctx.message.mentions[0]
-            except:
-                member = ctx.message.guild.get_member_named(memberName)
-            if not member:
-                member = ctx.message.guild.get_member(memberName)
-            if not member:
-                await ctx.send('Invalid user!')
-        try:
-            await member.send(message)
-            await ctx.send("Successfully sent a message to {}#{}!".format(member.name, member.discriminator))    
-        except discord.errors.Forbidden: # if Goku is blocked
-            await ctx.send("Could not send message. The user likely has the bot blocked.")  
+                await found_member.send(message)
+                await ctx.send("Successfully sent a message to {}#{}!".format(found_member.name, member.discriminator))    
+            except discord.errors.Forbidden: # if Goku is blocked
+                await ctx.send("Could not send message. The user likely has the bot blocked.")  
      
     @commands.has_permissions(ban_members=True)       
     @commands.command(pass_context=True)
