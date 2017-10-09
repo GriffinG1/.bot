@@ -132,6 +132,31 @@ class Moderation:
                 pass
             
     @commands.has_permissions(kick_members=True)
+    @commands.command(pass_context=True)
+    async def recontain(self, ctx, member, reason="No reason was given."):
+        """Put a member back in #containment."""
+        await ctx.message.delete()
+        rolelist = ""
+        if found_member == ctx.message.author:
+            return await ctx.send("You can't contain yourself, fucknugget.")
+        found_member = self.find_user(member, ctx)
+        member_roles = found_member.roles
+        if not found_member:
+            await ctx.send("That user could not be found.")
+        else:
+            for role in member_roles:
+                await found_member.remove_roles(role)
+                rolelist += "•{}\n".format(role)
+            await found_member.add_roles(self.bot.idiots_role)
+            embed = discord.Embed(description="{}#{} recontained user {} | {}#{} for \n•{}. Users roles were:\n{}".format(ctx.message.author.name, ctx.message.author.discriminator, found_member.mention, found_member.name, found_member.discriminator, reason, rolelist))
+            await self.bot.cmd_logs_channel.send(embed=embed)
+            try:
+                await found_member.send("You have been recontained by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this mute, send a direct message to one of the staff on the Server Admins list in {1}.".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
+            except discord.errors.Forbidden:
+                pass
+        
+            
+    @commands.has_permissions(kick_members=True)
     @commands.group(pass_context=True)
     async def promote(self, ctx):
         """Upgrade Roles"""
