@@ -30,7 +30,7 @@ class Moderation:
     async def kick(self, ctx, member, *, reason="No reason was given."):
         """Kick a member."""
         found_member = self.find_user(member, ctx)
-        if found_member == author:
+        if found_member == ctx.message.author:
             return await ctx.send("You can't kick yourself, you absolute fucking dumbass.")
         elif not found_member:
             await ctx.send("That user could not be found.")
@@ -52,7 +52,7 @@ class Moderation:
     async def ban(self, ctx, member, *, reason="No reason was given."):
         """Ban a member."""
         found_member = self.find_user(member, ctx)
-        if found_member == author:
+        if found_member == ctx.message.author:
             return await ctx.send("You can't ban yourself, you fuckwad.")
         if not found_member:
             await ctx.send("That user could not be found.")
@@ -74,7 +74,7 @@ class Moderation:
     async def mute(self, ctx, member, *, reason=""):
         """Mute a member."""
         found_member = self.find_user(member, ctx)
-        if found_member == author:
+        if found_member == ctx.message.author:
             return await ctx.send("Why the fuck are you trying to mute yourself?!?!?!")
         elif not found_member:
             await ctx.send("That user could not be found.")
@@ -98,7 +98,7 @@ class Moderation:
     async def unmute(self, ctx, *, member):
         """Unmute a member."""
         found_member = self.find_user(member, ctx)
-        if found_member == author:
+        if found_member == ctx.message.author:
             await ctx.send("How did you manage to mute yourself...")
         if not found_member:
             await ctx.send("That user could not be found.")
