@@ -8,22 +8,22 @@ class Troll:
         print('Addon "{}" loaded'.format(self.__class__.__name__))
     
     def find_user(self, user, ctx):
-        found_member = self.bot.guild.get_member(user)
-        if not found_member:
-            found_member = self.bot.guild.get_member_named(user)
+        found_member = self.bot.guild.get_member_named(user)
         if not found_member:
             try:
                 found_member = ctx.message.mentions[0]
             except IndexError:
                 pass
         if not found_member:
+            found_member = self.bot.guild.get_member(int(user))
+        if not found_member:
             return None
         else:
             return found_member
     
     @commands.has_permissions(ban_members=True)    
-    @commands.command(aliases=['whisper, dm'], pass_context=True)
-    async def pm(self, ctx, member, *, message=""):
+    @commands.command(aliases=['pm', 'dm'], pass_context=True)
+    async def whisper(self, ctx, member, *, message=""):
         """Sends a PM to a specified member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
