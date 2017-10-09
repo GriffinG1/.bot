@@ -137,10 +137,10 @@ class Moderation:
         """Put a member back in #containment."""
         await ctx.message.delete()
         rolelist = ""
-        if found_member == ctx.message.author:
-            return await ctx.send("You can't contain yourself, fucknugget.")
         found_member = self.find_user(member, ctx)
         member_roles = found_member.roles
+        if found_member == ctx.message.author:
+            return await ctx.send("You can't contain yourself, fucknugget.")
         if not found_member:
             await ctx.send("That user could not be found.")
         else:
