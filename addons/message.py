@@ -23,7 +23,7 @@ class Troll:
     
     @commands.has_permissions(ban_members=True)    
     @commands.command(aliases=['whisper, dm'], pass_context=True)
-    async def pm(self, ctx, user, *, message=""):
+    async def pm(self, ctx, member, *, message=""):
         """Sends a PM to a specified member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
