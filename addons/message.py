@@ -31,7 +31,7 @@ class Troll:
         else:
             try:
                 await found_member.send(message)
-                await ctx.send("Successfully sent a message to {}#{}!".format(found_member.name, member.discriminator))    
+                await ctx.send("Successfully sent a message to {}#{}!".format(found_member.name, found_member.discriminator))    
             except discord.errors.Forbidden: # if Goku is blocked
                 await ctx.send("Could not send message. The user likely has the bot blocked.")  
      
