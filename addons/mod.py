@@ -133,7 +133,7 @@ class Moderation:
             
     @commands.has_permissions(kick_members=True)
     @commands.command(pass_context=True)
-    async def recontain(self, ctx, member, reason="No reason was given."):
+    async def recontain(self, ctx, member, *, reason="No reason was given."):
         """Put a member back in #containment."""
         await ctx.message.delete()
         rolelist = ""
@@ -146,11 +146,12 @@ class Moderation:
         else:
             for role in member_roles:
                 if "@everyone" != role.name:
-                    rolelist += "• {}\n".format(role)
-            found_member.edit(roles=[])
+                    rolelist += "• {}\n".format(role.mention)
+            await found_member.edit(roles=[])
             await found_member.add_roles(self.bot.idiots_role)
             embed = discord.Embed(description="{}#{} recontained user {} | {}#{} for \n• *{}*\n\nUsers roles were:\n{}".format(ctx.message.author.name, ctx.message.author.discriminator, found_member.mention, found_member.name, found_member.discriminator, reason, rolelist))
             await self.bot.cmd_logs_channel.send(embed=embed)
+            await ctx.send("{} was recontained.".format(found_member.mention))
             try:
                 await found_member.send("You have been recontained by user {0.name}#{0.discriminator}.\n{2}\nIf you feel that you did not deserve this, send a direct message to one of the staff on the Server Admins list in {1}.".format(ctx.message.author, self.bot.rules_channel.mention, reason))
             except discord.errors.Forbidden:
