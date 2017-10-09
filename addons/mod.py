@@ -27,16 +27,16 @@ class Moderation:
     
     @commands.has_permissions(kick_members=True)    
     @commands.command(pass_context=True)
-    async def kick(self, ctx, member, *, reason=""):
+    async def kick(self, ctx, member, *, reason="No reason was given."):
         """Kick a member."""
         found_member = self.find_user(member, ctx)
-        if not found_member:
+        if found_member == author:
+            return await ctx.send("You can't kick yourself, you absolute fucking dumbass.")
+        elif not found_member:
             await ctx.send("That user could not be found.")
         else:
-            if reason:
+            if reason != "No reason was given.":
                 reason_msg = "The given reason was: {}".format(reason)
-            else:
-                reason_msg = "No reason was given."
             try:
                 await found_member.send("You have been kicked by user {0.name}#{0.discriminator}.\n{2}\nYou can rejoin the server with this link: https://discord.gg/hHHKPFz".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
             except discord.errors.Forbidden:
@@ -49,16 +49,16 @@ class Moderation:
     
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
-    async def ban(self, ctx, member, *, reason=""):
+    async def ban(self, ctx, member, *, reason="No reason was given."):
         """Ban a member."""
         found_member = self.find_user(member, ctx)
+        if found_member == author:
+            return await ctx.send("You can't ban yourself, you fuckwad.")
         if not found_member:
             await ctx.send("That user could not be found.")
         else:
-            if reason:
+            if reason != "No reason was given.":
                 reason_msg = "The given reason was: {}".format(reason)
-            else:
-                reason_msg = "No reason was given."
             try: 
                 await found_member.send("You have been banned by user {}#{}.\n{}\nIf you feel that you did not deserve this ban, send a direct message to one of the Server Admins.\nIn the rare scenario that you do not have the entire staff list memorized, you can DM <@177939404243992578> | Griffin#2329.".format(ctx.message.author.name, ctx.message.author.discriminator, reason_msg))
             except discord.errors.Forbidden:
@@ -74,7 +74,9 @@ class Moderation:
     async def mute(self, ctx, member, *, reason=""):
         """Mute a member."""
         found_member = self.find_user(member, ctx)
-        if not found_member:
+        if found_member == author:
+            return await ctx.send("Why the fuck are you trying to mute yourself?!?!?!")
+        elif not found_member:
             await ctx.send("That user could not be found.")
         else:
             await found_member.add_roles(self.bot.muted_role)
@@ -96,6 +98,8 @@ class Moderation:
     async def unmute(self, ctx, *, member):
         """Unmute a member."""
         found_member = self.find_user(member, ctx)
+        if found_member == author:
+            await ctx.send("How did you manage to mute yourself...")
         if not found_member:
             await ctx.send("That user could not be found.")
         else:

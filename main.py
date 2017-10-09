@@ -121,6 +121,7 @@ async def on_ready():
         bot.sheet_admin_role = discord.utils.get(guild.roles, name="Sheet Admins")
         bot.support_role = discord.utils.get(guild.roles, name="I NEED SUPPORT")
         bot.derek_role = discord.utils.get(guild.roles, name="DDM")
+        bot.nazi_role = discord.utils.get(guild.roles, name="Nazis")
         
         print("Initialized on {}.".format(guild.name))
         
