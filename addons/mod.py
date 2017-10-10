@@ -255,7 +255,7 @@ class Moderation:
         if not found_member:
             await ctx.send("That user could not be found.")
         else:
-            await channel.set_permissions(found_member, read_messages=True)
+            await channel.set_permissions(found_member, read_messages=None)
             embed = discord.Embed(description="{0.name}#{0.discriminator} restored user <@{1.id}> | {1.name}#{1.discriminator} permissions for <#336761748159987713>".format(ctx.message.author, found_member))
             await self.bot.cmd_logs_channel.send(embed=embed)
             try:
