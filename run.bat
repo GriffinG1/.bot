@@ -1,1 +1,1 @@
-python run.py
+python3 main.py
