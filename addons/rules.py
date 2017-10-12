@@ -67,7 +67,7 @@ class Rules:
     async def r8(self, ctx):
         embed = discord.Embed()
         async for rule in self.bot.rules_channel.history():
-            if "1." in rule.content:
+            if "8." in rule.content:
                 embed.description = rule.content
         await ctx.send(embed=embed)
 
