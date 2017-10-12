@@ -45,19 +45,19 @@ class Events:
             await message.channel.send("{} was kicked for trying to spam ping users.".format(message.author))
             await self.bot.logs_channnel.send("{} was kicked for trying to spam ping users.".format(message.author))
             await self.bot.logs_channel.send(embed=embed)
-        
-                                        
+
     async def on_message_delete(self, message):
         if isinstance(message.channel, discord.abc.GuildChannel) and message.author.id != self.bot.user.id:
             if message.channel not in (self.bot.msg_logs_channel, self.bot.containment_channel, self.bot.hidden_channel):
-                embed = discord.Embed(description=message.content)
-                if message.attachments:
-                        attachment_urls = []
-                        for attachment in message.attachments:
-                            attachment_urls.append('[{}]({})'.format(attachment.filename, attachment.url))
-                        attachment_msg = '\N{BULLET} ' + '\n\N{BULLET} s '.join(attachment_urls)
-                        embed.add_field(name='Attachments', value=attachment_msg, inline=False)
-                await self.bot.msg_logs_channel.send("Message by {0} deleted in channel {1.mention}:".format(message.author, message.channel), embed=embed)
+                if not message.content.startswith(tuple(self.bot.command_list), 1):
+                    embed = discord.Embed(description=message.content)
+                    if message.attachments:
+                            attachment_urls = []
+                            for attachment in message.attachments:
+                                attachment_urls.append('[{}]({})'.format(attachment.filename, attachment.url))
+                            attachment_msg = '\N{BULLET} ' + '\n\N{BULLET} s '.join(attachment_urls)
+                            embed.add_field(name='Attachments', value=attachment_msg, inline=False)
+                    await self.bot.msg_logs_channel.send("Message by {0} deleted in channel {1.mention}:".format(message.author, message.channel), embed=embed)
 
     async def on_member_join(self, member):
         try:

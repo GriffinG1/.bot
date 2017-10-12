@@ -29,6 +29,14 @@ config = configparser.ConfigParser()
 config.read("config.ini")
 
 bot.actions = []  # changes messages in mod-/server-logs
+bot.command_list = []
+
+
+def get_command_list():
+    bot.command_list = []
+    for command in bot.commands:
+        bot.command_list.append(command.name)
+        bot.command_list.extend(command.aliases)
 
 
 # http://stackoverflow.com/questions/3411771/multiple-character-replace-with-python
@@ -41,6 +49,7 @@ def escape_name(name):
     return name.replace("@", "@\u200b")  # prevent mentions
 
 
+bot.get_command_list = get_command_list
 bot.escape_name = escape_name
 bot.pruning = False  # used to disable leave logs if pruning, maybe.
 bot.escape_trans = str.maketrans({
@@ -122,6 +131,7 @@ async def on_ready():
         bot.support_role = discord.utils.get(guild.roles, name="I NEED SUPPORT")
         bot.derek_role = discord.utils.get(guild.roles, name="DDM")
         bot.nazi_role = discord.utils.get(guild.roles, name="Nazis")
+        get_command_list()
         
         print("Initialized on {}.".format(guild.name))
         

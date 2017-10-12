@@ -22,6 +22,7 @@ class Load:
         except Exception as e:
             await ctx.send(':anger: Failed!\n```\n{}: {}\n```'.format(type(e).__name__, e))
         else:
+            self.bot.get_command_list()
             await ctx.send(':white_check_mark: Extension loaded.')
 
     @commands.has_permissions(ban_members=True)
@@ -36,6 +37,7 @@ class Load:
         except Exception as e:
             await ctx.send(':anger: Failed!\n```\n{}: {}\n```'.format(type(e).__name__, e))
         else:
+            self.bot.get_command_list()
             await ctx.send(':white_check_mark: Extension unloaded.')
    
     @commands.has_permissions(ban_members=True)
@@ -52,6 +54,7 @@ class Load:
                 except Exception as e:
                     errors += 'Failed to load addon: `{}.py` due to `{}: {}`\n'.format(addon, type(e).__name__, e)
         if not errors:
+            self.bot.get_command_list()
             await ctx.send(':white_check_mark: Extensions reloaded.')
         else:
             await ctx.send(errors)
