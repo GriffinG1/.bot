@@ -6,15 +6,14 @@ class Rules:
     def __init__(self, bot):
         self.bot = bot
         print('Addon "{}" loaded'.format(self.__class__.__name__))
-        
-    async def simple_embed(self, text, title="", color=discord.Color.default()):
-        embed = discord.Embed(title=title, color=color)
-        embed.description = text
-        await ctx.send(embed=embed)
 
     @commands.command(pass_context=True, hidden=True)
     async def r1(self, ctx):
-        await self.simple_embed("**1.** Don't mess with formatting for the log, even sorting of users. Rather, let <@177939404243992578> take care of it.")
+        embed = discord.Embed(title=title, color=color)
+        async for rule in self.bot.rules_channel.history():
+            if "1." in message.content:
+                embed.description = message.content
+        await ctx.send(embed=embed)
 
     @commands.command(pass_context=True, hidden=True)
     async def r2(self, ctx):
