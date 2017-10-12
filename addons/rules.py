@@ -11,8 +11,8 @@ class Rules:
     async def r1(self, ctx):
         embed = discord.Embed()
         async for rule in self.bot.rules_channel.history():
-            if "1." in message.content:
-                embed.description = message.content
+            if "1." in rule.content:
+                embed.description = rule.content
         await ctx.send(embed=embed)
 
     @commands.command(pass_context=True, hidden=True)
