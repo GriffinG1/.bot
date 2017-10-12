@@ -32,7 +32,7 @@ class Events:
             if message.attachments:
                 attachment_urls = []
                 for attachment in message.attachments:
-                    attachment_urls.append('[{}]({})'.format(attachment['filename'], attachment['url']))
+                    attachment_urls.append('[{}]({})'.format(attachment.filename, attachment.url))
                 attachment_msg = '\N{BULLET} ' + '\n\N{BULLET} s '.join(attachment_urls)
                 embed.add_field(name='Attachments', value=attachment_msg, inline=False)
             await self.bot.private_messages_channel.send("Private message sent by {0.mention} | {0}:".format(message.author), embed=embed)
@@ -53,7 +53,7 @@ class Events:
             if message.attachments:
                     attachment_urls = []
                     for attachment in message.attachments:
-                        attachment_urls.append('[{}]({})'.format(attachment['filename'], attachment['url']))
+                        attachment_urls.append('[{}]({})'.format(attachment.filename, attachment.url))
                     attachment_msg = '\N{BULLET} ' + '\n\N{BULLET} s '.join(attachment_urls)
                     embed.add_field(name='Attachments', value=attachment_msg, inline=False)
             await self.bot.msg_logs_channel.send("Message by {0} deleted in channel {1.mention}:".format(message.author, message.channel), embed=embed)
