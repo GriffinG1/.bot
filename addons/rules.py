@@ -77,7 +77,7 @@ class Rules:
         if self.bot.sheet_admin_role in ctx.author.roles or self.bot.server_admin_role in ctx.author.roles or self.bot.nazi_role in ctx.author.roles:
             await ctx.send("Please tag Tony Stark for access to the server after reading <#318626746297745409> so they can set you up with roles!")
         else:
-            await ctx.send("You can't use this command!", delete_after=5)
+            await ctx.send("You can't use this command!", delete_after=3)
         
     @commands.command(hidden=True, aliases=['nick'])
     async def nickname(self, ctx):
