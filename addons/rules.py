@@ -7,7 +7,7 @@ class Rules:
         self.bot = bot
         print('Addon "{}" loaded'.format(self.__class__.__name__))
 
-    @commands.command(pass_context=True, hidden=True)
+    @commands.command(hidden=True)
     async def r1(self, ctx):
         embed = discord.Embed()
         async for rule in self.bot.rules_channel.history():
