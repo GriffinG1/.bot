@@ -17,8 +17,12 @@ class Rules:
 
     @commands.command(pass_context=True, hidden=True)
     async def r2(self, ctx):
-        await self.simple_embed("**2.** Do not hold conversations anywhere on the log, the server works better for that, and formatting won't get screwed up.")
-    
+        embed = discord.Embed()
+        async for rule in self.bot.rules_channel.history():
+            if "2." in rule.content:
+                embed.description = rule.content
+        await ctx.send(embed=embed)
+
     @commands.command(pass_context=True, hidden=True)
     async def r3(self, ctx):
         await self.simple_embed("**3.** Please post any changes made to the log in <#318629676404834304>, so that changes can be followed easily.")
