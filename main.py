@@ -112,7 +112,6 @@ async def on_ready():
         bot.hidden_channel = discord.utils.get(guild.channels, name="hiddenplace")
         bot.blacklist_channel = discord.utils.get(guild.channels, name="blacklist")
         
-        bot.archit_role = discord.utils.get(guild.roles, name="Tech Support")
         bot.idiots_role = discord.utils.get(guild.roles, name="Idiots")
         bot.muted_role = discord.utils.get(guild.roles, name="No Speaking!")
         bot.unhelpful_jerks_role = discord.utils.get(guild.roles, name="Unhelpful Jerks")
