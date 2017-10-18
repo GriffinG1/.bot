@@ -122,7 +122,15 @@ async def on_ready():
         bot.derek_role = discord.utils.get(guild.roles, name="DDM")
         bot.nazi_role = discord.utils.get(guild.roles, name="Nazis")
         
-        print("Initialized on {}.".format(guild.name))
+        if len(sys.argv) > 1:
+            try:
+                channel = bot.get_channel(int(sys.argv[1]))
+                await channel.send("Bot has restarted")
+                print("Bot has restarted")
+            except:
+                pass
+        else:
+            print("Initialized on {}.".format(guild.name))
         
         bot.all_ready = True
         bot._is_all_ready.set()
