@@ -121,16 +121,8 @@ async def on_ready():
         bot.support_role = discord.utils.get(guild.roles, name="I NEED SUPPORT")
         bot.derek_role = discord.utils.get(guild.roles, name="DDM")
         bot.nazi_role = discord.utils.get(guild.roles, name="Nazis")
-        
-        if len(sys.argv) > 1:
-            try:
-                channel = bot.get_channel(int(sys.argv[1]))
-                await channel.send("Bot has restarted")
-                print("Bot has restarted")
-            except:
-                pass
-        else:
-            print("Initialized on {}.".format(guild.name))
+
+        print("Initialized on {}.".format(guild.name))
         
         bot.all_ready = True
         bot._is_all_ready.set()
@@ -159,7 +151,13 @@ for extension in addons:
         print('{} failed to load.\n{}: {}'.format(extension, type(e).__name__, e))
         failed_addons.append([extension, type(e).__name__, e])
 
-
+if len(sys.argv) > 1:
+    try:
+        channel = bot.get_channel(int(sys.argv[1]))
+        await channel.send("Bot has restarted")
+    except:
+        pass
+        
 # Execute
 print('Bot directory: ', dir_path)
 bot.run(config['Main']['token'])
