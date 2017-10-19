@@ -127,6 +127,13 @@ async def on_ready():
         bot.all_ready = True
         bot._is_all_ready.set()
 
+        if len(sys.argv) > 1:
+            try:
+                channel = bot.get_channel(int(sys.argv[1]))
+                await channel.send("Bot has restarted")
+            except:
+                pass
+        
         break
     
 # loads extensions
@@ -150,13 +157,7 @@ for extension in addons:
     except Exception as e:
         print('{} failed to load.\n{}: {}'.format(extension, type(e).__name__, e))
         failed_addons.append([extension, type(e).__name__, e])
-
-if len(sys.argv) > 1:
-    try:
-        channel = bot.get_channel(int(sys.argv[1]))
-        await channel.send("Bot has restarted")
-    except:
-        pass
+        
         
 # Execute
 print('Bot directory: ', dir_path)
