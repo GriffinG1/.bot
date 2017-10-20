@@ -121,7 +121,6 @@ async def on_ready():
         bot.hidden_channel = discord.utils.get(guild.channels, name="hiddenplace")
         bot.blacklist_channel = discord.utils.get(guild.channels, name="blacklist")
         
-        bot.archit_role = discord.utils.get(guild.roles, name="Tech Support")
         bot.idiots_role = discord.utils.get(guild.roles, name="Idiots")
         bot.muted_role = discord.utils.get(guild.roles, name="No Speaking!")
         bot.unhelpful_jerks_role = discord.utils.get(guild.roles, name="Unhelpful Jerks")
@@ -132,12 +131,18 @@ async def on_ready():
         bot.derek_role = discord.utils.get(guild.roles, name="DDM")
         bot.nazi_role = discord.utils.get(guild.roles, name="Nazis")
         get_command_list()
-        
         print("Initialized on {}.".format(guild.name))
         
         bot.all_ready = True
         bot._is_all_ready.set()
 
+        if len(sys.argv) > 1:
+            try:
+                channel = bot.get_channel(int(sys.argv[1]))
+                await channel.send("Bot has restarted")
+            except:
+                pass
+        
         break
     
 # loads extensions
@@ -161,8 +166,8 @@ for extension in addons:
     except Exception as e:
         print('{} failed to load.\n{}: {}'.format(extension, type(e).__name__, e))
         failed_addons.append([extension, type(e).__name__, e])
-
-
+        
+        
 # Execute
 print('Bot directory: ', dir_path)
 bot.run(config['Main']['token'])

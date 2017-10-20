@@ -1,4 +1,4 @@
 import subprocess
 
 while True:
-    subprocess.call(['python', 'main.py'])
+    subprocess.call(['python3', 'main.py'])

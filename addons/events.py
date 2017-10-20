@@ -21,7 +21,7 @@ class Events:
 
     async def on_message(self, message):
         # auto update
-        if message.author.name == "GitHub":
+        if message.author.name == "GitHub" and "git" in message.channel.name:
             print("Pulling changes!")
             git.pull()
             print("Changes pulled!")
