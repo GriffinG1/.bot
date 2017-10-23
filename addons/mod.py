@@ -124,6 +124,8 @@ class Moderation:
                 member_roles = found_member.roles
                 if not found_member:
                     await ctx.send("That user could not be found.")
+                elif self.bot.unhelpful_jerks_role in found_member.roles or self.bot.neutron_stars_role in found_member.roles:
+                    return await ctx.send("That user isn't contained!")
                 else:
                     await found_member.add_roles(self.bot.unhelpful_jerks_role)
                     await found_member.remove_roles(self.bot.idiots_role)
