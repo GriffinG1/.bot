@@ -112,24 +112,31 @@ class Moderation:
             else:
                 await ctx.send("That user isn't muted!")
 
-    @commands.has_permissions(kick_members=True)
     @commands.command(pass_context=True)
-    async def uncontain(self, ctx, member):
+    async def uncontain(self, ctx, member=""):
         """Remove a member from #containment."""
         await ctx.message.delete()
-        found_member = self.find_user(member, ctx)
-        member_roles = found_member.roles
-        if not found_member:
-            await ctx.send("That user could not be found.")
+        if not member:
+            return await ctx.send("Please specify a member!")
+        if self.bot.sheet_admin_role in ctx.author.roles:
+            if "containment" in ctx.channel.name:
+                found_member = self.find_user(member, ctx)
+                member_roles = found_member.roles
+                if not found_member:
+                    await ctx.send("That user could not be found.")
+                else:
+                    await found_member.add_roles(self.bot.unhelpful_jerks_role)
+                    await found_member.remove_roles(self.bot.idiots_role)
+                    embed = discord.Embed(description="{0.name}#{0.discriminator} moved user <@{1.id}> | {1.name}#{1.discriminator} out of <#335599294553915392>".format(ctx.message.author, found_member))
+                    await self.bot.cmd_logs_channel.send(embed=embed)
+                    try:
+                        await found_member.send("Enjoy the server!")
+                    except discord.errors.Forbidden:
+                        pass
+            else:
+                await ctx.send("Command can only be used in <#335599294553915392>.")
         else:
-            await found_member.add_roles(self.bot.unhelpful_jerks_role)
-            await found_member.remove_roles(self.bot.idiots_role)
-            embed = discord.Embed(description="{0.name}#{0.discriminator} moved user <@{1.id}> | {1.name}#{1.discriminator} out of <#335599294553915392>".format(ctx.message.author, found_member))
-            await self.bot.cmd_logs_channel.send(embed=embed)
-            try:
-                await found_member.send("Enjoy the server!")
-            except discord.errors.Forbidden:
-                pass
+            await ctx.send("Only Sheet Admins can use this command!")
             
     @commands.has_permissions(kick_members=True)
     @commands.command(pass_context=True)
