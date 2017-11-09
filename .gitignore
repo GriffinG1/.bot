@@ -1,7 +1,10 @@
-__pycache__/
+*__pycache__*
+.idea/
 *.py[cod]
 run.bat
-runbeta.py
 *.pyc
-addons/__pycache__/
 config.ini
+configbeta.ini
+beta.py
+runbeta.py
+runbeta.bat
