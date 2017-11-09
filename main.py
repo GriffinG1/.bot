@@ -155,7 +155,7 @@ addons = [
     #'addons.music', Commented out until music.py is stable
     'addons.rules',
     'addons.utility',
-    'addons.warn'
+    #'addons.warn' Commented out until rewritten
 ]
 
 failed_addons = []
