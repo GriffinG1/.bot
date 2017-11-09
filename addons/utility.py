@@ -22,7 +22,8 @@ class Utility:
     async def restart(self, ctx):
         """Restarts the bot."""
         await ctx.send("Restarting...")
-        os.execv(__file__, [__file__, str(ctx.channel.id)])
+        # os.execv(__file__, [__file__, str(ctx.channel.id)]) Currently broken
+        sys.exit(0)
 
     @commands.command()
     async def support(self, ctx):
