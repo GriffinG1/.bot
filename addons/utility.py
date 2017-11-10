@@ -22,7 +22,9 @@ class Utility:
     async def restart(self, ctx):
         """Restarts the bot."""
         await ctx.send("Restarting...")
-        # os.execv(__file__, [__file__, str(ctx.channel.id)]) Currently broken
+        with open("restart.txt", "w+") as f:
+            f.write(str(ctx.message.channel.id))
+            f.close()
         sys.exit(0)
 
     @commands.command()
