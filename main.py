@@ -12,7 +12,6 @@ import traceback
 import sys
 import os
 import re
-import json
 import ast
 import git
 
@@ -39,19 +38,7 @@ def get_command_list():
         bot.command_list.extend(command.aliases)
 
 
-# http://stackoverflow.com/questions/3411771/multiple-character-replace-with-python
-def escape_name(name):
-    chars = "\\`*_<>#@:~"
-    name = str(name)
-    for c in chars:
-        if c in name:
-            name = name.replace(c, "\\" + c)
-    return name.replace("@", "@\u200b")  # prevent mentions
-
-
 bot.get_command_list = get_command_list
-bot.escape_name = escape_name
-bot.pruning = False  # used to disable leave logs if pruning, maybe.
 bot.escape_trans = str.maketrans({
     "*": "\*",
     "_": "\_",
