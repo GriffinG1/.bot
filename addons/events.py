@@ -19,6 +19,11 @@ class Events:
         print('Addon "{}" loaded'.format(self.__class__.__name__))
             
 
+    async def on_guild_join(self, guild):
+        # Don't let the bot be used elsewhere with the same token
+        if guild.id != 318626746297745409:
+            await guild.leave()
+        
     async def on_message(self, message):
         # auto update
         if message.author.name == "GitHub" and "git" in message.channel.name:
