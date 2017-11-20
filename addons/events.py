@@ -26,7 +26,7 @@ class Events:
             with open("joins.txt", "a") as f:
                 f.write(str(guild) + " " + str(datetime.now()) + "\n")
             try:
-                await guild.owner.send("Left your server, as this bot should only be used on NHIL under this token.")
+                await guild.owner.send("Left your server, `{}`, as this bot should only be used on NHIL under this token.".format(guild.name))
             except discord.Forbidden:
                 for channel in guild.channels:
                    if guild.me.permissions_in(channel).send_messages and isinstance(channel, discord.TextChannel):

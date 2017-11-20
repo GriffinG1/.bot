@@ -10,7 +10,7 @@ class Utility:
         print('Addon "{}" loaded'.format(self.__class__.__name__))  
     
     @commands.has_permissions(ban_members=True)
-    @commands.command()
+    @group.command()
     async def joins(self, ctx):
         """Checks joins.txt"""
         with open("joins.txt") as f:
@@ -21,6 +21,13 @@ class Utility:
             await ctx.send(joins)
         else:
             await ctx.send("File is over 2000 characters, please get the file manually from T3CHNOLOG1C")
+    
+    @commands.has_permissions(ban_members=True)
+    @joins.command()
+    async def clear(self, ctx):
+        """Clears joins.txt"""
+        open("joins.txt", "w+")
+        await ctx.send("Cleared joins.txt")
     
     @commands.command()
     async def test(self, ctx):
