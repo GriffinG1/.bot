@@ -12,8 +12,6 @@ class Utility:
     @commands.command()
     async def test(self, ctx):
         """A test command."""
-        servers = ""
-        members = ""
         embed = discord.Embed(title="testing", description="Testing")
         embed.add_field(name="Notes", value="Testing!", inline=False)
         embed.colour = discord.Colour(0x00FFFF)            
