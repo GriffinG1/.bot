@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-class Troll:
+class Message:
     """Commands used for jokes and trolling."""
     def __init__(self, bot):
         self.bot = bot
