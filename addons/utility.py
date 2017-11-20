@@ -10,7 +10,7 @@ class Utility:
         print('Addon "{}" loaded'.format(self.__class__.__name__))  
     
     @commands.has_permissions(ban_members=True)
-    @group.command()
+    @commands.group()
     async def joins(self, ctx):
         """Checks joins.txt"""
         with open("joins.txt") as f:
