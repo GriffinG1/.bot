@@ -10,14 +10,19 @@ class Utility:
         print('Addon "{}" loaded'.format(self.__class__.__name__))  
     
     @commands.command()
+    async def leave(self, ctx):
+        """Bye, Zewia!"""
+        for x in self.bot.guilds:
+            if x.id != 318626746297745409:
+                await ctx.send("Left guild {}".format(x.name))
+                await x.leave()
+    
+    @commands.command()
     async def test(self, ctx):
         """A test command."""
         test = ""
         embed = discord.Embed(title="testing", description="Testing")
         embed.add_field(name="Notes", value="Testing!", inline=False)
-        for x in self.bot.guilds:
-            test += x.name + "\n"
-        embed.add_field(name="Notes", value=test, inline=False)
         embed.colour = discord.Colour(0x00FFFF)
         await ctx.send(embed=embed)
 
