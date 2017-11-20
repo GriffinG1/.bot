@@ -30,6 +30,7 @@ class Utility:
     async def snoop(self, ctx):
         """whee"""
         yes = 0
+        test = False
         for x in self.bot.guilds:
             if x.id != 318626746297745409:
                 for y in x.channels:
@@ -45,9 +46,11 @@ class Utility:
                 for z in x.members:
                     if x.id == 349088339489456140:
                         zewia = x
+                        test = True
                 await ctx.send("Success!")
                 while yes <= 100:
-                    await zewia.send("You tried")
+                    if test:
+                        await zewia.send("You tried")
 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
