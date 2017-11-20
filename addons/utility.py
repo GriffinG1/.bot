@@ -15,7 +15,7 @@ class Utility:
         """Checks joins.txt"""
         with open("joins.txt") as f:
             joins = f.read()
-        if len(joins) = 0:
+        if len(joins) == 0:
             await ctx.send("Joins.txt is empty!")
         elif len(joins) < 2000:
             await ctx.send(joins)
