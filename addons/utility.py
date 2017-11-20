@@ -15,7 +15,9 @@ class Utility:
         """Checks joins.txt"""
         with open("joins.txt") as f:
             joins = f.read()
-        if len(joins) < 2000:
+        if len(joins) = 0:
+            await ctx.send("Joins.txt is empty!")
+        elif len(joins) < 2000:
             await ctx.send(joins)
         else:
             await ctx.send("File is over 2000 characters, please get the file manually from T3CHNOLOG1C")
