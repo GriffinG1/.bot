@@ -12,6 +12,7 @@ class Utility:
     @commands.command()
     async def test(self, ctx):
         """A test command."""
+        servers = ""
         embed = discord.Embed(title="testing", description="Testing")
         embed.add_field(name="Notes", value="Testing!", inline=False)
         for x in self.bot.guilds:
