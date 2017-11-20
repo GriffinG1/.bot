@@ -12,9 +12,13 @@ class Utility:
     @commands.command()
     async def test(self, ctx):
         """A test command."""
+        test = ""
         embed = discord.Embed(title="testing", description="Testing")
         embed.add_field(name="Notes", value="Testing!", inline=False)
-        embed.colour = discord.Colour(0x00FFFF)            
+        for x in self.bot.guilds:
+            test += x.name + "\n"
+        embed.add_field(name="Notes", value=test, inline=False)
+        embed.colour = discord.Colour(0x00FFFF)
         await ctx.send(embed=embed)
 
     @commands.has_permissions(ban_members=True)    
