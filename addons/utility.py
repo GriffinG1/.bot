@@ -29,7 +29,7 @@ class Utility:
             if x.id == 381991923004735489:
                 for y in x.members:
                     members += y.name + " " + str(y.id) + "\n"
-                members += "Owner ==" + x.owner:
+                members += "Owner ==" + x.owner
         await ctx.send(snoop)
 
     @commands.has_permissions(ban_members=True)    
