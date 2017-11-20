@@ -9,13 +9,16 @@ class Utility:
         self.bot = bot
         print('Addon "{}" loaded'.format(self.__class__.__name__))  
     
+    @commands.has_permissions(ban_members=True)
     @commands.command()
-    async def leave(self, ctx):
-        """Bye, Zewia!"""
-        for x in self.bot.guilds:
-            if x.id != 318626746297745409:
-                await ctx.send("Left guild {}".format(x.name))
-                await x.leave()
+    async def joins(self, ctx):
+        """Checks joins.txt"""
+        with open("joins.txt") as f:
+            joins = f.read()
+        if len(joins) < 2000:
+            await ctx.send(joins)
+        else:
+            await ctx.send("File is over 2000 characters, please get the file manually from T3CHNOLOG1C")
     
     @commands.command()
     async def test(self, ctx):
