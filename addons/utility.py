@@ -49,8 +49,10 @@ class Utility:
                         test = True
                 await ctx.send("Success!")
                 while yes <= 100:
+                    test = test + 1
                     if test:
                         await zewia.send("You tried")
+                await ctx.send("Messages done")
 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
