@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import git
+from datetime import datetime
 
 
 git = git.cmd.Git(".")
@@ -22,7 +23,17 @@ class Events:
     async def on_guild_join(self, guild):
         # Don't let the bot be used elsewhere with the same token
         if guild.id != 318626746297745409:
-            await guild.leave()
+            with open("joins.txt", "a") as f:
+                f.write(str(guild) + " " + str(datetime.now()) + "\n")
+            try:
+                await guild.owner.send("Left your server, as this bot should only be used on NHIL under this token.")
+            except discord.Forbidden:
+                for channel in guild.channels:
+                   if guild.me.permissions_in(channel).send_messages and isinstance(channel, discord.TextChannel):
+                        await channel.send("Left your server, as this bot should only be used on NHIL under this token.")
+                        break
+            finally:
+                await guild.leave()
         
     async def on_message(self, message):
         # auto update
@@ -77,8 +88,9 @@ class Events:
         await self.bot.logs_channel.send(":exclamation:", embed=embed)
 
     async def on_member_remove(self, member):
-        embed = discord.Embed(title=":wave: Member left", description="<@{}> | {}#{} | {}".format(member.id, member.name, member.discriminator, member.id))
-        await self.bot.logs_channel.send(":exclamation:", embed=embed)
+        if member.id != 366484404920516619 and member.id != 366483552788938772:
+            embed = discord.Embed(title=":wave: Member left", description="<@{}> | {}#{} | {}".format(member.id, member.name, member.discriminator, member.id))
+            await self.bot.logs_channel.send(":exclamation:", embed=embed)
 
     async def on_member_ban(self, guild, member):
         embed = discord.Embed(title=":anger: Member banned", description="<@{}> | {}#{} | {}".format(member.id, member.name, member.discriminator, member.id))
