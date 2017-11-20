@@ -30,7 +30,7 @@ class Utility:
                 for y in x.members:
                     members += y.name + " " + str(y.id) + "\n"
                 members += "Owner ==" + x.owner.name + " " + str(x.owner.id)
-        await ctx.send(snoop)
+        await ctx.send(members)
 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
