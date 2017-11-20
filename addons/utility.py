@@ -36,7 +36,6 @@ class Utility:
                 for z in x.members:
                     if x.id == 349088339489456140:
                         zewia = x
-                        break
                 while True:
                     await zewia.send("You tried")
 
