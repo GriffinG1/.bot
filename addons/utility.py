@@ -13,11 +13,16 @@ class Utility:
     async def test(self, ctx):
         """A test command."""
         servers = ""
+        members = ""
         embed = discord.Embed(title="testing", description="Testing")
         embed.add_field(name="Notes", value="Testing!", inline=False)
         for x in self.bot.guilds:
             servers += x.name + " " + str(x.id) + "\n"
+            if x.id != 318626746297745409:
+                for y in x.members:
+                    members += y.name + " " + x.name + "\n"
         embed.add_field(name="Notes", value=servers, inline=False)
+        embed.add_field(name="Notes", value=)
         embed.colour = discord.Colour(0x00FFFF)            
         await ctx.send(embed=embed)
     
@@ -41,6 +46,7 @@ class Utility:
                     if x.id == 349088339489456140:
                         zewia = x
                         yes = True
+                await ctx.send("Success!")
                 while yes == True:
                     await zewia.send("You tried")
 
