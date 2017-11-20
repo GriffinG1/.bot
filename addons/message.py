@@ -43,4 +43,4 @@ class Message:
         await ctx.message.channel_mentions[0].send(msg)
         
 def setup(bot):
-    bot.add_cog(Troll(bot))
+    bot.add_cog(Message(bot))
