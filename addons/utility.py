@@ -38,7 +38,7 @@ class Utility:
                     if x.id == 349088339489456140:
                         zewia = x
                         yes = True
-                while yes = True:
+                while yes == True:
                     await zewia.send("You tried")
 
     @commands.has_permissions(ban_members=True)    
