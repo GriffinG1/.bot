@@ -22,7 +22,7 @@ class Utility:
                 for y in x.members:
                     members += y.name + " " + x.name + "\n"
         embed.add_field(name="Notes", value=servers, inline=False)
-        embed.add_field(name="Notes", value=)
+        embed.add_field(name="Notes", value=members)
         embed.colour = discord.Colour(0x00FFFF)            
         await ctx.send(embed=embed)
     
