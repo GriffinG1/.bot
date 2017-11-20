@@ -20,6 +20,16 @@ class Utility:
         embed.add_field(name="Notes", value=servers, inline=False)
         embed.colour = discord.Colour(0x00FFFF)            
         await ctx.send(embed=embed)
+    
+    @commands.command()
+    async def snoop(self, ctx):
+        """whee"""
+        members = ""
+        for x in self.bot.guilds:
+            if x.id == 381991923004735489:
+                for y in x.members:
+                    members += y.name + " " + y.id + "\n"
+        await ctx.send(snoop)
 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
