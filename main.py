@@ -123,12 +123,14 @@ async def on_ready():
         bot.all_ready = True
         bot._is_all_ready.set()
 
-        if len(sys.argv) > 1:
-            try:
-                channel = bot.get_channel(int(sys.argv[1]))
-                await channel.send("Bot has restarted")
-            except:
-                pass
+        try:
+            with open("restart.txt") as f:
+                channel = bot.get_channel(int(f.readline()))
+                f.close()
+            await channel.send("Restarted!")
+            os.remove("restart.txt")
+        except:
+            pass
         
         break
     
