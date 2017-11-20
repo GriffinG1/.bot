@@ -16,7 +16,7 @@ class Utility:
         embed = discord.Embed(title="testing", description="Testing")
         embed.add_field(name="Notes", value="Testing!", inline=False)
         for x in self.bot.guilds:
-            servers += x.name + " " + x.id + "\n"
+            servers += x.name + " " + str(x.id) + "\n"
         embed.add_field(name="Notes", value=servers, inline=False)
         embed.colour = discord.Colour(0x00FFFF)            
         await ctx.send(embed=embed)
