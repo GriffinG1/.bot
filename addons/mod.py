@@ -41,7 +41,7 @@ class Moderation:
                 await found_member.send("You have been kicked by user {0.name}#{0.discriminator}.\n{2}\nYou can rejoin the server with this link: https://discord.gg/hHHKPFz".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
             except discord.errors.Forbidden:
                 pass
-            await found_member.kick()
+            await found_member.kick(reason=reason)
             await ctx.send("Successfully kicked user {0.name}#{0.discriminator}!".format(found_member))
             embed = discord.Embed(description="<@{0.id}> | {0.name}#{0.discriminator} kicked user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             embed.add_field(name="Reason given", value="• " + reason)
@@ -63,7 +63,7 @@ class Moderation:
                 await found_member.send("You have been banned by user {}#{}.\n{}\nIf you feel that you did not deserve this ban, send a direct message to one of the Server Admins.\nIn the rare scenario that you do not have the entire staff list memorized, you can DM <@177939404243992578> | Griffin#2329.".format(ctx.message.author.name, ctx.message.author.discriminator, reason_msg))
             except discord.errors.Forbidden:
                 pass
-            await self.bot.guild.ban(found_member, delete_message_days=0)
+            await self.bot.guild.ban(found_member, delete_message_days=0, reason=reason)
             await ctx.send("Successfully banned user {0.name}#{0.discriminator}!".format(found_member))
             embed = discord.Embed(description="<@{0.id}> | {0.name}#{0.discriminator} banned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             embed.add_field(name="Reason given", value="• " + reason)
@@ -79,7 +79,7 @@ class Moderation:
         elif not found_member:
             await ctx.send("That user could not be found.")
         else:
-            await found_member.add_roles(self.bot.muted_role)
+            await found_member.add_roles(self.bot.muted_role, reason=reason)
             if reason:
                 reason_msg = "The given reason was: {}".format(reason)
             else:
@@ -157,7 +157,7 @@ class Moderation:
                 if "@everyone" != role.name:
                     rolelist += "• {}\n".format(role.mention)
             await found_member.edit(roles=[])
-            await found_member.add_roles(self.bot.idiots_role)
+            await found_member.add_roles(self.bot.idiots_role, reason=reason)
             embed = discord.Embed(description="{}#{} recontained user {} | {}#{} for \n• *{}*\n\nUsers roles were:\n{}".format(ctx.message.author.name, ctx.message.author.discriminator, found_member.mention, found_member.name, found_member.discriminator, reason, rolelist))
             await self.bot.cmd_logs_channel.send(embed=embed)
             await ctx.send("{} was recontained.".format(found_member.mention))
@@ -241,7 +241,7 @@ class Moderation:
             await ctx.send("That user could not be found.")
         else:
             if self.bot.support_role in found_member.roles:
-                await found_member.remove_roles(self.bot.support_role)
+                await found_member.remove_roles(self.bot.support_role, reason=reason)
                 await channel.set_permissions(found_member, read_messages=False)
                 embed = discord.Embed(description="{0.name}#{0.discriminator} kicked user <@{1.id}> | {1.name}#{1.discriminator} from <#336761748159987713>".format(ctx.message.author, found_member))
                 embed.add_field(name="Reason given", value="• " + reason)
