@@ -27,7 +27,7 @@ class Warning:
         else:
             return found_member            
                 
-    @commands.has_permissions(ban_members=True)    
+    @commands.has_permissions(kick_members=True)    
     @commands.command(pass_context=True)
     async def warn(self, ctx, member, *, reason="No reason given."):
         """Warn a member."""
@@ -88,7 +88,7 @@ class Warning:
             await ctx.send(reply_msg)
             embed = discord.Embed(description="{0.name}#{0.discriminator} warned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.author, found_member))
             embed.add_field(name="Reason given", value="• " + reason)
-            await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+            await self.bot.cmd_logs_channel.send(embed=embed)
             with open("saves/warns.json", "w+") as f:
                 json.dump(self.warns, f)
                 
@@ -176,7 +176,7 @@ class Warning:
                         await ctx.send("Removed `{}` warn of user {}#{}.".format(reason, found_member.name, found_member.discriminator))
                         embed = discord.Embed(description="{0.name}#{0.discriminator} took a warn off of user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.author, found_member))
                         embed.add_field(name="Removed Warn", value="• " + reason)
-                        await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+                        await self.bot.cmd_logs_channel.send(embed=embed)
                     except ValueError:
                         await ctx.send("{}#{} was never warned for the reason `{}`!".format(found_member.name, found_member.discriminator, reason))
                 else:
