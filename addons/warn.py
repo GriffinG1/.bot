@@ -33,11 +33,11 @@ class Warning:
         """Warn a member."""
         found_member = self.find_user(member, ctx)
         if not found_member:
-            await self.bot.say("That user could not be found.")
+            await ctx.send("That user could not be found.")
         else:
             owner = ctx.message.server.owner
             if self.bot.server_admin_role in found_member.roles and not ctx.message.author == owner:
-                return await self.bot.say("You cannot warn a staff member!")
+                return await ctx.send("You cannot warn a staff member!")
             try:
                 self.warns[found_member.id]
             except KeyError:
@@ -48,7 +48,7 @@ class Warning:
             if len(self.warns[found_member.id]) >= 5:
                 private_message += "\nYou were banned due to this warn.\nIf you feel that you did not deserve this ban, send a direct message to one of the Server Admins.\nIn the rare scenario that you do not have the entire staff list memorized, you can DM <@177939404243992578> | Griffin#2329."
                 try:
-                    await self.bot.send_message(found_member, private_message)
+                    await found_member.send(private_message)
                 except discord.Forbidden:
                     pass
                 await self.bot.ban(found_member)
@@ -57,7 +57,7 @@ class Warning:
             elif len(self.warns[found_member.id]) == 4:
                 private_message += "\nYou were kicked due to this warn.\nYou can rejoin the server with this link: https://discord.gg/hHHKPFz\nYour next warn will automatically ban you."
                 try:
-                    await self.bot.send_message(found_member, private_message)
+                    await found_member.send(private_message)
                 except discord.Forbidden:
                     pass
                 await self.bot.kick(found_member)
@@ -66,7 +66,7 @@ class Warning:
             elif len(self.warns[found_member.id]) == 3:
                 private_message += "\nYou were kicked due to this warn.\nYou can rejoin the server with this link: https://discord.gg/hHHKPFz\nYour next warn will automatically kick you."
                 try:
-                    await self.bot.send_message(found_member, private_message)
+                    await found_member.send(private_message)
                 except discord.Forbidden:
                     pass
                 await self.bot.kick(found_member)
@@ -75,17 +75,17 @@ class Warning:
             elif len(self.warns[found_member.id]) == 2:
                 private_message += "\nYour next warn will automatically kick you."
                 try:
-                    await self.bot.send_message(found_member, private_message)
+                    await found_member.send(private_message)
                 except discord.Forbidden:
                     pass
                 reply_msg += " The next warn will automatically kick the user."
                 
             else:
                 try:
-                    await self.bot.send_message(found_member, private_message)
+                    await found_member.send(private_message)
                 except discord.Forbidden:
                     pass
-            await self.bot.say(reply_msg)
+            await ctx.send(reply_msg)
             embed = discord.Embed(description="{0.name}#{0.discriminator} warned user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
             embed.add_field(name="Reason given", value="• " + reason)
             await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
@@ -108,18 +108,18 @@ class Warning:
                             embed.description += "• {}\n".format(warn)
                         embed.description += "\n"
                 if embed.description is None:
-                    await self.bot.say("There are no warns")
+                    await ctx.send("There are no warns")
                 else:
-                    return await self.bot.say("", embed=embed)
+                    return await ctx.send("", embed=embed)
             else:
-                return await self.bot.say("Only the owner can check everyone's warns")
+                return await ctx.send("Only the owner can check everyone's warns")
         else:
             found_member = self.find_user(member, ctx)
         if not found_member:
-            await self.bot.say("That user could not be found.")
+            await ctx.send("That user could not be found.")
         else:
             if not ctx.message.author.server_permissions.ban_members and ctx.message.author != found_member:
-                await self.bot.say("You don't have permission to use this command.")
+                await ctx.send("You don't have permission to use this command.")
             else:
                 try:
                     user_warns = self.warns[found_member.id]
@@ -128,11 +128,11 @@ class Warning:
                         for warn in user_warns:
                             embed.description += "• {}\n".format(warn)
                         embed.set_footer(text="There are {} warns in total.".format(len(user_warns)))
-                        await self.bot.say("", embed=embed)
+                        await ctx.send("", embed=embed)
                     else:
-                        await self.bot.say("That user has no warns!")
+                        await ctx.send("That user has no warns!")
                 except KeyError:
-                    await self.bot.say("That user has no warns!")
+                    await ctx.send("That user has no warns!")
                 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
@@ -140,24 +140,24 @@ class Warning:
         """Clear a member's warns."""
         found_member = self.find_user(member, ctx)
         if not found_member:
-            await self.bot.say("That user could not be found.")
+            await ctx.send("That user could not be found.")
         else:            
             try:
                 if self.warns[found_member.id]:
                     self.warns[found_member.id] = []
                     with open("saves/warns.json", "w+") as f:
                         json.dump(self.warns, f)
-                    await self.bot.say("Cleared the warns of user {}#{}.".format(found_member.name, found_member.discriminator))
+                    await ctx.send("Cleared the warns of user {}#{}.".format(found_member.name, found_member.discriminator))
                     embed = discord.Embed(description="{0.name}#{0.discriminator} cleared warns of user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
-                    await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
+                    await self.bot.cmd_logs_channel.send(embed=embed)
                     try:
-                        await self.bot.send_message(found_member, "All your warns have been cleared.")
+                        await found_member.send("All your warns have been cleared.")
                     except discord.errors.Forbidden:
                         pass
                 else:
-                    await self.bot.say("That user has no warns!")
+                    await ctx.send("That user has no warns!")
             except KeyError:
-                await self.bot.say("That user has no warns!")
+                await ctx.send("That user has no warns!")
                 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
@@ -165,7 +165,7 @@ class Warning:
         """Take a specific warn off a user."""
         found_member = self.find_user(member, ctx)
         if not found_member:
-            await self.bot.say("That user could not be found.")
+            await ctx.send("That user could not be found.")
         else:            
             try:
                 if self.warns[found_member.id]:
@@ -173,16 +173,16 @@ class Warning:
                         self.warns[found_member.id].remove(reason)
                         with open("saves/warns.json", "w+") as f:
                             json.dump(self.warns, f)
-                        await self.bot.say("Removed `{}` warn of user {}#{}.".format(reason, found_member.name, found_member.discriminator))
+                        await ctx.send("Removed `{}` warn of user {}#{}.".format(reason, found_member.name, found_member.discriminator))
                         embed = discord.Embed(description="{0.name}#{0.discriminator} took a warn off of user <@{1.id}> | {1.name}#{1.discriminator}".format(ctx.message.author, found_member))
                         embed.add_field(name="Removed Warn", value="• " + reason)
                         await self.bot.send_message(self.bot.cmd_logs_channel, embed=embed)
                     except ValueError:
-                        await self.bot.say("{}#{} was never warned for the reason `{}`!".format(found_member.name, found_member.discriminator, reason))
+                        await ctx.send("{}#{} was never warned for the reason `{}`!".format(found_member.name, found_member.discriminator, reason))
                 else:
-                    await self.bot.say("That user has no warns!")
+                    await ctx.send("That user has no warns!")
             except KeyError:
-                await self.bot.say("That user has no warns!")
+                await ctx.send("That user has no warns!")
                 
 def setup(bot):
     bot.add_cog(Warning(bot))
