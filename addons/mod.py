@@ -282,6 +282,31 @@ class Moderation:
                 pass
             await ctx.send("{}#{} can access support again.".format(found_member.name, found_member.discriminator))
            
+    @commands.has_permissions(kick_members=True)
+    @commands.command()
+    async def purge(self, ctx, amount=0):
+        """Clears chat to a certain amount."""
+        await ctx.message.delete()
+        asyncio.sleep(2)
+        if amount != 0:
+            await ctx.channel.purge(limit=amount)
+        else:
+            await ctx.send("Why would you wanna purge no messages?", delete_after=10)
+        embed = discord.Embed(description="{0.name}#{0.discriminator} purged {1} messages in {2}".format(ctx.message.author, amount, ctx.channel.mention))
+        await self.bot.cmd_logs_channel.send(embed=embed)
+            
+    @commands.has_permissions(kick_members=True)
+    @commands.command()
+    async def clean(self, ctx, amount=100):
+        """Clears chat to a certain amount."""
+        if amount > 100:
+            return await ctx.send("That number is too large!")
+        await ctx.message.delete()
+        def is_bot(message):
+            return message.author == ctx.me
+        cleared = await ctx.channel.purge(limit=amount, check=is_bot)
+        embed = discord.Embed(description="{0.name}#{0.discriminator} purged {1} bot messages in {2}".format(ctx.message.author, amount, ctx.channel.mention))
+        await self.bot.cmd_logs_channel.send(embed=embed)
             
 def setup(bot):
     bot.add_cog(Moderation(bot))
