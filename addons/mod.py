@@ -74,7 +74,7 @@ class Moderation:
         bans = await ctx.guild.bans()
         unbanned = False
         for ban in bans:
-            if ban.user.id == member_id:
+            if ban.user.id == int(member_id):
                 await ctx.guild.unban(ban.user, reason=reason)
                 await ctx.send("Successfully unbanned user with ID {}!".format(member_id))
                 unbanned = True
