@@ -31,6 +31,7 @@ class Utility:
         open("joins.txt", "w+")
         await ctx.send("Cleared joins.txt")
     
+    @commands.cooldown(rate=1, per=300.0, type=commands.BucketType.channel)
     @commands.command(aliases=['test'])
     async def ping(self, ctx):
         await ctx.message.delete()
