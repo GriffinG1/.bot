@@ -52,6 +52,18 @@ class Utility:
             f.write(str(ctx.message.channel.id))
             f.close()
         sys.exit(0)
+        
+    @commands.has_permissions(ban_members=True)
+    @commands.command()
+    async def pull(self, ctx):
+        """Pull GitHub changes"""
+        await ctx.send("Pulling changes...")
+        git.pull()
+        await ctx.send("Changes pulled! Restarting...")
+        with open("restart.txt", "w+") as f:
+            f.write(str(ctx.message.channel.id))
+            f.close()
+        sys.exit(0)
 
     @commands.command()
     async def support(self, ctx):
