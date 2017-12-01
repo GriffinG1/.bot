@@ -305,7 +305,7 @@ class Moderation:
         def is_bot(message):
             return message.author == ctx.me
         cleared = await ctx.channel.purge(limit=amount, check=is_bot)
-        embed = discord.Embed(description="{0.name}#{0.discriminator} purged {1} bot messages in {2}".format(ctx.message.author, amount, ctx.channel.mention))
+        embed = discord.Embed(description="{0.name}#{0.discriminator} purged {1} bot messages within {2} messages in {3}".format(ctx.message.author, len(cleared), amount, ctx.channel.mention))
         await self.bot.cmd_logs_channel.send(embed=embed)
             
 def setup(bot):
