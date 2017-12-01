@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import os
 import sys
+import datetime
 
 class Utility:
     """Utility bot commands."""
@@ -30,13 +31,19 @@ class Utility:
         open("joins.txt", "w+")
         await ctx.send("Cleared joins.txt")
     
-    @commands.command()
+    @commands.command(aliases=['test'])
     async def ping(self, ctx):
-        """A test/ping command."""
-        await ctx.send("Pong")
+        await ctx.message.delete()
+        """Get response time."""
+        msgtime = ctx.message.created_at.now()
+        await (await self.bot.ws.ping())
+        now = datetime.datetime.now()
+        ping = now - msgtime
+        await ctx.send("🏓 Response Time: **{}ms**".format(ping.microseconds / 1000.0))
+        
 
     @commands.has_permissions(ban_members=True)    
-    @commands.command(pass_context=True)
+    @commands.command()
     async def restart(self, ctx):
         """Restarts the bot."""
         await ctx.send("Restarting...")
