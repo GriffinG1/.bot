@@ -118,7 +118,7 @@ class Warning:
         if not found_member:
             await ctx.send("That user could not be found.")
         else:
-            if not self.bot.server_admin_role in found_member.roles and not self.bot.nazi_role in found_member.roles and not ctx.author == owner:
+            if not self.bot.server_admin_role in found_member.roles and not self.bot.nazi_role in found_member.roles and not ctx.author == ctx.guild.owner and not ctx.message.author == found_member:
                 await ctx.send("You don't have permission to use this command.")
             else:
                 try:
