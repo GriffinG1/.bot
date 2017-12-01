@@ -72,9 +72,15 @@ class Moderation:
     async def unban(self, ctx, member_id, *, reason=""):
         """Unbans a member. Must provide ID only."""
         bans = await ctx.guild.bans()
+        unbanned = False
         for ban in bans:
             if ban.user.id == member_id:
                 await ctx.guild.unban(ban.user, reason=reason)
+                await ctx.send("Successfully unbanned user with ID {}!".format(member_id))
+                unbanned = True
+                break
+        if not unbanned:
+            await ctx.send("Failed to unban user with ID {}.".format(member_id))
             
     @commands.has_permissions(ban_members=True)    
     @commands.command()
