@@ -35,8 +35,7 @@ class Moderation:
         elif not found_member:
             await ctx.send("That user could not be found.")
         else:
-            if reason != "No reason was given.":
-                reason_msg = "The given reason was: {}".format(reason)
+            reason_msg = "The given reason was: `{}`".format(reason)
             try:
                 await found_member.send("You have been kicked by user {0.name}#{0.discriminator}.\n{2}\nYou can rejoin the server with this link: https://discord.gg/hHHKPFz".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
             except discord.errors.Forbidden:
@@ -57,8 +56,7 @@ class Moderation:
         if not found_member:
             await ctx.send("That user could not be found.")
         else:
-            if reason != "No reason was given.":
-                reason_msg = "The given reason was: {}".format(reason)
+            reason_msg = "The given reason was: `{}`".format(reason)
             try: 
                 await found_member.send("You have been banned by user {}#{}.\n{}\nIf you feel that you did not deserve this ban, send a direct message to one of the Server Admins.\nIn the rare scenario that you do not have the entire staff list memorized, you can DM <@177939404243992578> | Griffin#2329.".format(ctx.message.author.name, ctx.message.author.discriminator, reason_msg))
             except discord.errors.Forbidden:
