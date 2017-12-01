@@ -31,13 +31,9 @@ class Utility:
         await ctx.send("Cleared joins.txt")
     
     @commands.command()
-    async def test(self, ctx):
-        """A test command."""
-        test = ""
-        embed = discord.Embed(title="testing", description="Testing")
-        embed.add_field(name="Notes", value="Testing!", inline=False)
-        embed.colour = discord.Colour(0x00FFFF)
-        await ctx.send(embed=embed)
+    async def ping(self, ctx):
+        """A test/ping command."""
+        await ctx.send("Pong")
 
     @commands.has_permissions(ban_members=True)    
     @commands.command(pass_context=True)
