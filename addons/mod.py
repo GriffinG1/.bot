@@ -26,7 +26,7 @@ class Moderation:
             return found_member
     
     @commands.has_permissions(kick_members=True)    
-    @commands.command(pass_context=True)
+    @commands.command()
     async def kick(self, ctx, member, *, reason="No reason was given."):
         """Kick a member."""
         found_member = self.find_user(member, ctx)
@@ -48,7 +48,7 @@ class Moderation:
             await self.bot.cmd_logs_channel.send(embed=embed)
     
     @commands.has_permissions(ban_members=True)    
-    @commands.command(pass_context=True)
+    @commands.command()
     async def ban(self, ctx, member, *, reason="No reason was given."):
         """Ban a member."""
         found_member = self.find_user(member, ctx)
@@ -69,8 +69,17 @@ class Moderation:
             embed.add_field(name="Reason given", value="• " + reason)
             await self.bot.cmd_logs_channel.send(embed=embed)
             
+    @commands.has_permissions(ban_members=True)
+    @commands.command()
+    async def unban(self, ctx, member_id, *, reason=""):
+        """Unbans a member. Must provide ID only."""
+        bans = await ctx.guild.bans()
+        for ban in bans:
+            if ban.user.id == member_id:
+                await ctx.guild.unban(ban.user, reason=reason)
+            
     @commands.has_permissions(ban_members=True)    
-    @commands.command(pass_context=True)
+    @commands.command()
     async def mute(self, ctx, member, *, reason=""):
         """Mute a member."""
         found_member = self.find_user(member, ctx)
@@ -94,7 +103,7 @@ class Moderation:
                 pass
             
     @commands.has_permissions(ban_members=True)    
-    @commands.command(pass_context=True)
+    @commands.command()
     async def unmute(self, ctx, *, member):
         """Unmute a member."""
         found_member = self.find_user(member, ctx)
@@ -112,7 +121,7 @@ class Moderation:
             else:
                 await ctx.send("That user isn't muted!")
 
-    @commands.command(pass_context=True)
+    @commands.command()
     async def uncontain(self, ctx, member=""):
         """Remove a member from #containment."""
         await ctx.message.delete()
@@ -141,7 +150,7 @@ class Moderation:
             await ctx.send("Only Sheet Admins can use this command!")
             
     @commands.has_permissions(kick_members=True)
-    @commands.command(pass_context=True)
+    @commands.command()
     async def recontain(self, ctx, member, *, reason="No reason was given."):
         """Put a member back in #containment."""
         await ctx.message.delete()
@@ -168,7 +177,7 @@ class Moderation:
         
             
     @commands.has_permissions(kick_members=True)
-    @commands.group(pass_context=True)
+    @commands.group()
     async def promote(self, ctx):
         """Upgrade Roles"""
         if ctx.invoked_subcommand is None:
@@ -176,7 +185,7 @@ class Moderation:
             await ctx.send("You're missing a parameter!", delete_after=3)
 
     @commands.has_permissions(kick_members=True)
-    @promote.command(pass_context=True)
+    @promote.command()
     async def Neutron(self, ctx, *, member):
         """Neutron Stars"""
         await ctx.message.delete()
@@ -195,7 +204,7 @@ class Moderation:
                 pass
 
     @commands.has_permissions(kick_members=True)
-    @promote.command(pass_context=True)
+    @promote.command()
     async def Sheet(self, ctx, *, member):
         """Sheet Admins"""
         await ctx.message.delete()
@@ -213,7 +222,7 @@ class Moderation:
                 pass
 
     @commands.has_permissions(ban_members=True)
-    @promote.command(pass_context=True)
+    @promote.command()
     async def Server(self, ctx, *, member):
         """Server Admins"""
         await ctx.message.delete()
@@ -231,7 +240,7 @@ class Moderation:
                 pass
     
     @commands.has_permissions(kick_members=True)
-    @commands.command(pass_context=True)
+    @commands.command()
     async def nosupport(self, ctx, member, *, reason="No reason given."):
         """Kicks a user out of support"""
         await ctx.message.delete()
@@ -255,7 +264,7 @@ class Moderation:
                 await ctx.send("That user isn't in support!")
                 
     @commands.has_permissions(kick_members=True)
-    @commands.command(pass_context=True)
+    @commands.command()
     async def givesupport(self, ctx, member):
         """Allows a user to rejoin support"""
         await ctx.message.delete()
@@ -272,6 +281,7 @@ class Moderation:
             except discord.errors.Forbidden:
                 pass
             await ctx.send("{}#{} can access support again.".format(found_member.name, found_member.discriminator))
+           
             
 def setup(bot):
     bot.add_cog(Moderation(bot))
