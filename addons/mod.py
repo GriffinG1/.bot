@@ -35,8 +35,7 @@ class Moderation:
         elif not found_member:
             await ctx.send("That user could not be found.")
         else:
-            if reason != "No reason was given.":
-                reason_msg = "The given reason was: {}".format(reason)
+            reason_msg = "The given reason was: `{}`".format(reason)
             try:
                 await found_member.send("You have been kicked by user {0.name}#{0.discriminator}.\n{2}\nYou can rejoin the server with this link: https://discord.gg/hHHKPFz".format(ctx.message.author, self.bot.rules_channel.mention, reason_msg))
             except discord.errors.Forbidden:
@@ -58,8 +57,7 @@ class Moderation:
         if not found_member:
             await ctx.send("That user could not be found.")
         else:
-            if reason != "No reason was given.":
-                reason_msg = "The given reason was: {}".format(reason)
+            reason_msg = "The given reason was: `{}`".format(reason)
             try: 
                 await found_member.send("You have been banned by user {}#{}.\n{}\nIf you feel that you did not deserve this ban, send a direct message to one of the Server Admins.\nIn the rare scenario that you do not have the entire staff list memorized, you can DM <@177939404243992578> | Griffin#2329.".format(ctx.message.author.name, ctx.message.author.discriminator, reason_msg))
             except discord.errors.Forbidden:
@@ -76,10 +74,16 @@ class Moderation:
     async def unban(self, ctx, member_id, *, reason=""):
         """Unbans a member. Must provide ID only."""
         bans = await ctx.guild.bans()
+        unbanned = False
         for ban in bans:
-            if ban.user.id == member_id:
+            if ban.user.id == int(member_id):
                 audit_reason = reason + " This action was done by: " + ctx.message.author
                 await ctx.guild.unban(ban.user, reason=audit_reason)
+                await ctx.send("Successfully unbanned user with ID {}!".format(member_id))
+                unbanned = True
+                break
+        if not unbanned:
+            await ctx.send("Failed to unban user with ID {}.".format(member_id))
             
     @commands.has_permissions(ban_members=True)    
     @commands.command()

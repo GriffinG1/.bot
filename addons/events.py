@@ -86,6 +86,7 @@ class Events:
             if member.mention in message.content:
                 embed.set_footer(text="This user is blacklisted.")
         await self.bot.logs_channel.send(":exclamation:", embed=embed)
+        await self.bot.containment_channel.send(member.mention, delete_after=5)
 
     async def on_member_remove(self, member):
         if member.id != 366484404920516619 and member.id != 366483552788938772:
