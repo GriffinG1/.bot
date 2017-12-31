@@ -308,7 +308,7 @@ class Moderation:
     @commands.has_permissions(kick_members=True)
     @commands.command()
     async def clean(self, ctx, amount=100):
-        """Clears chat to a certain amount."""
+        """Clears bot messages over a certain amount."""
         if amount > 100:
             return await ctx.send("That number is too large!")
         await ctx.message.delete()
