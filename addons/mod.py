@@ -184,7 +184,6 @@ class Moderation:
             except discord.errors.Forbidden:
                 pass
         
-            
     @commands.has_permissions(kick_members=True)
     @commands.group()
     async def promote(self, ctx):
@@ -247,50 +246,6 @@ class Moderation:
                 await found_member.send("You're a Server Admin now!")
             except discord.errors.Forbidden:
                 pass
-    
-    @commands.has_permissions(kick_members=True)
-    @commands.command()
-    async def nosupport(self, ctx, member, *, reason="No reason given."):
-        """Kicks a user out of support"""
-        await ctx.message.delete()
-        found_member = self.find_user(member, ctx)
-        channel = self.bot.guild.get_channel(336761748159987713)
-        if not found_member:
-            await ctx.send("That user could not be found.")
-        else:
-            if self.bot.support_role in found_member.roles:
-                audit_reason = reason + " This action was done by: " + ctx.message.author.name
-                await found_member.remove_roles(self.bot.support_role, reason=audit_reason)
-                await channel.set_permissions(found_member, read_messages=False)
-                embed = discord.Embed(description="{0.name}#{0.discriminator} kicked user <@{1.id}> | {1.name}#{1.discriminator} from <#336761748159987713>".format(ctx.message.author, found_member))
-                embed.add_field(name="Reason given", value="• " + reason)
-                await self.bot.cmd_logs_channel.send(embed=embed)
-                try:
-                    await found_member.send("You were removed from 9-1-1-tech-support by user {}#{}. The given reason was: `{}` \nIf you feel that you did not deserve this removal, send a direct message to one of the staff on the Server Admins list in <#318626746297745409>".format(ctx.message.author.name, ctx.message.author.discriminator, reason))
-                except discord.errors.Forbidden:
-                    pass
-                await ctx.send("{}#{} can no longer access support.".format(found_member.name, found_member.discriminator))
-            else:
-                await ctx.send("That user isn't in support!")
-                
-    @commands.has_permissions(kick_members=True)
-    @commands.command()
-    async def givesupport(self, ctx, member):
-        """Allows a user to rejoin support"""
-        await ctx.message.delete()
-        found_member = self.find_user(member, ctx)
-        channel = self.bot.guild.get_channel(336761748159987713)
-        if not found_member:
-            await ctx.send("That user could not be found.")
-        else:
-            await channel.set_permissions(found_member, read_messages=None)
-            embed = discord.Embed(description="{0.name}#{0.discriminator} restored user <@{1.id}> | {1.name}#{1.discriminator} permissions for <#336761748159987713>".format(ctx.message.author, found_member))
-            await self.bot.cmd_logs_channel.send(embed=embed)
-            try:
-                await found_member.send("You can access <#336761748159987713> again!")
-            except discord.errors.Forbidden:
-                pass
-            await ctx.send("{}#{} can access support again.".format(found_member.name, found_member.discriminator))
            
     @commands.has_permissions(kick_members=True)
     @commands.command()

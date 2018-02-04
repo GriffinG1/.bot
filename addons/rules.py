@@ -64,14 +64,6 @@ class Rules:
         await ctx.send(embed=embed)
 
     @commands.command(hidden=True)
-    async def r8(self, ctx):
-        embed = discord.Embed()
-        async for rule in self.bot.rules_channel.history():
-            if "8." in rule.content:
-                embed.description = rule.content
-        await ctx.send(embed=embed)
-
-    @commands.command(hidden=True)
     async def containment(self, ctx):
         await ctx.message.delete()
         if self.bot.sheet_admin_role in ctx.author.roles or self.bot.server_admin_role in ctx.author.roles or self.bot.nazi_role in ctx.author.roles:

@@ -1,4 +1,4 @@
-description = """Goku, the bot for the Nintendo Homebrew Idiot Log Discord!"""
+description = """The .bot for the Nintendo Homebrew Idiot Log Discord!"""
 
 # import dependencies
 import os
@@ -39,13 +39,6 @@ def get_command_list():
 
 
 bot.get_command_list = get_command_list
-bot.escape_trans = str.maketrans({
-    "*": "\*",
-    "_": "\_",
-    "~": "\~",
-    "`": "\`",
-    "\\": "\\\\"
-})  # used to escape a string
 
 
 # mostly taken from https://github.com/Rapptz/discord.py/blob/async/discord/ext/commands/bot.py
@@ -108,7 +101,6 @@ async def on_ready():
         bot.containment_channel = discord.utils.get(guild.channels, name="containment")
         bot.err_logs_channel = discord.utils.get(guild.channels, name="err-logs")
         bot.msg_logs_channel = discord.utils.get(guild.channels, name="msg-logs")
-        bot.hidden_channel = discord.utils.get(guild.channels, name="hiddenplace")
         bot.blacklist_channel = discord.utils.get(guild.channels, name="blacklist")
         
         bot.idiots_role = discord.utils.get(guild.roles, name="Idiots")
@@ -117,9 +109,7 @@ async def on_ready():
         bot.neutron_stars_role = discord.utils.get(guild.roles, name="Neutron Stars")
         bot.server_admin_role = discord.utils.get(guild.roles, name="Server Admins")
         bot.sheet_admin_role = discord.utils.get(guild.roles, name="Sheet Admins")
-        bot.support_role = discord.utils.get(guild.roles, name="I NEED SUPPORT")
-        bot.derek_role = discord.utils.get(guild.roles, name="DDM")
-        bot.nazi_role = discord.utils.get(guild.roles, name="Nazis")
+        bot.nazi_role = discord.utils.get(guild.roles, name="Server Mods")
         get_command_list()
         print("Initialized on {}.".format(guild.name))
         
@@ -144,7 +134,6 @@ addons = [
     'addons.load',
     'addons.message',
     'addons.mod',
-    #'addons.music', Commented out until music.py is stable
     'addons.rules',
     'addons.utility',
     'addons.warn'
