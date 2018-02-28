@@ -64,7 +64,7 @@ class Events:
 
     async def on_message_delete(self, message):
         if isinstance(message.channel, discord.abc.GuildChannel) and message.author.id != self.bot.user.id:
-            if message.channel not in (self.bot.msg_logs_channel, self.bot.containment_channel):
+            if message.channel not in (self.bot.msg_logs_channel, self.bot.containment_channel, self.bot.containment_logs_channel):
                 if not message.content.startswith(tuple(self.bot.command_list), 1):
                     embed = discord.Embed(description=message.content)
                     if message.attachments:
