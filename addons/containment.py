@@ -27,7 +27,7 @@ class Containment:
         while self is self.bot.get_cog("Containment"):
             await asyncio.sleep(1)
             self.clear += 1
-            if self.clear == 120:
+            if self.clear == 7200:
                 timer = 0
                 async for message in self.bot.containment_logs_channel.history(limit=500):
                     await message.delete()
