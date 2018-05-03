@@ -39,13 +39,7 @@ def get_command_list():
 
 
 bot.get_command_list = get_command_list
-bot.escape_trans = str.maketrans({
-    "*": "\*",
-    "_": "\_",
-    "~": "\~",
-    "`": "\`",
-    "\\": "\\\\"
-})  # used to escape a string, believed to be from kurisu?
+
 
 
 # mostly taken from https://github.com/Rapptz/discord.py/blob/async/discord/ext/commands/bot.py
@@ -68,7 +62,7 @@ async def on_command_error(ctx, error):
         tb = traceback.format_exception(type(error), error, error.__traceback__)
         error_trace = "".join(tb)
         print(error_trace)
-        embed = discord.Embed(description=error_trace.translate(bot.escape_trans))
+        embed = discord.Embed(description=error_trace)
         await bot.err_logs_channel.send("An error occurred while processing the `{}` command in channel `{}`.".format(ctx.command.name, ctx.message.channel), embed=embed)
 
 
